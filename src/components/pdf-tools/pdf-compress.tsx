@@ -7,8 +7,8 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
-import { pdfjsLib } from "@/lib/pdfjs";
-import { formatBytes, downloadBlob, isEncryptedError } from "@/lib/pdf-utils";
+import { loadPdfjs } from "@/lib/pdfjs";
+import { formatBytes, downloadBlob, isEncryptedError, safeRenderScale } from "@/lib/pdf-utils";
 
 type Quality = "low" | "medium" | "high";
 const QUALITY_MAP: Record<Quality, { jpeg: number; scale: number; label: string }> = {
