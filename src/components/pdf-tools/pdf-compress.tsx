@@ -12,9 +12,9 @@ import { formatBytes, downloadBlob, isEncryptedError } from "@/lib/pdf-utils";
 
 type Quality = "low" | "medium" | "high";
 const QUALITY_MAP: Record<Quality, { jpeg: number; scale: number; label: string }> = {
-  low: { jpeg: 0.5, scale: 1.0, label: "Low (smallest file)" },
-  medium: { jpeg: 0.7, scale: 1.25, label: "Medium (balanced)" },
-  high: { jpeg: 0.85, scale: 1.5, label: "High (best quality)" },
+  low: { jpeg: 0.4, scale: 0.75, label: "Low (smallest file)" },
+  medium: { jpeg: 0.6, scale: 1.0, label: "Medium (balanced)" },
+  high: { jpeg: 0.75, scale: 1.25, label: "High (best quality)" },
 };
 
 export function PdfCompress() {
@@ -75,46 +75,64 @@ export function PdfCompress() {
     setResultBytes(null);
     setResultSize(null);
     try {
-      const { jpeg, scale } = QUALITY_MAP[quality];
-      const pdf = await pdfjsLib.getDocument({ data: bytesRef.current.slice(0) }).promise;
-      const out = await PDFDocument.create();
-      // Strip metadata
-      out.setTitle("");
-      out.setAuthor("");
-      out.setSubject("");
-      out.setKeywords([]);
-      out.setProducer("");
-      out.setCreator("");
+      const original = new Uint8Array(bytesRef.current.slice(0));
+      const candidates: Uint8Array[] = [original];
 
-      const total = pdf.numPages;
-      for (let i = 1; i <= total; i++) {
-        const page = await pdf.getPage(i);
-        const viewport = page.getViewport({ scale });
-        const canvas = document.createElement("canvas");
-        canvas.width = Math.floor(viewport.width);
-        canvas.height = Math.floor(viewport.height);
-        const ctx = canvas.getContext("2d")!;
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        await page.render({ canvasContext: ctx, viewport, canvas } as never).promise;
-        const dataUrl = canvas.toDataURL("image/jpeg", jpeg);
-        const jpgBytes = dataUrlToUint8(dataUrl);
-        const img = await out.embedJpg(jpgBytes);
-        const originalViewport = page.getViewport({ scale: 1 });
-        const newPage = out.addPage([originalViewport.width, originalViewport.height]);
-        newPage.drawImage(img, {
-          x: 0,
-          y: 0,
-          width: originalViewport.width,
-          height: originalViewport.height,
-        });
-        setProgress(Math.round((i / total) * 100));
+      // Strategy A: lossless re-save — strip metadata, use object streams.
+      try {
+        const doc = await PDFDocument.load(bytesRef.current.slice(0), { updateMetadata: false });
+        doc.setTitle("");
+        doc.setAuthor("");
+        doc.setSubject("");
+        doc.setKeywords([]);
+        doc.setProducer("");
+        doc.setCreator("");
+        candidates.push(await doc.save({ useObjectStreams: true }));
+      } catch (err) {
+        if (isEncryptedError(err)) throw err;
+        console.error(err);
+      }
+      setProgress(10);
+
+      // Strategy B: rasterize pages as JPEG (great for scans, bad for text-only).
+      try {
+        const { jpeg, scale } = QUALITY_MAP[quality];
+        const pdf = await pdfjsLib.getDocument({ data: bytesRef.current.slice(0) }).promise;
+        const out = await PDFDocument.create();
+        const total = pdf.numPages;
+        for (let i = 1; i <= total; i++) {
+          const page = await pdf.getPage(i);
+          const viewport = page.getViewport({ scale });
+          const canvas = document.createElement("canvas");
+          canvas.width = Math.floor(viewport.width);
+          canvas.height = Math.floor(viewport.height);
+          const ctx = canvas.getContext("2d")!;
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          await page.render({ canvasContext: ctx, viewport, canvas } as never).promise;
+          const jpgBytes = dataUrlToUint8(canvas.toDataURL("image/jpeg", jpeg));
+          const img = await out.embedJpg(jpgBytes);
+          const base = page.getViewport({ scale: 1 });
+          const newPage = out.addPage([base.width, base.height]);
+          newPage.drawImage(img, { x: 0, y: 0, width: base.width, height: base.height });
+          setProgress(10 + Math.round((i / total) * 85));
+        }
+        candidates.push(await out.save({ useObjectStreams: true }));
+      } catch (err) {
+        if (isEncryptedError(err)) throw err;
+        console.error(err);
       }
 
-      const bytes = await out.save();
-      setResultBytes(bytes);
-      setResultSize(bytes.byteLength);
-      toast.success("Compression complete");
+      // Keep whichever result is smallest — never hand back a bigger file.
+      const best = candidates.reduce((a, b) => (b.byteLength < a.byteLength ? b : a));
+      setProgress(100);
+      setResultBytes(best);
+      setResultSize(best.byteLength);
+      if (best === original) {
+        toast.info("This PDF is already well optimised — kept the original file.");
+      } else {
+        toast.success("Compression complete");
+      }
     } catch (err) {
       console.error(err);
       if (isEncryptedError(err)) toast.error("This PDF is password-protected and can't be processed");
