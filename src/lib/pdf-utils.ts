@@ -58,3 +58,20 @@ export function isEncryptedError(err: unknown): boolean {
     msg.includes("password")
   );
 }
+
+/**
+ * Mobile browsers (iOS Safari especially) silently degrade or blank out canvases
+ * above a memory budget, which made rasterised output look worse on phones than
+ * in the desktop preview. Cap every render to the same pixel budget on all
+ * devices so results are identical everywhere.
+ */
+export const MAX_CANVAS_AREA = 2048 * 2048;
+export const MAX_CANVAS_DIM = 2048;
+
+export function safeRenderScale(baseWidth: number, baseHeight: number, wanted: number): number {
+  let scale = wanted;
+  const maxDimScale = MAX_CANVAS_DIM / Math.max(baseWidth, baseHeight);
+  const maxAreaScale = Math.sqrt(MAX_CANVAS_AREA / (baseWidth * baseHeight));
+  scale = Math.min(scale, maxDimScale, maxAreaScale);
+  return Math.max(scale, 0.1);
+}
