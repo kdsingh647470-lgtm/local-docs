@@ -98,26 +98,32 @@ export function PdfCompress() {
       // Strategy B: rasterize pages as JPEG (great for scans, bad for text-only).
       try {
         const { jpeg, scale } = QUALITY_MAP[quality];
+        const pdfjsLib = await loadPdfjs();
         const pdf = await pdfjsLib.getDocument({ data: bytesRef.current.slice(0) }).promise;
         const out = await PDFDocument.create();
         const total = pdf.numPages;
+        // Reuse a single canvas: phones cap how many/how large canvases can exist.
+        const canvas = document.createElement("canvas");
         for (let i = 1; i <= total; i++) {
           const page = await pdf.getPage(i);
-          const viewport = page.getViewport({ scale });
-          const canvas = document.createElement("canvas");
+          const base = page.getViewport({ scale: 1 });
+          const safeScale = safeRenderScale(base.width, base.height, scale);
+          const viewport = page.getViewport({ scale: safeScale });
           canvas.width = Math.floor(viewport.width);
           canvas.height = Math.floor(viewport.height);
           const ctx = canvas.getContext("2d")!;
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
           ctx.fillStyle = "#ffffff";
           ctx.fillRect(0, 0, canvas.width, canvas.height);
           await page.render({ canvasContext: ctx, viewport, canvas } as never).promise;
           const jpgBytes = dataUrlToUint8(canvas.toDataURL("image/jpeg", jpeg));
           const img = await out.embedJpg(jpgBytes);
-          const base = page.getViewport({ scale: 1 });
           const newPage = out.addPage([base.width, base.height]);
           newPage.drawImage(img, { x: 0, y: 0, width: base.width, height: base.height });
           setProgress(10 + Math.round((i / total) * 85));
         }
+        canvas.width = 0;
+        canvas.height = 0;
         candidates.push(await out.save({ useObjectStreams: true }));
       } catch (err) {
         if (isEncryptedError(err)) throw err;
