@@ -23,6 +23,7 @@ export function PdfCompress() {
   const [resultSize, setResultSize] = useState<number | null>(null);
   const [resultBytes, setResultBytes] = useState<Uint8Array | null>(null);
   const [quality, setQuality] = useState<Quality>("medium");
+  const [method, setMethod] = useState<"original" | "optimized" | "rasterized" | null>(null);
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState(0);
   const [dragOver, setDragOver] = useState(false);
