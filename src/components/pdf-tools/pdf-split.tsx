@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { pdfjsLib } from "@/lib/pdfjs";
+import { loadPdfjs } from "@/lib/pdfjs";
 import { formatBytes, downloadBlob, parsePageRange, isEncryptedError } from "@/lib/pdf-utils";
 
 interface Thumb {
@@ -55,6 +55,7 @@ export function PdfSplit() {
         }
         throw err;
       }
+      const pdfjsLib = await loadPdfjs();
       const pdf = await pdfjsLib.getDocument({ data: bytes.slice(0) }).promise;
       setPageCount(pdf.numPages);
       const collected: Thumb[] = [];
