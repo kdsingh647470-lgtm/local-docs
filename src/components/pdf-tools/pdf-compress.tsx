@@ -23,6 +23,7 @@ export function PdfCompress() {
   const [resultSize, setResultSize] = useState<number | null>(null);
   const [resultBytes, setResultBytes] = useState<Uint8Array | null>(null);
   const [quality, setQuality] = useState<Quality>("medium");
+  const [method, setMethod] = useState<"original" | "optimized" | "rasterized" | null>(null);
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState(0);
   const [dragOver, setDragOver] = useState(false);
@@ -128,6 +129,7 @@ export function PdfCompress() {
       setProgress(100);
       setResultBytes(best);
       setResultSize(best.byteLength);
+      setMethod(best === original ? "original" : best === candidates[1] ? "optimized" : "rasterized");
       if (best === original) {
         toast.info("This PDF is already well optimised — kept the original file.");
       } else {
@@ -242,9 +244,15 @@ export function PdfCompress() {
               </p>
             </div>
           </div>
-          {reduction !== null && reduction <= 0 && (
+          {method === "rasterized" && (
             <p className="mt-2 text-xs text-muted-foreground">
-              This PDF didn't shrink — it likely contains mostly text or already-compressed content.
+              Pages were re-rendered as images at {quality} quality — try a lower quality for a smaller file.
+            </p>
+          )}
+          {method !== "rasterized" && (
+            <p className="mt-2 text-xs text-muted-foreground">
+              This PDF is mostly text or already-compressed images, so image quality has no effect on it. We
+              stripped metadata and re-packed the file instead — that's the most this PDF can safely shrink.
             </p>
           )}
         </Card>
