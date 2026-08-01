@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { ShieldCheck } from "lucide-react";
 
+const linkClass = "text-muted-foreground transition-colors hover:text-[color:var(--emerald-deep)]";
+
 export function SiteFooter() {
   return (
     <footer className="border-t border-border bg-[color:var(--cream-warm)]">
@@ -18,24 +20,72 @@ export function SiteFooter() {
         </div>
 
         <FooterCol title="Products">
-          <FooterLink to="/pdf-tools" search={{ tool: "merge" }}>Merge PDF</FooterLink>
-          <FooterLink to="/pdf-tools" search={{ tool: "split" }}>Split PDF</FooterLink>
-          <FooterLink to="/pdf-tools" search={{ tool: "compress" }}>Compress PDF</FooterLink>
-          <FooterLink to="/pdf-tools">All tools</FooterLink>
+          <li>
+            <Link to="/pdf-tools" search={{ tool: "merge" }} className={linkClass}>
+              Merge PDF
+            </Link>
+          </li>
+          <li>
+            <Link to="/pdf-tools" search={{ tool: "split" }} className={linkClass}>
+              Split PDF
+            </Link>
+          </li>
+          <li>
+            <Link to="/pdf-tools" search={{ tool: "compress" }} className={linkClass}>
+              Compress PDF
+            </Link>
+          </li>
+          <li>
+            <Link to="/pdf-tools" className={linkClass}>
+              All tools
+            </Link>
+          </li>
         </FooterCol>
 
         <FooterCol title="Documentation">
-          <FooterLink to="/docs" hash="getting-started">Getting started</FooterLink>
-          <FooterLink to="/docs" hash="merge">How merging works</FooterLink>
-          <FooterLink to="/docs" hash="compression">How compression works</FooterLink>
-          <FooterLink to="/docs" hash="faq">FAQs</FooterLink>
+          <li>
+            <Link to="/docs" hash="getting-started" className={linkClass}>
+              Getting started
+            </Link>
+          </li>
+          <li>
+            <Link to="/docs" hash="merge" className={linkClass}>
+              How merging works
+            </Link>
+          </li>
+          <li>
+            <Link to="/docs" hash="compression" className={linkClass}>
+              How compression works
+            </Link>
+          </li>
+          <li>
+            <Link to="/docs" hash="faq" className={linkClass}>
+              FAQs
+            </Link>
+          </li>
         </FooterCol>
 
         <FooterCol title="Company">
-          <FooterLink to="/docs" hash="privacy">Privacy</FooterLink>
-          <FooterLink to="/docs" hash="security">Security</FooterLink>
-          <FooterLink to="/docs" hash="terms">Terms</FooterLink>
-          <FooterLink to="/docs" hash="contact">Contact</FooterLink>
+          <li>
+            <Link to="/docs" hash="privacy" className={linkClass}>
+              Privacy
+            </Link>
+          </li>
+          <li>
+            <Link to="/docs" hash="security" className={linkClass}>
+              Security
+            </Link>
+          </li>
+          <li>
+            <Link to="/docs" hash="terms" className={linkClass}>
+              Terms
+            </Link>
+          </li>
+          <li>
+            <Link to="/docs" hash="contact" className={linkClass}>
+              Contact
+            </Link>
+          </li>
         </FooterCol>
       </div>
       <div className="border-t border-border/70">
@@ -55,21 +105,5 @@ function FooterCol({ title, children }: { title: string; children: React.ReactNo
       </p>
       <ul className="mt-4 space-y-2.5 text-sm">{children}</ul>
     </div>
-  );
-}
-
-function FooterLink({
-  children,
-  ...props
-}: React.ComponentProps<typeof Link> & { children: React.ReactNode }) {
-  return (
-    <li>
-      <Link
-        {...(props as never)}
-        className="text-muted-foreground transition-colors hover:text-[color:var(--emerald-deep)]"
-      >
-        {children}
-      </Link>
-    </li>
   );
 }
