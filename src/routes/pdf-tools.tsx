@@ -37,6 +37,7 @@ import {
 import { PdfMerge } from "@/components/pdf-tools/pdf-merge";
 import { PdfSplit } from "@/components/pdf-tools/pdf-split";
 import { PdfCompress } from "@/components/pdf-tools/pdf-compress";
+import { PdfToWord } from "@/components/pdf-tools/pdf-to-word";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { ToolCard } from "@/components/site/tool-card";
