@@ -41,17 +41,19 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { ToolCard } from "@/components/site/tool-card";
 import { FAQ_ITEMS } from "@/lib/site-content";
 
-type Tool = "merge" | "split" | "compress";
+type Tool = "merge" | "split" | "compress" | "pdf-to-word";
 
-const TITLE = "Free PDF Tools — Merge, Split & Compress | Nesake PDF";
+const TOOLS: Tool[] = ["merge", "split", "compress", "pdf-to-word"];
+
+const TITLE = "Free PDF Tools — Merge, Split, Compress, to Word | Nesake PDF";
 const DESCRIPTION =
-  "The Nesake PDF tools hub: merge, split and compress PDFs locally in your browser, plus a roadmap of rotate, protect, unlock and watermark tools.";
+  "The Nesake PDF tools hub: merge, split, compress and convert PDF to Word locally in your browser, plus a roadmap of rotate, protect, unlock and watermark tools.";
 const URL = "https://local-docs.lovable.app/pdf-tools";
 
 export const Route = createFileRoute("/pdf-tools")({
   validateSearch: (search: Record<string, unknown>): { tool?: Tool } => {
     const tool = search.tool;
-    return tool === "merge" || tool === "split" || tool === "compress" ? { tool } : {};
+    return TOOLS.includes(tool as Tool) ? { tool: tool as Tool } : {};
   },
   head: () => ({
     meta: [
