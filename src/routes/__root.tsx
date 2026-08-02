@@ -80,6 +80,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Nesake PDF" },
       { name: "description", content: "Nesake PDF offers in-browser PDF tools to merge, split, and compress files locally." },
       { name: "author", content: "Nesake PDF" },
+      { name: "google-site-verification", content: "uuJDRw-VUZqE6dDNPlof4drd3ny4zn-KbBpwR9o2BaE" },
       { property: "og:title", content: "Nesake PDF" },
       { property: "og:description", content: "Nesake PDF offers in-browser PDF tools to merge, split, and compress files locally." },
       { property: "og:type", content: "website" },
