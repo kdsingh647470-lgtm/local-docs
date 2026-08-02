@@ -490,7 +490,9 @@ function ActiveTool({ tool, onBack }: { tool: Tool; onBack: () => void }) {
           <ShieldCheck className="h-3.5 w-3.5 text-[color:var(--emerald-mid)]" />
           Files never leave your device
         </div>
-        <DocLink hash={tool === "compress" ? "compression" : tool}>Read how this works</DocLink>
+        <DocLink hash={tool === "compress" ? "compression" : tool === "pdf-to-word" ? "pdf-to-word" : tool}>
+          Read how this works
+        </DocLink>
       </div>
     </div>
   );
