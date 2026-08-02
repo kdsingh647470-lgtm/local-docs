@@ -129,6 +129,10 @@ const TOOL_META: Record<Tool, { title: string; blurb: string }> = {
     title: "Compress PDF",
     blurb: "Trim file size for easier sharing without losing readability.",
   },
+  "pdf-to-word": {
+    title: "PDF to Word",
+    blurb: "Turn a PDF into an editable .docx document, converted right here in your browser.",
+  },
 };
 
 const UPCOMING = [
