@@ -4,6 +4,7 @@ import {
   FilePlus2,
   Scissors,
   FileArchive,
+  FileType2,
   ShieldCheck,
   Zap,
   Globe,
