@@ -43,7 +43,7 @@ import { FAQ_ITEMS } from "@/lib/site-content";
 
 type Tool = "merge" | "split" | "compress";
 
-const TITLE = "Free PDF Tools — Merge, Split & Compress in Your Browser | Nesake PDF";
+const TITLE = "Free PDF Tools — Merge, Split & Compress | Nesake PDF";
 const DESCRIPTION =
   "The Nesake PDF tools hub: merge, split and compress PDFs locally in your browser, plus a roadmap of rotate, protect, unlock and watermark tools.";
 const URL = "https://local-docs.lovable.app/pdf-tools";

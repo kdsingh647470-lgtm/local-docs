@@ -211,7 +211,7 @@ export function PdfCompress() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <button type="button" className="text-muted-foreground hover:text-foreground min-h-[24px] min-w-[24px] flex items-center justify-center">
+                <button type="button" aria-label="Quality information" className="text-muted-foreground hover:text-foreground min-h-[24px] min-w-[24px] flex items-center justify-center">
                   <Info className="h-3.5 w-3.5" />
                 </button>
               </TooltipTrigger>
