@@ -254,7 +254,15 @@ function ToolsHub() {
             description="Re-encode page images at low, medium or high quality and see exactly how much you saved."
             tool="compress"
           />
+          <ToolCard
+            icon={<FileType2 className="h-6 w-6" />}
+            title="PDF to Word"
+            description="Convert a PDF into an editable .docx, keeping headings, bold text and paragraph flow."
+            tool="pdf-to-word"
+            accent="gold"
+          />
         </div>
+
 
         <div className="mt-12">
           <SectionHeading eyebrow="Roadmap" title="Coming soon" />
