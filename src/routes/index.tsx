@@ -20,9 +20,9 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { ToolCard } from "@/components/site/tool-card";
 import { DOC_ENTRIES } from "@/lib/site-content";
 
-const TITLE = "Free PDF Tools Online — Merge, Split & Compress | Nesake";
+const TITLE = "Free PDF Tools Online — Merge, Split, Compress | Nesake";
 const DESCRIPTION =
-  "Merge, split and compress PDF files securely in your browser. No installation, no registration, no uploads — your documents stay on your device.";
+  "Merge, split, compress and convert PDF to Word securely in your browser. No installation, no registration, no uploads — your documents stay on your device.";
 const URL = "https://local-docs.lovable.app/";
 
 export const Route = createFileRoute("/")({
