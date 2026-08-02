@@ -6,6 +6,7 @@ import {
   FilePlus2,
   Scissors,
   FileArchive,
+  FileType2,
   RotateCw,
   Unlock,
   Lock,
