@@ -78,7 +78,13 @@ export const Route = createFileRoute("/pdf-tools")({
             operatingSystem: "Any (web browser)",
             url: URL,
             description: DESCRIPTION,
-            featureList: ["Merge PDF", "Split PDF", "Extract pages", "Compress PDF"],
+            featureList: [
+              "Merge PDF",
+              "Split PDF",
+              "Extract pages",
+              "Compress PDF",
+              "Convert PDF to Word",
+            ],
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
           },
           {
