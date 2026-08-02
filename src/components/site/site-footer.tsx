@@ -36,6 +36,11 @@ export function SiteFooter() {
             </Link>
           </li>
           <li>
+            <Link to="/pdf-tools" search={{ tool: "pdf-to-word" }} className={linkClass}>
+              PDF to Word
+            </Link>
+          </li>
+          <li>
             <Link to="/pdf-tools" className={linkClass}>
               All tools
             </Link>
