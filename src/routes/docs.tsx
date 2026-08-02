@@ -175,6 +175,28 @@ function DocsPage() {
               <ToolLink tool="compress">Open PDF compress</ToolLink>
             </DocSection>
 
+            <DocSection id="pdf-to-word" title="How PDF to Word works">
+              <p>
+                A PDF stores glyphs at fixed coordinates rather than paragraphs, so conversion
+                reconstructs the document. Every text run on a page is read with its position, size
+                and font name; runs sharing a baseline become a line, wrapped lines are rejoined into
+                a paragraph, and an isolated line noticeably larger than the body text is promoted to
+                a heading. The result is written out as a real <strong>.docx</strong> package you can
+                edit in Word, Google Docs or LibreOffice.
+              </p>
+              <p>
+                <strong>Keep formatting</strong> carries bold, italic and font sizes across; turning
+                it off produces a clean, uniformly styled document. <strong>One Word page per PDF
+                page</strong> inserts explicit page breaks instead of letting text flow continuously.
+                Multi-column layouts, tables and images are simplified into plain paragraphs, and a
+                scanned PDF has no text layer at all — those pages are flagged in the output and need
+                OCR before their words can be recovered.
+              </p>
+              <ToolLink tool="pdf-to-word">Open PDF to Word</ToolLink>
+            </DocSection>
+
+
+
             <DocSection id="privacy" title="Privacy">
               <p>
                 Your file never leaves the browser tab. There is no upload endpoint, no temporary
@@ -273,7 +295,7 @@ function ToolLink({
   tool,
   children,
 }: {
-  tool: "merge" | "split" | "compress";
+  tool: "merge" | "split" | "compress" | "pdf-to-word";
   children: React.ReactNode;
 }) {
   return (

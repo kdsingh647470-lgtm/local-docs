@@ -4,6 +4,7 @@ import {
   FilePlus2,
   Scissors,
   FileArchive,
+  FileType2,
   ShieldCheck,
   Zap,
   Globe,
@@ -19,9 +20,9 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { ToolCard } from "@/components/site/tool-card";
 import { DOC_ENTRIES } from "@/lib/site-content";
 
-const TITLE = "Free PDF Tools Online — Merge, Split & Compress | Nesake";
+const TITLE = "Free PDF Tools Online — Merge, Split, Compress | Nesake";
 const DESCRIPTION =
-  "Merge, split and compress PDF files securely in your browser. No installation, no registration, no uploads — your documents stay on your device.";
+  "Merge, split, compress and convert PDF to Word securely in your browser. No installation, no registration, no uploads — your documents stay on your device.";
 const URL = "https://local-docs.lovable.app/";
 
 export const Route = createFileRoute("/")({
@@ -178,7 +179,15 @@ function Home() {
             description="Shrink large scans and photo-heavy files by re-encoding their images and stripping unused metadata."
             tool="compress"
           />
+          <ToolCard
+            icon={<FileType2 className="h-6 w-6" />}
+            title="PDF to Word"
+            description="Convert a PDF into an editable .docx with headings, bold text and paragraph flow rebuilt for you."
+            tool="pdf-to-word"
+            accent="gold"
+          />
         </div>
+
       </section>
 
       {/* Why choose */}

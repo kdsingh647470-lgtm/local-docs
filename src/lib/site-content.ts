@@ -31,6 +31,11 @@ export const FAQ_ITEMS: FaqItem[] = [
       "No account, no email, no trial. Because processing happens on your device there are no per-file server costs, so the tools are free to use as often as you like and the output carries no watermark.",
   },
   {
+    question: "Can I convert a PDF to an editable Word document?",
+    answer:
+      "Yes. The PDF to Word tool extracts the text layer of your PDF and rebuilds it as a .docx file with headings, bold and italic runs and paragraph flow preserved. It runs entirely in your browser, so the document is never uploaded. Complex layouts such as multi-column pages, tables and images are flattened into plain paragraphs, and a scanned PDF has no text layer to extract, so it needs OCR first.",
+  },
+  {
     question: "Does it work on a phone or tablet?",
     answer:
       "Yes. The layouts, drop zones, and thumbnail grids are touch-friendly and adapt to small screens. Very large documents will be slower on mobile hardware than on a desktop.",
@@ -69,6 +74,11 @@ export const DOC_ENTRIES: DocEntry[] = [
     hash: "compression",
     title: "How compression works",
     summary: "Why image re-encoding drives the savings and which quality level to choose.",
+  },
+  {
+    hash: "pdf-to-word",
+    title: "How PDF to Word works",
+    summary: "Text extraction, heading detection, and why scanned PDFs need OCR first.",
   },
   {
     hash: "privacy",

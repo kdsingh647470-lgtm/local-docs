@@ -6,6 +6,7 @@ import {
   FilePlus2,
   Scissors,
   FileArchive,
+  FileType2,
   RotateCw,
   Unlock,
   Lock,
@@ -36,22 +37,25 @@ import {
 import { PdfMerge } from "@/components/pdf-tools/pdf-merge";
 import { PdfSplit } from "@/components/pdf-tools/pdf-split";
 import { PdfCompress } from "@/components/pdf-tools/pdf-compress";
+import { PdfToWord } from "@/components/pdf-tools/pdf-to-word";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { ToolCard } from "@/components/site/tool-card";
 import { FAQ_ITEMS } from "@/lib/site-content";
 
-type Tool = "merge" | "split" | "compress";
+type Tool = "merge" | "split" | "compress" | "pdf-to-word";
 
-const TITLE = "Free PDF Tools — Merge, Split & Compress | Nesake PDF";
+const TOOLS: Tool[] = ["merge", "split", "compress", "pdf-to-word"];
+
+const TITLE = "Free PDF Tools — Merge, Split, Compress, to Word | Nesake PDF";
 const DESCRIPTION =
-  "The Nesake PDF tools hub: merge, split and compress PDFs locally in your browser, plus a roadmap of rotate, protect, unlock and watermark tools.";
+  "The Nesake PDF tools hub: merge, split, compress and convert PDF to Word locally in your browser, plus a roadmap of rotate, protect, unlock and watermark tools.";
 const URL = "https://local-docs.lovable.app/pdf-tools";
 
 export const Route = createFileRoute("/pdf-tools")({
   validateSearch: (search: Record<string, unknown>): { tool?: Tool } => {
     const tool = search.tool;
-    return tool === "merge" || tool === "split" || tool === "compress" ? { tool } : {};
+    return TOOLS.includes(tool as Tool) ? { tool: tool as Tool } : {};
   },
   head: () => ({
     meta: [
@@ -76,7 +80,13 @@ export const Route = createFileRoute("/pdf-tools")({
             operatingSystem: "Any (web browser)",
             url: URL,
             description: DESCRIPTION,
-            featureList: ["Merge PDF", "Split PDF", "Extract pages", "Compress PDF"],
+            featureList: [
+              "Merge PDF",
+              "Split PDF",
+              "Extract pages",
+              "Compress PDF",
+              "Convert PDF to Word",
+            ],
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
           },
           {
@@ -120,6 +130,10 @@ const TOOL_META: Record<Tool, { title: string; blurb: string }> = {
   compress: {
     title: "Compress PDF",
     blurb: "Trim file size for easier sharing without losing readability.",
+  },
+  "pdf-to-word": {
+    title: "PDF to Word",
+    blurb: "Turn a PDF into an editable .docx document, converted right here in your browser.",
   },
 };
 
@@ -242,7 +256,15 @@ function ToolsHub() {
             description="Re-encode page images at low, medium or high quality and see exactly how much you saved."
             tool="compress"
           />
+          <ToolCard
+            icon={<FileType2 className="h-6 w-6" />}
+            title="PDF to Word"
+            description="Convert a PDF into an editable .docx, keeping headings, bold text and paragraph flow."
+            tool="pdf-to-word"
+            accent="gold"
+          />
         </div>
+
 
         <div className="mt-12">
           <SectionHeading eyebrow="Roadmap" title="Coming soon" />
@@ -461,13 +483,16 @@ function ActiveTool({ tool, onBack }: { tool: Tool; onBack: () => void }) {
         {tool === "merge" && <PdfMerge />}
         {tool === "split" && <PdfSplit />}
         {tool === "compress" && <PdfCompress />}
+        {tool === "pdf-to-word" && <PdfToWord />}
       </section>
       <div className="mt-6 flex flex-wrap items-center gap-4">
         <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground">
           <ShieldCheck className="h-3.5 w-3.5 text-[color:var(--emerald-mid)]" />
           Files never leave your device
         </div>
-        <DocLink hash={tool === "compress" ? "compression" : tool}>Read how this works</DocLink>
+        <DocLink hash={tool === "compress" ? "compression" : tool === "pdf-to-word" ? "pdf-to-word" : tool}>
+          Read how this works
+        </DocLink>
       </div>
     </div>
   );
