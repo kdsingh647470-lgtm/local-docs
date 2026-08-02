@@ -273,7 +273,7 @@ function ToolLink({
   tool,
   children,
 }: {
-  tool: "merge" | "split" | "compress";
+  tool: "merge" | "split" | "compress" | "pdf-to-word";
   children: React.ReactNode;
 }) {
   return (
