@@ -71,6 +71,11 @@ export const DOC_ENTRIES: DocEntry[] = [
     summary: "Why image re-encoding drives the savings and which quality level to choose.",
   },
   {
+    hash: "pdf-to-word",
+    title: "How PDF to Word works",
+    summary: "Text extraction, heading detection, and why scanned PDFs need OCR first.",
+  },
+  {
     hash: "privacy",
     title: "Privacy",
     summary: "What leaves your device (nothing) and what we could not collect even if we wanted to.",
