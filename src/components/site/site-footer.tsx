@@ -41,6 +41,21 @@ export function SiteFooter() {
             </Link>
           </li>
           <li>
+            <Link to="/pdf-tools" search={{ tool: "pdf-to-jpg" }} className={linkClass}>
+              PDF to JPG
+            </Link>
+          </li>
+          <li>
+            <Link to="/pdf-tools" search={{ tool: "jpg-to-pdf" }} className={linkClass}>
+              JPG to PDF
+            </Link>
+          </li>
+          <li>
+            <Link to="/pdf-tools" search={{ tool: "rotate" }} className={linkClass}>
+              Rotate PDF
+            </Link>
+          </li>
+          <li>
             <Link to="/pdf-tools" className={linkClass}>
               All tools
             </Link>

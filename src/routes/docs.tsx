@@ -12,7 +12,7 @@ import { DOC_ENTRIES, FAQ_ITEMS } from "@/lib/site-content";
 
 const TITLE = "Nesake PDF Documentation — How the browser PDF tools work";
 const DESCRIPTION =
-  "Reference documentation for Nesake PDF: getting started, how merge, split and compression behave, privacy, security and answers to common questions.";
+  "Reference documentation for Nesake PDF: getting started, how merge, split, compress, convert and rotate behave, privacy, security and answers to common questions.";
 const URL = "https://local-docs.lovable.app/docs";
 
 export const Route = createFileRoute("/docs")({
@@ -195,6 +195,56 @@ function DocsPage() {
               <ToolLink tool="pdf-to-word">Open PDF to Word</ToolLink>
             </DocSection>
 
+            <DocSection id="pdf-to-jpg" title="How PDF to JPG works">
+              <p>
+                Each page is drawn onto a canvas at the resolution implied by the quality you pick —
+                <strong>low</strong> for screen sharing, <strong>medium</strong> for everyday use and{" "}
+                <strong>high</strong> when the image will be printed or cropped — then encoded as a
+                JPEG. Rendering is capped to a fixed pixel budget so a phone produces the same image
+                as a desktop instead of silently degrading large pages.
+              </p>
+              <p>
+                Thumbnails of the results appear as they finish, so you can download a single page
+                straight away or take every page at once inside one ZIP archive. Images are named
+                after the source document with the page number appended, keeping the original order
+                obvious in your downloads folder.
+              </p>
+              <ToolLink tool="pdf-to-jpg">Open PDF to JPG</ToolLink>
+            </DocSection>
+
+            <DocSection id="jpg-to-pdf" title="How JPG to PDF works">
+              <p>
+                Add as many JPG or PNG images as you like; each one becomes a single page in a new
+                document, in the order shown in the list. Use the arrows on a row to move an image up
+                or down before exporting — the list order is the page order.
+              </p>
+              <p>
+                <strong>A4 pages</strong> places every image centred on a standard page with a small
+                margin, switching to landscape automatically for wide images, which is the right
+                choice for printing. <strong>Fit to image</strong> instead sizes each page to the
+                image itself, giving a borderless result that suits photo albums and screenshots. The
+                images are embedded as-is, so no quality is lost in the conversion.
+              </p>
+              <ToolLink tool="jpg-to-pdf">Open JPG to PDF</ToolLink>
+            </DocSection>
+
+            <DocSection id="rotate" title="How rotate works">
+              <p>
+                Every page is rendered to a thumbnail so you can see which ones are sideways. Rotate
+                a single page 90° left or right with the buttons under its thumbnail, or use the
+                rotate-all controls to turn the whole document at once; changed pages are outlined so
+                the pending edits are easy to review, and Reset clears them.
+              </p>
+              <p>
+                Rotation is written as the page's own rotation attribute rather than by redrawing the
+                content, so text stays selectable, images keep their original resolution and the file
+                size barely changes. The download button stays disabled until at least one page has
+                actually been turned.
+              </p>
+              <ToolLink tool="rotate">Open Rotate PDF</ToolLink>
+            </DocSection>
+
+
 
 
             <DocSection id="privacy" title="Privacy">
@@ -250,8 +300,8 @@ function DocsPage() {
             <DocSection id="contact" title="Contact">
               <p>
                 Found a document that will not process, or want a tool that is not here yet? The
-                roadmap on the tools hub lists what is planned next, including rotate, protect,
-                unlock and watermark.
+                roadmap on the tools hub lists what is planned next, including protect, unlock,
+                OCR and watermark.
               </p>
               <Link
                 to="/pdf-tools"
@@ -295,7 +345,7 @@ function ToolLink({
   tool,
   children,
 }: {
-  tool: "merge" | "split" | "compress" | "pdf-to-word";
+  tool: "merge" | "split" | "compress" | "pdf-to-word" | "pdf-to-jpg" | "jpg-to-pdf" | "rotate";
   children: React.ReactNode;
 }) {
   return (

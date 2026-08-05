@@ -26,6 +26,8 @@ import {
   Check,
   X,
   BookOpen,
+  Images,
+  ImagePlus,
 } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import {
@@ -38,18 +40,36 @@ import { PdfMerge } from "@/components/pdf-tools/pdf-merge";
 import { PdfSplit } from "@/components/pdf-tools/pdf-split";
 import { PdfCompress } from "@/components/pdf-tools/pdf-compress";
 import { PdfToWord } from "@/components/pdf-tools/pdf-to-word";
+import { PdfToJpg } from "@/components/pdf-tools/pdf-to-jpg";
+import { JpgToPdf } from "@/components/pdf-tools/jpg-to-pdf";
+import { PdfRotate } from "@/components/pdf-tools/pdf-rotate";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { ToolCard } from "@/components/site/tool-card";
 import { FAQ_ITEMS } from "@/lib/site-content";
 
-type Tool = "merge" | "split" | "compress" | "pdf-to-word";
+type Tool =
+  | "merge"
+  | "split"
+  | "compress"
+  | "pdf-to-word"
+  | "pdf-to-jpg"
+  | "jpg-to-pdf"
+  | "rotate";
 
-const TOOLS: Tool[] = ["merge", "split", "compress", "pdf-to-word"];
+const TOOLS: Tool[] = [
+  "merge",
+  "split",
+  "compress",
+  "pdf-to-word",
+  "pdf-to-jpg",
+  "jpg-to-pdf",
+  "rotate",
+];
 
-const TITLE = "Free PDF Tools — Merge, Split, Compress, to Word | Nesake PDF";
+const TITLE = "Free PDF Tools — Merge, Split, Compress, Convert | Nesake";
 const DESCRIPTION =
-  "The Nesake PDF tools hub: merge, split, compress and convert PDF to Word locally in your browser, plus a roadmap of rotate, protect, unlock and watermark tools.";
+  "The Nesake PDF tools hub: merge, split, compress, rotate, convert PDF to Word, PDF to JPG and JPG to PDF locally in your browser — nothing is uploaded.";
 const URL = "https://local-docs.lovable.app/pdf-tools";
 
 export const Route = createFileRoute("/pdf-tools")({
@@ -86,6 +106,9 @@ export const Route = createFileRoute("/pdf-tools")({
               "Extract pages",
               "Compress PDF",
               "Convert PDF to Word",
+              "Convert PDF to JPG",
+              "Convert JPG to PDF",
+              "Rotate PDF",
             ],
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
           },
@@ -135,10 +158,21 @@ const TOOL_META: Record<Tool, { title: string; blurb: string }> = {
     title: "PDF to Word",
     blurb: "Turn a PDF into an editable .docx document, converted right here in your browser.",
   },
+  "pdf-to-jpg": {
+    title: "PDF to JPG",
+    blurb: "Render every page as a JPG image and download one page or all of them as a ZIP.",
+  },
+  "jpg-to-pdf": {
+    title: "JPG to PDF",
+    blurb: "Turn photos and scans into a single PDF, one page per image, in the order you choose.",
+  },
+  rotate: {
+    title: "Rotate PDF",
+    blurb: "Turn sideways pages upright — one page at a time or the whole document at once.",
+  },
 };
 
 const UPCOMING = [
-  { icon: RotateCw, title: "Rotate PDF", description: "Turn sideways scans upright, page by page or all at once." },
   { icon: Unlock, title: "Unlock PDF", description: "Remove a password you own so the document can be edited again." },
   { icon: Lock, title: "Protect PDF", description: "Add a password before sharing a sensitive document." },
   { icon: Trash2, title: "Delete Pages", description: "Drop pages you no longer need and keep the rest intact." },
@@ -262,6 +296,25 @@ function ToolsHub() {
             description="Convert a PDF into an editable .docx, keeping headings, bold text and paragraph flow."
             tool="pdf-to-word"
             accent="gold"
+          />
+          <ToolCard
+            icon={<Images className="h-6 w-6" />}
+            title="PDF to JPG"
+            description="Render each page as a JPG at screen, standard or print quality — download one or all as a ZIP."
+            tool="pdf-to-jpg"
+          />
+          <ToolCard
+            icon={<ImagePlus className="h-6 w-6" />}
+            title="JPG to PDF"
+            description="Combine photos and scans into one PDF, reorder them first, and pick A4 or fit-to-image pages."
+            tool="jpg-to-pdf"
+            accent="gold"
+          />
+          <ToolCard
+            icon={<RotateCw className="h-6 w-6" />}
+            title="Rotate PDF"
+            description="Turn sideways pages upright from a thumbnail grid — per page or the whole document."
+            tool="rotate"
           />
         </div>
 
@@ -484,13 +537,16 @@ function ActiveTool({ tool, onBack }: { tool: Tool; onBack: () => void }) {
         {tool === "split" && <PdfSplit />}
         {tool === "compress" && <PdfCompress />}
         {tool === "pdf-to-word" && <PdfToWord />}
+        {tool === "pdf-to-jpg" && <PdfToJpg />}
+        {tool === "jpg-to-pdf" && <JpgToPdf />}
+        {tool === "rotate" && <PdfRotate />}
       </section>
       <div className="mt-6 flex flex-wrap items-center gap-4">
         <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground">
           <ShieldCheck className="h-3.5 w-3.5 text-[color:var(--emerald-mid)]" />
           Files never leave your device
         </div>
-        <DocLink hash={tool === "compress" ? "compression" : tool === "pdf-to-word" ? "pdf-to-word" : tool}>
+        <DocLink hash={tool === "compress" ? "compression" : tool}>
           Read how this works
         </DocLink>
       </div>
