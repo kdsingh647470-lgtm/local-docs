@@ -534,13 +534,16 @@ function ActiveTool({ tool, onBack }: { tool: Tool; onBack: () => void }) {
         {tool === "split" && <PdfSplit />}
         {tool === "compress" && <PdfCompress />}
         {tool === "pdf-to-word" && <PdfToWord />}
+        {tool === "pdf-to-jpg" && <PdfToJpg />}
+        {tool === "jpg-to-pdf" && <JpgToPdf />}
+        {tool === "rotate" && <PdfRotate />}
       </section>
       <div className="mt-6 flex flex-wrap items-center gap-4">
         <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground">
           <ShieldCheck className="h-3.5 w-3.5 text-[color:var(--emerald-mid)]" />
           Files never leave your device
         </div>
-        <DocLink hash={tool === "compress" ? "compression" : tool === "pdf-to-word" ? "pdf-to-word" : tool}>
+        <DocLink hash={tool === "compress" ? "compression" : tool}>
           Read how this works
         </DocLink>
       </div>
