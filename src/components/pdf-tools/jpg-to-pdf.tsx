@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import { PDFDocument } from "pdf-lib";
-import { Upload, Loader2, Download, X, ArrowUp, ArrowDown, FileType2 } from "lucide-react";
+import { Upload, Loader2, X, ArrowUp, ArrowDown, FileType2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
