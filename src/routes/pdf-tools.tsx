@@ -67,9 +67,9 @@ const TOOLS: Tool[] = [
   "rotate",
 ];
 
-const TITLE = "Free PDF Tools — Merge, Split, Compress, to Word | Nesake PDF";
+const TITLE = "Free PDF Tools — Merge, Split, Compress, Convert | Nesake";
 const DESCRIPTION =
-  "The Nesake PDF tools hub: merge, split, compress and convert PDF to Word locally in your browser, plus a roadmap of rotate, protect, unlock and watermark tools.";
+  "The Nesake PDF tools hub: merge, split, compress, rotate, convert PDF to Word, PDF to JPG and JPG to PDF locally in your browser — nothing is uploaded.";
 const URL = "https://local-docs.lovable.app/pdf-tools";
 
 export const Route = createFileRoute("/pdf-tools")({
@@ -106,6 +106,9 @@ export const Route = createFileRoute("/pdf-tools")({
               "Extract pages",
               "Compress PDF",
               "Convert PDF to Word",
+              "Convert PDF to JPG",
+              "Convert JPG to PDF",
+              "Rotate PDF",
             ],
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
           },
