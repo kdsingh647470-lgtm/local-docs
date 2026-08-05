@@ -14,6 +14,9 @@ import {
   Droplets,
   Check,
   BookOpen,
+  Images,
+  ImagePlus,
+  RotateCw,
 } from "lucide-react";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
@@ -185,6 +188,25 @@ function Home() {
             description="Convert a PDF into an editable .docx with headings, bold text and paragraph flow rebuilt for you."
             tool="pdf-to-word"
             accent="gold"
+          />
+          <ToolCard
+            icon={<Images className="h-6 w-6" />}
+            title="PDF to JPG"
+            description="Turn each page into a JPG image at screen, standard or print quality — grab one page or a ZIP of all."
+            tool="pdf-to-jpg"
+          />
+          <ToolCard
+            icon={<ImagePlus className="h-6 w-6" />}
+            title="JPG to PDF"
+            description="Bundle photos and scans into a single PDF, reordered how you like, on A4 or image-sized pages."
+            tool="jpg-to-pdf"
+            accent="gold"
+          />
+          <ToolCard
+            icon={<RotateCw className="h-6 w-6" />}
+            title="Rotate PDF"
+            description="Straighten sideways scans from a thumbnail grid, page by page or the whole document at once."
+            tool="rotate"
           />
         </div>
 
