@@ -292,6 +292,25 @@ function ToolsHub() {
             tool="pdf-to-word"
             accent="gold"
           />
+          <ToolCard
+            icon={<Images className="h-6 w-6" />}
+            title="PDF to JPG"
+            description="Render each page as a JPG at screen, standard or print quality — download one or all as a ZIP."
+            tool="pdf-to-jpg"
+          />
+          <ToolCard
+            icon={<ImagePlus className="h-6 w-6" />}
+            title="JPG to PDF"
+            description="Combine photos and scans into one PDF, reorder them first, and pick A4 or fit-to-image pages."
+            tool="jpg-to-pdf"
+            accent="gold"
+          />
+          <ToolCard
+            icon={<RotateCw className="h-6 w-6" />}
+            title="Rotate PDF"
+            description="Turn sideways pages upright from a thumbnail grid — per page or the whole document."
+            tool="rotate"
+          />
         </div>
 
 
