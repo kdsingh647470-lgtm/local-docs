@@ -12,7 +12,7 @@ import { DOC_ENTRIES, FAQ_ITEMS } from "@/lib/site-content";
 
 const TITLE = "Nesake PDF Documentation — How the browser PDF tools work";
 const DESCRIPTION =
-  "Reference documentation for Nesake PDF: getting started, how merge, split and compression behave, privacy, security and answers to common questions.";
+  "Reference documentation for Nesake PDF: getting started, how merge, split, compress, convert and rotate behave, privacy, security and answers to common questions.";
 const URL = "https://local-docs.lovable.app/docs";
 
 export const Route = createFileRoute("/docs")({
@@ -345,7 +345,7 @@ function ToolLink({
   tool,
   children,
 }: {
-  tool: "merge" | "split" | "compress" | "pdf-to-word";
+  tool: "merge" | "split" | "compress" | "pdf-to-word" | "pdf-to-jpg" | "jpg-to-pdf" | "rotate";
   children: React.ReactNode;
 }) {
   return (
