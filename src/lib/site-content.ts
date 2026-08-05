@@ -36,6 +36,21 @@ export const FAQ_ITEMS: FaqItem[] = [
       "Yes. The PDF to Word tool extracts the text layer of your PDF and rebuilds it as a .docx file with headings, bold and italic runs and paragraph flow preserved. It runs entirely in your browser, so the document is never uploaded. Complex layouts such as multi-column pages, tables and images are flattened into plain paragraphs, and a scanned PDF has no text layer to extract, so it needs OCR first.",
   },
   {
+    question: "Can I turn PDF pages into JPG images?",
+    answer:
+      "Yes. The PDF to JPG tool renders every page to a JPEG at screen, standard or print quality and lets you download a single page or all of them together in a ZIP archive. Rendering happens on your device, so nothing is uploaded.",
+  },
+  {
+    question: "Can I make a PDF from photos or scans?",
+    answer:
+      "Yes. JPG to PDF accepts multiple JPG or PNG images, lets you reorder them, and writes one page per image. Choose A4 pages to centre each image with a margin, or fit-to-image so the page matches the photo's own dimensions.",
+  },
+  {
+    question: "How do I fix a sideways scanned page?",
+    answer:
+      "Open Rotate PDF, drop the file in, and rotate individual pages left or right from the thumbnail grid — or rotate every page at once. Rotation is stored as page metadata, so text and image quality are untouched.",
+  },
+  {
     question: "Does it work on a phone or tablet?",
     answer:
       "Yes. The layouts, drop zones, and thumbnail grids are touch-friendly and adapt to small screens. Very large documents will be slower on mobile hardware than on a desktop.",
@@ -79,6 +94,21 @@ export const DOC_ENTRIES: DocEntry[] = [
     hash: "pdf-to-word",
     title: "How PDF to Word works",
     summary: "Text extraction, heading detection, and why scanned PDFs need OCR first.",
+  },
+  {
+    hash: "pdf-to-jpg",
+    title: "How PDF to JPG works",
+    summary: "Page rendering, the three quality levels, and single vs. ZIP downloads.",
+  },
+  {
+    hash: "jpg-to-pdf",
+    title: "How JPG to PDF works",
+    summary: "Image ordering, A4 versus fit-to-image pages, and supported formats.",
+  },
+  {
+    hash: "rotate",
+    title: "How rotate works",
+    summary: "Per-page and whole-document rotation, and why quality is never affected.",
   },
   {
     hash: "privacy",
