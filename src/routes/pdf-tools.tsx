@@ -26,6 +26,8 @@ import {
   Check,
   X,
   BookOpen,
+  Images,
+  ImagePlus,
 } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import {
