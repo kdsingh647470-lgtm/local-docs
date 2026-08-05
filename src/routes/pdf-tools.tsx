@@ -38,14 +38,32 @@ import { PdfMerge } from "@/components/pdf-tools/pdf-merge";
 import { PdfSplit } from "@/components/pdf-tools/pdf-split";
 import { PdfCompress } from "@/components/pdf-tools/pdf-compress";
 import { PdfToWord } from "@/components/pdf-tools/pdf-to-word";
+import { PdfToJpg } from "@/components/pdf-tools/pdf-to-jpg";
+import { JpgToPdf } from "@/components/pdf-tools/jpg-to-pdf";
+import { PdfRotate } from "@/components/pdf-tools/pdf-rotate";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { ToolCard } from "@/components/site/tool-card";
 import { FAQ_ITEMS } from "@/lib/site-content";
 
-type Tool = "merge" | "split" | "compress" | "pdf-to-word";
+type Tool =
+  | "merge"
+  | "split"
+  | "compress"
+  | "pdf-to-word"
+  | "pdf-to-jpg"
+  | "jpg-to-pdf"
+  | "rotate";
 
-const TOOLS: Tool[] = ["merge", "split", "compress", "pdf-to-word"];
+const TOOLS: Tool[] = [
+  "merge",
+  "split",
+  "compress",
+  "pdf-to-word",
+  "pdf-to-jpg",
+  "jpg-to-pdf",
+  "rotate",
+];
 
 const TITLE = "Free PDF Tools — Merge, Split, Compress, to Word | Nesake PDF";
 const DESCRIPTION =
