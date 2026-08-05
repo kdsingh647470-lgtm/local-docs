@@ -300,8 +300,8 @@ function DocsPage() {
             <DocSection id="contact" title="Contact">
               <p>
                 Found a document that will not process, or want a tool that is not here yet? The
-                roadmap on the tools hub lists what is planned next, including rotate, protect,
-                unlock and watermark.
+                roadmap on the tools hub lists what is planned next, including protect, unlock,
+                OCR and watermark.
               </p>
               <Link
                 to="/pdf-tools"

@@ -25,7 +25,7 @@ import { DOC_ENTRIES } from "@/lib/site-content";
 
 const TITLE = "Free PDF Tools Online — Merge, Split, Compress | Nesake";
 const DESCRIPTION =
-  "Merge, split, compress and convert PDF to Word securely in your browser. No installation, no registration, no uploads — your documents stay on your device.";
+  "Merge, split, compress, rotate and convert PDFs — to Word, to JPG or from JPG — securely in your browser. No installation, no registration, no uploads.";
 const URL = "https://local-docs.lovable.app/";
 
 export const Route = createFileRoute("/")({
@@ -126,8 +126,8 @@ function Home() {
             <span className="italic text-[color:var(--emerald-mid)]">online</span>
           </h1>
           <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            Merge, split and compress PDFs securely in your browser. No installation. Fast. Private.
-            Free.
+            Merge, split, compress, rotate and convert PDFs securely in your browser. No
+            installation. Fast. Private. Free.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
@@ -160,7 +160,7 @@ function Home() {
         <SectionHeading
           eyebrow="Featured tools"
           title="Everything you need for everyday PDFs"
-          text="Three tools cover the tasks people reach for most. Each one runs locally and downloads straight back to your device."
+          text="Seven tools cover the tasks people reach for most. Each one runs locally and downloads straight back to your device."
         />
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <ToolCard
