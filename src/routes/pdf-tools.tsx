@@ -153,10 +153,21 @@ const TOOL_META: Record<Tool, { title: string; blurb: string }> = {
     title: "PDF to Word",
     blurb: "Turn a PDF into an editable .docx document, converted right here in your browser.",
   },
+  "pdf-to-jpg": {
+    title: "PDF to JPG",
+    blurb: "Render every page as a JPG image and download one page or all of them as a ZIP.",
+  },
+  "jpg-to-pdf": {
+    title: "JPG to PDF",
+    blurb: "Turn photos and scans into a single PDF, one page per image, in the order you choose.",
+  },
+  rotate: {
+    title: "Rotate PDF",
+    blurb: "Turn sideways pages upright — one page at a time or the whole document at once.",
+  },
 };
 
 const UPCOMING = [
-  { icon: RotateCw, title: "Rotate PDF", description: "Turn sideways scans upright, page by page or all at once." },
   { icon: Unlock, title: "Unlock PDF", description: "Remove a password you own so the document can be edited again." },
   { icon: Lock, title: "Protect PDF", description: "Add a password before sharing a sensitive document." },
   { icon: Trash2, title: "Delete Pages", description: "Drop pages you no longer need and keep the rest intact." },
