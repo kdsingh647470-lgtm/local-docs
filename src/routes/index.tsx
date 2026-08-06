@@ -25,7 +25,7 @@ import { DOC_ENTRIES } from "@/lib/site-content";
 
 const TITLE = "Free PDF Tools Online — Merge, Split, Compress | Nesake";
 const DESCRIPTION =
-  "Merge, split, compress, rotate and convert PDFs — to Word, to JPG or from JPG — securely in your browser. No installation, no registration, no uploads.";
+  "Merge, split, compress, rotate and convert PDFs — to Word, to image or from images — securely in your browser. No installation, no registration, no uploads.";
 const URL = "https://local-docs.lovable.app/";
 
 export const Route = createFileRoute("/")({
@@ -191,14 +191,14 @@ function Home() {
           />
           <ToolCard
             icon={<Images className="h-6 w-6" />}
-            title="PDF to JPG"
-            description="Turn each page into a JPG image at screen, standard or print quality — grab one page or a ZIP of all."
+            title="PDF to Image"
+            description="Turn each page into a JPG, PNG or WEBP image at screen, standard or print quality — one page or a ZIP of all."
             tool="pdf-to-jpg"
           />
           <ToolCard
             icon={<ImagePlus className="h-6 w-6" />}
-            title="JPG to PDF"
-            description="Bundle photos and scans into a single PDF, reordered how you like, on A4 or image-sized pages."
+            title="Image to PDF"
+            description="Bundle JPG, PNG, WEBP, GIF, BMP or AVIF images into one PDF, reordered how you like, on A4, Letter or image-sized pages."
             tool="jpg-to-pdf"
             accent="gold"
           />

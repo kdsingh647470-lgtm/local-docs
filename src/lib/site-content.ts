@@ -36,14 +36,14 @@ export const FAQ_ITEMS: FaqItem[] = [
       "Yes. The PDF to Word tool extracts the text layer of your PDF and rebuilds it as a .docx file with headings, bold and italic runs and paragraph flow preserved. It runs entirely in your browser, so the document is never uploaded. Complex layouts such as multi-column pages, tables and images are flattened into plain paragraphs, and a scanned PDF has no text layer to extract, so it needs OCR first.",
   },
   {
-    question: "Can I turn PDF pages into JPG images?",
+    question: "Can I turn PDF pages into JPG or PNG images?",
     answer:
-      "Yes. The PDF to JPG tool renders every page to a JPEG at screen, standard or print quality and lets you download a single page or all of them together in a ZIP archive. Rendering happens on your device, so nothing is uploaded.",
+      "Yes. The PDF to Image tool renders every page to a JPG, PNG or WEBP file at screen, standard or print quality and lets you download a single page or all of them together in a ZIP archive. Rendering happens on your device, so nothing is uploaded.",
   },
   {
     question: "Can I make a PDF from photos or scans?",
     answer:
-      "Yes. JPG to PDF accepts multiple JPG or PNG images, lets you reorder them, and writes one page per image. Choose A4 pages to centre each image with a margin, or fit-to-image so the page matches the photo's own dimensions.",
+      "Yes. Image to PDF accepts JPG, PNG, WEBP, GIF, BMP and AVIF images, lets you reorder them, and writes one page per image. Choose A4 or Letter pages to centre each image with your chosen margin and orientation, or fit-to-image so the page matches the photo's own dimensions.",
   },
   {
     question: "How do I fix a sideways scanned page?",
@@ -97,13 +97,13 @@ export const DOC_ENTRIES: DocEntry[] = [
   },
   {
     hash: "pdf-to-jpg",
-    title: "How PDF to JPG works",
-    summary: "Page rendering, the three quality levels, and single vs. ZIP downloads.",
+    title: "How PDF to Image works",
+    summary: "Page rendering, JPG/PNG/WEBP output, quality levels, and single vs. ZIP downloads.",
   },
   {
     hash: "jpg-to-pdf",
-    title: "How JPG to PDF works",
-    summary: "Image ordering, A4 versus fit-to-image pages, and supported formats.",
+    title: "How Image to PDF works",
+    summary: "Image ordering, A4/Letter versus fit-to-image pages, orientation, margins and formats.",
   },
   {
     hash: "rotate",

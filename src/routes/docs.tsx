@@ -195,12 +195,13 @@ function DocsPage() {
               <ToolLink tool="pdf-to-word">Open PDF to Word</ToolLink>
             </DocSection>
 
-            <DocSection id="pdf-to-jpg" title="How PDF to JPG works">
+            <DocSection id="pdf-to-jpg" title="How PDF to Image works">
               <p>
                 Each page is drawn onto a canvas at the resolution implied by the quality you pick —
                 <strong>low</strong> for screen sharing, <strong>medium</strong> for everyday use and{" "}
                 <strong>high</strong> when the image will be printed or cropped — then encoded as a
-                JPEG. Rendering is capped to a fixed pixel budget so a phone produces the same image
+                JPG, PNG or WEBP file. PNG stays lossless for sharp text, while JPG and WEBP apply the
+                quality setting to keep files small. Rendering is capped to a fixed pixel budget so a phone produces the same image
                 as a desktop instead of silently degrading large pages.
               </p>
               <p>
@@ -209,23 +210,24 @@ function DocsPage() {
                 after the source document with the page number appended, keeping the original order
                 obvious in your downloads folder.
               </p>
-              <ToolLink tool="pdf-to-jpg">Open PDF to JPG</ToolLink>
+              <ToolLink tool="pdf-to-jpg">Open PDF to Image</ToolLink>
             </DocSection>
 
-            <DocSection id="jpg-to-pdf" title="How JPG to PDF works">
+            <DocSection id="jpg-to-pdf" title="How Image to PDF works">
               <p>
-                Add as many JPG or PNG images as you like; each one becomes a single page in a new
+                Add as many JPG, PNG, WEBP, GIF, BMP or AVIF images as you like (anything other than JPG
+                or PNG is re-encoded losslessly to PNG before embedding); each one becomes a single page in a new
                 document, in the order shown in the list. Use the arrows on a row to move an image up
                 or down before exporting — the list order is the page order.
               </p>
               <p>
-                <strong>A4 pages</strong> places every image centred on a standard page with a small
-                margin, switching to landscape automatically for wide images, which is the right
-                choice for printing. <strong>Fit to image</strong> instead sizes each page to the
+                <strong>A4</strong> and <strong>Letter</strong> place every image centred on a standard page
+                with your chosen margin, switching to landscape automatically for wide images unless
+                you force portrait or landscape, which is the right choice for printing. <strong>Fit to image</strong> instead sizes each page to the
                 image itself, giving a borderless result that suits photo albums and screenshots. The
                 images are embedded as-is, so no quality is lost in the conversion.
               </p>
-              <ToolLink tool="jpg-to-pdf">Open JPG to PDF</ToolLink>
+              <ToolLink tool="jpg-to-pdf">Open Image to PDF</ToolLink>
             </DocSection>
 
             <DocSection id="rotate" title="How rotate works">

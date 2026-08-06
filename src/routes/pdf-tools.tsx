@@ -69,7 +69,7 @@ const TOOLS: Tool[] = [
 
 const TITLE = "Free PDF Tools — Merge, Split, Compress, Convert | Nesake";
 const DESCRIPTION =
-  "The Nesake PDF tools hub: merge, split, compress, rotate, convert PDF to Word, PDF to JPG and JPG to PDF locally in your browser — nothing is uploaded.";
+  "The Nesake PDF tools hub: merge, split, compress, rotate, convert PDF to Word, PDF to Image and Image to PDF locally in your browser — nothing is uploaded.";
 const URL = "https://local-docs.lovable.app/pdf-tools";
 
 export const Route = createFileRoute("/pdf-tools")({
@@ -106,8 +106,8 @@ export const Route = createFileRoute("/pdf-tools")({
               "Extract pages",
               "Compress PDF",
               "Convert PDF to Word",
-              "Convert PDF to JPG",
-              "Convert JPG to PDF",
+              "Convert PDF to Image",
+              "Convert Image to PDF",
               "Rotate PDF",
             ],
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
@@ -159,12 +159,12 @@ const TOOL_META: Record<Tool, { title: string; blurb: string }> = {
     blurb: "Turn a PDF into an editable .docx document, converted right here in your browser.",
   },
   "pdf-to-jpg": {
-    title: "PDF to JPG",
-    blurb: "Render every page as a JPG image and download one page or all of them as a ZIP.",
+    title: "PDF to Image",
+    blurb: "Render every page as a JPG, PNG or WEBP image and download one page or all as a ZIP.",
   },
   "jpg-to-pdf": {
-    title: "JPG to PDF",
-    blurb: "Turn photos and scans into a single PDF, one page per image, in the order you choose.",
+    title: "Image to PDF",
+    blurb: "Turn JPG, PNG, WEBP, GIF, BMP or AVIF images into a single PDF, one page per image.",
   },
   rotate: {
     title: "Rotate PDF",
@@ -299,14 +299,14 @@ function ToolsHub() {
           />
           <ToolCard
             icon={<Images className="h-6 w-6" />}
-            title="PDF to JPG"
-            description="Render each page as a JPG at screen, standard or print quality — download one or all as a ZIP."
+            title="PDF to Image"
+            description="Render each page as JPG, PNG or WEBP at screen, standard or print quality — download one or all as a ZIP."
             tool="pdf-to-jpg"
           />
           <ToolCard
             icon={<ImagePlus className="h-6 w-6" />}
-            title="JPG to PDF"
-            description="Combine photos and scans into one PDF, reorder them first, and pick A4 or fit-to-image pages."
+            title="Image to PDF"
+            description="Combine JPG, PNG, WEBP, GIF, BMP or AVIF images into one PDF with A4, Letter or fit-to-image pages."
             tool="jpg-to-pdf"
             accent="gold"
           />
