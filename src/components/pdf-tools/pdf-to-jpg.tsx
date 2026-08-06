@@ -17,16 +17,26 @@ const QUALITY = {
 
 type QualityKey = keyof typeof QUALITY;
 
+const FORMATS = {
+  jpg: { mime: "image/jpeg", ext: "jpg", label: "JPG", note: "Smallest files", lossy: true },
+  png: { mime: "image/png", ext: "png", label: "PNG", note: "Lossless, sharp text", lossy: false },
+  webp: { mime: "image/webp", ext: "webp", label: "WEBP", note: "Modern, compact", lossy: true },
+} as const;
+
+type FormatKey = keyof typeof FORMATS;
+
 interface PageImage {
   index: number;
   dataUrl: string;
   blob: Blob;
+  ext: string;
 }
 
 export function PdfToJpg() {
   const [file, setFile] = useState<File | null>(null);
   const [pageCount, setPageCount] = useState(0);
   const [quality, setQuality] = useState<QualityKey>("medium");
+  const [format, setFormat] = useState<FormatKey>("jpg");
   const [images, setImages] = useState<PageImage[]>([]);
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -77,6 +87,7 @@ export function PdfToJpg() {
       const pdfjsLib = await loadPdfjs();
       const pdf = await pdfjsLib.getDocument({ data: bytesRef.current.slice(0) }).promise;
       const { scale: wanted, jpeg } = QUALITY[quality];
+      const target = FORMATS[format];
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d")!;
       const out: PageImage[] = [];
@@ -91,15 +102,24 @@ export function PdfToJpg() {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         await page.render({ canvasContext: ctx, viewport, canvas } as never).promise;
         const blob = await new Promise<Blob>((resolve, reject) =>
-          canvas.toBlob((b) => (b ? resolve(b) : reject(new Error("encode failed"))), "image/jpeg", jpeg),
+          canvas.toBlob(
+            (b) => (b ? resolve(b) : reject(new Error("encode failed"))),
+            target.mime,
+            target.lossy ? jpeg : undefined,
+          ),
         );
-        out.push({ index: i - 1, dataUrl: canvas.toDataURL("image/jpeg", 0.6), blob });
+        out.push({
+          index: i - 1,
+          dataUrl: canvas.toDataURL("image/jpeg", 0.6),
+          blob,
+          ext: target.ext,
+        });
         setProgress(Math.round((i / pdf.numPages) * 100));
         setImages([...out]);
         await new Promise((r) => setTimeout(r, 0));
       }
       setImages(out);
-      toast.success(`Converted ${out.length} page${out.length === 1 ? "" : "s"} to JPG`);
+      toast.success(`Converted ${out.length} page${out.length === 1 ? "" : "s"} to ${target.label}`);
     } catch (err) {
       console.error(err);
       toast.error("Failed to convert this PDF to images");
@@ -111,7 +131,7 @@ export function PdfToJpg() {
   const baseName = file ? file.name.replace(/\.pdf$/i, "") : "pages";
 
   const downloadOne = (img: PageImage) => {
-    downloadBlob(img.blob, `${baseName}-page-${img.index + 1}.jpg`);
+    downloadBlob(img.blob, `${baseName}-page-${img.index + 1}.${img.ext}`);
   };
 
   const downloadZip = async () => {
@@ -119,11 +139,11 @@ export function PdfToJpg() {
     try {
       const zip = new JSZip();
       for (const img of images) {
-        zip.file(`${baseName}-page-${img.index + 1}.jpg`, img.blob);
+        zip.file(`${baseName}-page-${img.index + 1}.${img.ext}`, img.blob);
       }
       const blob = await zip.generateAsync({ type: "blob" });
-      downloadBlob(blob, `${baseName}-jpg.zip`);
-      toast.success("ZIP of JPG images downloaded");
+      downloadBlob(blob, `${baseName}-${images[0]?.ext ?? "images"}.zip`);
+      toast.success("ZIP of images downloaded");
     } catch (err) {
       console.error(err);
       toast.error("Failed to build the ZIP archive");
@@ -149,7 +169,7 @@ export function PdfToJpg() {
       >
         <Upload className="h-8 w-8 text-muted-foreground mb-2" />
         <p className="text-sm font-medium">Drop a PDF here or tap to browse</p>
-        <p className="text-xs text-muted-foreground mt-1">Every page becomes a JPG image</p>
+        <p className="text-xs text-muted-foreground mt-1">Every page becomes a JPG, PNG or WEBP image</p>
         <input
           ref={inputRef}
           type="file"
@@ -180,7 +200,30 @@ export function PdfToJpg() {
       </Card>
 
       <div>
-        <Label className="text-xs">Image quality</Label>
+        <Label className="text-xs">Image format</Label>
+        <div className="mt-2 grid grid-cols-3 gap-2">
+          {(Object.keys(FORMATS) as FormatKey[]).map((key) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setFormat(key)}
+              className={`rounded-xl border-2 p-3 text-left transition-colors min-h-11 ${
+                format === key
+                  ? "border-primary bg-primary/5"
+                  : "border-border hover:border-primary/50"
+              }`}
+            >
+              <span className="block text-sm font-semibold">{FORMATS[key].label}</span>
+              <span className="block text-xs text-muted-foreground">{FORMATS[key].note}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <Label className="text-xs">
+          {FORMATS[format].lossy ? "Image quality" : "Resolution (PNG is always lossless)"}
+        </Label>
         <div className="mt-2 grid grid-cols-3 gap-2">
           {(Object.keys(QUALITY) as QualityKey[]).map((key) => (
             <button
@@ -205,7 +248,7 @@ export function PdfToJpg() {
           {busy ? (
             <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Converting… {progress}%</>
           ) : (
-            <><Images className="mr-2 h-4 w-4" /> Convert to JPG</>
+            <><Images className="mr-2 h-4 w-4" /> Convert to {FORMATS[format].label}</>
           )}
         </Button>
         {images.length > 0 && (
@@ -228,7 +271,7 @@ export function PdfToJpg() {
                   variant="ghost"
                   size="icon"
                   onClick={() => downloadOne(img)}
-                  aria-label={`Download page ${img.index + 1} as JPG`}
+                  aria-label={`Download page ${img.index + 1} as ${img.ext.toUpperCase()}`}
                 >
                   <Download className="h-4 w-4" />
                 </Button>
