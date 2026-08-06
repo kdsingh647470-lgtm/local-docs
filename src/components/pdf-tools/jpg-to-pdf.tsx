@@ -12,14 +12,50 @@ interface ImageItem {
   previewUrl: string;
 }
 
-const A4 = { width: 595.28, height: 841.89 };
-const MARGIN = 24;
+const PAGE_SIZES = {
+  a4: { label: "A4", width: 595.28, height: 841.89, note: "210 × 297 mm" },
+  letter: { label: "Letter", width: 612, height: 792, note: "8.5 × 11 in" },
+  fit: { label: "Fit to image", width: 0, height: 0, note: "Page matches image" },
+} as const;
 
-type Layout = "fit" | "a4";
+type SizeKey = keyof typeof PAGE_SIZES;
+type Orientation = "auto" | "portrait" | "landscape";
+type MarginKey = "none" | "small" | "large";
+
+const MARGINS: Record<MarginKey, { label: string; value: number }> = {
+  none: { label: "None", value: 0 },
+  small: { label: "Small", value: 24 },
+  large: { label: "Large", value: 48 },
+};
+
+const ACCEPTED = /^image\/(jpeg|png|webp|gif|bmp|avif)$/;
+const ACCEPTED_EXT = /\.(jpe?g|png|webp|gif|bmp|avif)$/i;
+
+/** pdf-lib only embeds JPEG and PNG, so anything else is re-encoded to PNG via canvas. */
+async function toEmbeddable(file: File): Promise<{ bytes: Uint8Array; isPng: boolean }> {
+  const isJpg = /^image\/jpeg$/.test(file.type) || /\.jpe?g$/i.test(file.name);
+  const isPng = /^image\/png$/.test(file.type) || /\.png$/i.test(file.name);
+  if (isJpg || isPng) {
+    return { bytes: new Uint8Array(await file.arrayBuffer()), isPng };
+  }
+  const bitmap = await createImageBitmap(file);
+  const canvas = document.createElement("canvas");
+  canvas.width = bitmap.width;
+  canvas.height = bitmap.height;
+  const ctx = canvas.getContext("2d")!;
+  ctx.drawImage(bitmap, 0, 0);
+  bitmap.close?.();
+  const blob = await new Promise<Blob>((resolve, reject) =>
+    canvas.toBlob((b) => (b ? resolve(b) : reject(new Error("encode failed"))), "image/png"),
+  );
+  return { bytes: new Uint8Array(await blob.arrayBuffer()), isPng: true };
+}
 
 export function JpgToPdf() {
   const [items, setItems] = useState<ImageItem[]>([]);
-  const [layout, setLayout] = useState<Layout>("a4");
+  const [size, setSize] = useState<SizeKey>("a4");
+  const [orientation, setOrientation] = useState<Orientation>("auto");
+  const [margin, setMargin] = useState<MarginKey>("small");
   const [busy, setBusy] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -27,8 +63,8 @@ export function JpgToPdf() {
   const addFiles = useCallback((files: FileList | File[]) => {
     const accepted: ImageItem[] = [];
     for (const f of Array.from(files)) {
-      if (!/^image\/(jpeg|png)$/.test(f.type) && !/\.(jpe?g|png)$/i.test(f.name)) {
-        toast.error(`${f.name} is not a JPG or PNG image`);
+      if (!ACCEPTED.test(f.type) && !ACCEPTED_EXT.test(f.name)) {
+        toast.error(`${f.name} is not a supported image`);
         continue;
       }
       accepted.push({
@@ -63,26 +99,30 @@ export function JpgToPdf() {
     setBusy(true);
     try {
       const doc = await PDFDocument.create();
+      const m = MARGINS[margin].value;
       for (const item of items) {
-        const bytes = new Uint8Array(await item.file.arrayBuffer());
-        const isPng = /^image\/png$/.test(item.file.type) || /\.png$/i.test(item.file.name);
+        const { bytes, isPng } = await toEmbeddable(item.file);
         const image = isPng ? await doc.embedPng(bytes) : await doc.embedJpg(bytes);
 
-        if (layout === "fit") {
-          const page = doc.addPage([image.width, image.height]);
-          page.drawImage(image, { x: 0, y: 0, width: image.width, height: image.height });
-        } else {
-          const landscape = image.width > image.height;
-          const pw = landscape ? A4.height : A4.width;
-          const ph = landscape ? A4.width : A4.height;
-          const page = doc.addPage([pw, ph]);
-          const maxW = pw - MARGIN * 2;
-          const maxH = ph - MARGIN * 2;
-          const scale = Math.min(maxW / image.width, maxH / image.height);
-          const w = image.width * scale;
-          const h = image.height * scale;
-          page.drawImage(image, { x: (pw - w) / 2, y: (ph - h) / 2, width: w, height: h });
+        if (size === "fit") {
+          const page = doc.addPage([image.width + m * 2, image.height + m * 2]);
+          page.drawImage(image, { x: m, y: m, width: image.width, height: image.height });
+          continue;
         }
+
+        const preset = PAGE_SIZES[size];
+        const landscape =
+          orientation === "landscape" ||
+          (orientation === "auto" && image.width > image.height);
+        const pw = landscape ? preset.height : preset.width;
+        const ph = landscape ? preset.width : preset.height;
+        const page = doc.addPage([pw, ph]);
+        const maxW = Math.max(pw - m * 2, 1);
+        const maxH = Math.max(ph - m * 2, 1);
+        const scale = Math.min(maxW / image.width, maxH / image.height);
+        const w = image.width * scale;
+        const h = image.height * scale;
+        page.drawImage(image, { x: (pw - w) / 2, y: (ph - h) / 2, width: w, height: h });
       }
       const out = await doc.save();
       downloadBlob(out, "images.pdf");
@@ -96,6 +136,10 @@ export function JpgToPdf() {
   };
 
   const totalSize = items.reduce((sum, i) => sum + i.file.size, 0);
+  const optionClass = (active: boolean) =>
+    `rounded-xl border-2 p-3 text-left transition-colors min-h-11 ${
+      active ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
+    }`;
 
   return (
     <div className="space-y-4">
@@ -113,12 +157,14 @@ export function JpgToPdf() {
         }`}
       >
         <Upload className="h-8 w-8 text-muted-foreground mb-2" />
-        <p className="text-sm font-medium">Drop JPG or PNG images here or tap to browse</p>
-        <p className="text-xs text-muted-foreground mt-1">Each image becomes one page</p>
+        <p className="text-sm font-medium">Drop images here or tap to browse</p>
+        <p className="text-xs text-muted-foreground mt-1">
+          JPG, PNG, WEBP, GIF, BMP or AVIF — each image becomes one page
+        </p>
         <input
           ref={inputRef}
           type="file"
-          accept="image/jpeg,image/png,.jpg,.jpeg,.png"
+          accept="image/jpeg,image/png,image/webp,image/gif,image/bmp,image/avif,.jpg,.jpeg,.png,.webp,.gif,.bmp,.avif"
           multiple
           className="hidden"
           onChange={(e) => {
@@ -132,27 +178,58 @@ export function JpgToPdf() {
         <>
           <div>
             <Label className="text-xs">Page size</Label>
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => setLayout("a4")}
-                className={`rounded-xl border-2 p-3 text-left transition-colors min-h-11 ${
-                  layout === "a4" ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
-                }`}
-              >
-                <span className="block text-sm font-semibold">A4 pages</span>
-                <span className="block text-xs text-muted-foreground">Centred with a margin</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setLayout("fit")}
-                className={`rounded-xl border-2 p-3 text-left transition-colors min-h-11 ${
-                  layout === "fit" ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
-                }`}
-              >
-                <span className="block text-sm font-semibold">Fit to image</span>
-                <span className="block text-xs text-muted-foreground">Page matches image size</span>
-              </button>
+            <div className="mt-2 grid grid-cols-3 gap-2">
+              {(Object.keys(PAGE_SIZES) as SizeKey[]).map((key) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setSize(key)}
+                  className={optionClass(size === key)}
+                >
+                  <span className="block text-sm font-semibold">{PAGE_SIZES[key].label}</span>
+                  <span className="block text-xs text-muted-foreground">{PAGE_SIZES[key].note}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {size !== "fit" && (
+            <div>
+              <Label className="text-xs">Orientation</Label>
+              <div className="mt-2 grid grid-cols-3 gap-2">
+                {(["auto", "portrait", "landscape"] as Orientation[]).map((key) => (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setOrientation(key)}
+                    className={optionClass(orientation === key)}
+                  >
+                    <span className="block text-sm font-semibold capitalize">{key}</span>
+                    <span className="block text-xs text-muted-foreground">
+                      {key === "auto" ? "Match each image" : `Always ${key}`}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div>
+            <Label className="text-xs">Margin</Label>
+            <div className="mt-2 grid grid-cols-3 gap-2">
+              {(Object.keys(MARGINS) as MarginKey[]).map((key) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setMargin(key)}
+                  className={optionClass(margin === key)}
+                >
+                  <span className="block text-sm font-semibold">{MARGINS[key].label}</span>
+                  <span className="block text-xs text-muted-foreground">
+                    {MARGINS[key].value === 0 ? "Edge to edge" : `${MARGINS[key].value}pt`}
+                  </span>
+                </button>
+              ))}
             </div>
           </div>
 
