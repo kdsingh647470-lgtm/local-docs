@@ -41,6 +41,8 @@ const DESCRIPTION =
   "Nesake builds free, browser-based PDF tools that merge, split, compress, convert and rotate documents locally on your device. No upload, no account, no watermark — private and fast.";
 const URL = "https://local-docs.lovable.app/";
 
+const HOME_FAQ = FAQ_ITEMS.slice(0, 6);
+
 const FAQPageSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
