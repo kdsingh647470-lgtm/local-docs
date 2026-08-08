@@ -593,8 +593,7 @@ function Home() {
                 </div>
               </div>
               <p className="text-muted-foreground">
-                Contact channel: <span className="font-semibold text-foreground">hello@nesake.com</span>
-                <span className="text-xs block mt-1">(placeholder — replace with a real address before publishing)</span>
+                Contact channel: <span className="font-semibold text-foreground">support@nesake.com</span>
               </p>
             </div>
           </div>
