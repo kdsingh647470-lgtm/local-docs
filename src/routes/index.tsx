@@ -36,9 +36,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const TITLE = "Nesake PDF — Free Online PDF Tools for Merge, Split, Compress & More";
+const TITLE = "Nesake PDF — Free Online PDF Tools | Merge, Split, Compress";
 const DESCRIPTION =
-  "Nesake builds free, browser-based PDF tools that merge, split, compress, convert and rotate documents locally on your device. No upload, no account, no watermark — private and fast.";
+  "Free PDF tools by Nesake: merge, split, compress, convert and rotate documents locally in your browser. Private, fast, no watermark, no account.";
 const URL = "https://local-docs.lovable.app/";
 
 const HOME_FAQ = FAQ_ITEMS.slice(0, 6);
