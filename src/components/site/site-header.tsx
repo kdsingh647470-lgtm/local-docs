@@ -32,6 +32,22 @@ export function SiteHeader() {
             Docs
           </Link>
           <Link
+            to="/"
+            hash="about"
+            inactiveProps={{ className: "text-muted-foreground" }}
+            className="hidden sm:inline-flex rounded-lg px-2.5 sm:px-3 py-2 transition-colors hover:text-foreground"
+          >
+            About
+          </Link>
+          <Link
+            to="/"
+            hash="contact"
+            inactiveProps={{ className: "text-muted-foreground" }}
+            className="hidden sm:inline-flex rounded-lg px-2.5 sm:px-3 py-2 transition-colors hover:text-foreground"
+          >
+            Contact
+          </Link>
+          <Link
             to="/pdf-tools"
             className="ml-1 hidden sm:inline-flex items-center rounded-xl bg-primary px-4 py-2 font-semibold text-primary-foreground transition-colors hover:bg-[color:var(--emerald-mid)]"
           >
