@@ -111,6 +111,16 @@ export const DOC_ENTRIES: DocEntry[] = [
     summary: "Per-page and whole-document rotation, and why quality is never affected.",
   },
   {
+    hash: "troubleshooting",
+    title: "Troubleshooting",
+    summary: "Real errors, their causes and fixes: encrypted files, blank thumbnails, blocked downloads.",
+  },
+  {
+    hash: "changelog",
+    title: "Changelog",
+    summary: "Version history for every release that changed behaviour you can observe.",
+  },
+  {
     hash: "privacy",
     title: "Privacy",
     summary: "What leaves your device (nothing) and what we could not collect even if we wanted to.",
@@ -121,3 +131,111 @@ export const DOC_ENTRIES: DocEntry[] = [
     summary: "Encrypted files, corrupted files, and how errors are surfaced instead of hidden.",
   },
 ];
+
+export interface TroubleshootItem {
+  problem: string;
+  cause: string;
+  fix: string;
+}
+
+/** Troubleshooting matrix rendered on /docs#troubleshooting. */
+export const TROUBLESHOOTING: TroubleshootItem[] = [
+  {
+    problem: "\"This PDF is password protected\" appears as soon as I add the file",
+    cause:
+      "The document is encrypted, so its page tree cannot be read without the password.",
+    fix: "Open it in the app that created it (or any reader that accepts the password), save an unprotected copy, then run that copy through the tool.",
+  },
+  {
+    problem: "Thumbnails stay blank or the grid never finishes loading",
+    cause:
+      "Page rendering is memory-bound; a very large or image-heavy document can exhaust a mobile browser's canvas budget.",
+    fix: "Split the document first, close other tabs, or retry on a desktop browser. Rendering is capped to 2048 px per side, so a reload usually succeeds.",
+  },
+  {
+    problem: "Compression returned a file the same size, or only a few percent smaller",
+    cause:
+      "The PDF is mostly text or already-optimised images, so rasterising it cannot win. The tool falls back to a lossless re-save.",
+    fix: "Nothing to fix — the output is the smallest of both strategies. Quality levels only change the result on scan- and photo-heavy files.",
+  },
+  {
+    problem: "PDF to Word produced empty paragraphs or page-break markers only",
+    cause: "The pages are scans: images of text with no text layer to extract.",
+    fix: "Run the file through OCR software first, then convert. A quick check: if you cannot select text in a PDF reader, there is nothing to extract.",
+  },
+  {
+    problem: "Merged file lost bookmarks or form fields",
+    cause:
+      "Merging copies page content, not document-level structures such as outlines, attachments and AcroForm fields.",
+    fix: "Keep the originals for the interactive version, or add bookmarks again in a full PDF editor after merging.",
+  },
+  {
+    problem: "Text is no longer selectable after compressing",
+    cause: "The rasterise strategy won, so each page is now a JPEG image.",
+    fix: "Use the original file when searchable text matters, or pick High quality and accept a larger file.",
+  },
+  {
+    problem: "Nothing downloads when I press the action button",
+    cause: "The browser blocked an automatic download, or the tab is in a private mode with downloads restricted.",
+    fix: "Allow downloads for this site in your browser settings and press the button again; no work is lost, the document is still in memory.",
+  },
+  {
+    problem: "Rotate's download button stays disabled",
+    cause: "No page has actually been turned yet — the button unlocks on the first pending rotation.",
+    fix: "Rotate at least one page (or use rotate-all), then export.",
+  },
+];
+
+export interface ChangelogEntry {
+  version: string;
+  date: string;
+  changes: string[];
+}
+
+/** Product changelog surfaced on /docs#changelog. Newest first. */
+export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.4.0",
+    date: "2026-08-08",
+    changes: [
+      "Documentation rebuilt as a searchable knowledge base with troubleshooting, changelog and per-article related links.",
+      "Added Article and Breadcrumb structured data to the documentation hub.",
+    ],
+  },
+  {
+    version: "1.3.0",
+    date: "2026-07-28",
+    changes: [
+      "PDF to JPG became PDF to Image: JPG, PNG and WEBP output with screen/standard/print quality.",
+      "JPG to PDF became Image to PDF: GIF, BMP and AVIF input, A4/Letter/fit pages, orientation and margin controls.",
+    ],
+  },
+  {
+    version: "1.2.0",
+    date: "2026-07-15",
+    changes: [
+      "Added Rotate PDF with per-page and whole-document rotation written as page metadata.",
+      "Capped canvas rendering to a fixed pixel budget so mobile output matches desktop.",
+    ],
+  },
+  {
+    version: "1.1.0",
+    date: "2026-07-02",
+    changes: [
+      "Added PDF to Word with heading detection, bold/italic runs and optional page breaks.",
+      "Compression now compares a lossless re-save against rasterisation and keeps the smaller file.",
+    ],
+  },
+  {
+    version: "1.0.0",
+    date: "2026-06-20",
+    changes: ["First release: Merge, Split & extract and Compress, all running in the browser."],
+  },
+];
+
+/** Byline shown on documentation articles. */
+export const DOC_AUTHOR = {
+  name: "Nesake Documentation Team",
+  role: "Maintainers of the Nesake PDF engine and docs",
+  updated: "8 August 2026",
+};
