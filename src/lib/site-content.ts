@@ -111,6 +111,16 @@ export const DOC_ENTRIES: DocEntry[] = [
     summary: "Per-page and whole-document rotation, and why quality is never affected.",
   },
   {
+    hash: "troubleshooting",
+    title: "Troubleshooting",
+    summary: "Real errors, their causes and fixes: encrypted files, blank thumbnails, blocked downloads.",
+  },
+  {
+    hash: "changelog",
+    title: "Changelog",
+    summary: "Version history for every release that changed behaviour you can observe.",
+  },
+  {
     hash: "privacy",
     title: "Privacy",
     summary: "What leaves your device (nothing) and what we could not collect even if we wanted to.",
