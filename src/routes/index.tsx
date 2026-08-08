@@ -657,5 +657,3 @@ function ArticleCard({
     </article>
   );
 }
-
-const HOME_FAQ = FAQ_ITEMS.slice(0, 6);
