@@ -87,6 +87,16 @@ export function SiteFooter() {
 
         <FooterCol title="Company">
           <li>
+            <Link to="/" hash="about" className={linkClass}>
+              About
+            </Link>
+          </li>
+          <li>
+            <Link to="/" hash="contact" className={linkClass}>
+              Contact
+            </Link>
+          </li>
+          <li>
             <Link to="/docs" hash="privacy" className={linkClass}>
               Privacy
             </Link>
@@ -99,11 +109,6 @@ export function SiteFooter() {
           <li>
             <Link to="/docs" hash="terms" className={linkClass}>
               Terms
-            </Link>
-          </li>
-          <li>
-            <Link to="/docs" hash="contact" className={linkClass}>
-              Contact
             </Link>
           </li>
         </FooterCol>
