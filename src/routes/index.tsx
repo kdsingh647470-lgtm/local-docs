@@ -17,16 +17,39 @@ import {
   Images,
   ImagePlus,
   RotateCw,
+  Target,
+  Users,
+  Lock,
+  Mail,
+  HelpCircle,
+  Scale,
+  FileText,
 } from "lucide-react";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { ToolCard } from "@/components/site/tool-card";
-import { DOC_ENTRIES } from "@/lib/site-content";
+import { DOC_ENTRIES, FAQ_ITEMS } from "@/lib/site-content";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
-const TITLE = "Free PDF Tools Online — Merge, Split, Compress | Nesake";
+const TITLE = "Nesake PDF — Free Online PDF Tools for Merge, Split, Compress & More";
 const DESCRIPTION =
-  "Merge, split, compress, rotate and convert PDFs — to Word, to image or from images — securely in your browser. No installation, no registration, no uploads.";
+  "Nesake builds free, browser-based PDF tools that merge, split, compress, convert and rotate documents locally on your device. No upload, no account, no watermark — private and fast.";
 const URL = "https://local-docs.lovable.app/";
+
+const FAQPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: HOME_FAQ.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -52,7 +75,31 @@ export const Route = createFileRoute("/")({
           url: URL,
           description: DESCRIPTION,
           offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+          featureList: [
+            "Merge PDF files",
+            "Split and extract PDF pages",
+            "Compress PDF files",
+            "Convert PDF to Word",
+            "Convert PDF to JPG, PNG or WEBP",
+            "Convert images to PDF",
+            "Rotate PDF pages",
+          ],
         }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Nesake PDF",
+          url: URL,
+          description: "Free browser-based PDF tools built for privacy and speed.",
+          sameAs: [],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(FAQPageSchema),
       },
     ],
   }),
@@ -98,6 +145,47 @@ const REASONS = [
     icon: Droplets,
     title: "No watermarks",
     text: "Output files contain your content only — nothing is stamped on top.",
+  },
+];
+
+const SOFTWARE_CATEGORIES = [
+  {
+    icon: FileText,
+    title: "Document tools",
+    text: "PDF utilities that merge, split, compress, rotate, convert to Word and exchange pages with images.",
+    href: "/pdf-tools",
+  },
+  {
+    icon: Target,
+    title: "Privacy-first design",
+    text: "Every app is built so your data stays on your device. No cloud processing means nothing to leak or retain.",
+    href: "/docs",
+    hash: "privacy",
+  },
+  {
+    icon: Zap,
+    title: "Speed by default",
+    text: "No upload queues, no sign-up friction, no server round-trips. The work starts the moment you pick a file.",
+    href: "/docs",
+    hash: "getting-started",
+  },
+];
+
+const TRUST_POINTS = [
+  {
+    icon: Lock,
+    title: "Local processing",
+    text: "Your PDF never leaves the browser tab. There is no server-side endpoint that receives the file, and closing the tab discards it completely.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "No account required",
+    text: "We do not ask for your email, payment details or social login. There is no identity to associate with a document.",
+  },
+  {
+    icon: Scale,
+    title: "Clear terms and limits",
+    text: "The tools are provided as-is for lawful use. Errors are surfaced visibly, and the limits of each conversion are explained in the documentation.",
   },
 ];
 
@@ -209,7 +297,94 @@ function Home() {
             tool="rotate"
           />
         </div>
+      </section>
 
+      {/* About / What is Nesake */}
+      <section id="about" className="scroll-mt-24 border-y border-border bg-[color:var(--cream-warm)]">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
+            <div>
+              <SectionHeading
+                eyebrow="About Nesake"
+                title="What is Nesake?"
+                text="Nesake is a small product studio building free, browser-based utilities that treat your privacy as a feature, not an afterthought."
+              />
+              <div className="mt-6 space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                <p>
+                  We started with a simple frustration: most online PDF tools force you to upload
+                  sensitive documents to a distant server before you can do anything with them. That
+                  means waiting, trusting a third party, and hoping the file is deleted afterwards.
+                </p>
+                <p>
+                  Nesake PDF proves there is a better way. The PDF engine — merging, splitting,
+                  compression, conversion and rotation — runs entirely inside your browser tab using
+                  JavaScript. The file you pick is read from your local disk, edited in memory, and
+                  written back out as a download. Nothing is transmitted, queued or stored by us.
+                </p>
+                <p>
+                  Because there is no server-side processing, we can offer the tools free of charge,
+                  without asking for an account, and without adding watermarks to your output. The
+                  trade-off is honesty: we tell you clearly what each tool can and cannot do, and we
+                  document the real limits in our knowledge base.
+                </p>
+              </div>
+            </div>
+            <div className="rounded-3xl border border-border bg-card p-6 sm:p-8 shadow-sm">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-[color:var(--emerald-mid)]/10 text-[color:var(--emerald-mid)]">
+                  <Target className="h-5 w-5" />
+                </div>
+                <p className="font-display text-lg font-semibold">Our mission</p>
+              </div>
+              <p className="mt-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                Make everyday document tasks fast, private and accessible to everyone. We believe
+                the best tools are the ones that get out of your way: open the page, do the job,
+                close the tab. No account, no upload, no surveillance.
+              </p>
+              <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
+                {[
+                  "Build utilities that run on the user's device, not our servers.",
+                  "Never require an account, email or payment to use the core product.",
+                  "Explain the limits of every tool so users can make informed choices.",
+                  "Keep the interface clean, modern and accessible across devices.",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--emerald-mid)]" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Software categories */}
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <SectionHeading
+          eyebrow="What we build"
+          title="Categories of software we build"
+          text="Nesake focuses on lightweight, browser-based productivity tools. PDF utilities are our first category, designed as a reference for how every future app should behave."
+        />
+        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+          {SOFTWARE_CATEGORIES.map(({ icon: Icon, title, text, href, hash }) => (
+            <Link
+              key={title}
+              to={href}
+              hash={hash}
+              className="group flex flex-col rounded-3xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:border-[color:var(--gold)]/60 hover:shadow-md"
+            >
+              <div className="w-fit p-2.5 rounded-xl bg-[color:var(--emerald-mid)]/10 text-[color:var(--emerald-mid)]">
+                <Icon className="h-5 w-5" />
+              </div>
+              <p className="font-display mt-4 font-semibold">{title}</p>
+              <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed flex-1">{text}</p>
+              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--emerald-deep)]">
+                Learn more <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </span>
+            </Link>
+          ))}
+        </div>
       </section>
 
       {/* Why choose */}
@@ -234,73 +409,192 @@ function Home() {
         </div>
       </section>
 
-      {/* Documentation */}
+      {/* Trust & quality */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <SectionHeading
-          eyebrow="Documentation"
-          title="Read how each tool behaves"
-          text="Short, practical reference pages that explain what happens to your file — written for people, not for a changelog."
+          eyebrow="Trust & quality"
+          title="Why you can trust our apps"
+          text="We treat your files with the same caution we would want for our own. That means no cloud dependency, no hidden data collection, and no misleading promises."
         />
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {DOC_ENTRIES.map((entry) => (
-            <Link
-              key={entry.hash}
-              to="/docs"
-              hash={entry.hash}
-              className="group rounded-3xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:border-[color:var(--gold)]/60 hover:shadow-md"
-            >
-              <p className="font-display text-base font-semibold">{entry.title}</p>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{entry.summary}</p>
-              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--emerald-deep)]">
-                Read
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </span>
-            </Link>
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {TRUST_POINTS.map(({ icon: Icon, title, text }) => (
+            <div key={title} className="rounded-3xl border border-border bg-card p-6 shadow-sm">
+              <div className="w-fit p-2.5 rounded-xl bg-[color:var(--gold)]/15 text-[color:var(--emerald-deep)]">
+                <Icon className="h-5 w-5" />
+              </div>
+              <p className="font-display mt-4 font-semibold">{title}</p>
+              <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{text}</p>
+            </div>
           ))}
         </div>
-        <p className="mt-6 text-sm text-muted-foreground">
-          Looking for answers instead?{" "}
-          <Link to="/docs" hash="faq" className="font-semibold text-[color:var(--emerald-deep)] underline underline-offset-4">
-            Browse the FAQs
-          </Link>{" "}
-          or open the{" "}
-          <Link to="/pdf-tools" className="font-semibold text-[color:var(--emerald-deep)] underline underline-offset-4">
-            tools hub
+        <div className="mt-8 flex flex-wrap gap-4 text-sm">
+          <Link
+            to="/docs"
+            hash="privacy"
+            className="inline-flex items-center gap-1.5 font-semibold text-[color:var(--emerald-deep)] underline underline-offset-4"
+          >
+            Read our privacy policy <ArrowRight className="h-4 w-4" />
           </Link>
-          .
-        </p>
+          <Link
+            to="/docs"
+            hash="security"
+            className="inline-flex items-center gap-1.5 font-semibold text-[color:var(--emerald-deep)] underline underline-offset-4"
+          >
+            Read our security practices <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </section>
+
+      {/* Documentation */}
+      <section className="border-y border-border bg-[color:var(--cream-warm)]">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+          <SectionHeading
+            eyebrow="Documentation"
+            title="Read how each tool behaves"
+            text="Short, practical reference pages that explain what happens to your file — written for people, not for a changelog."
+          />
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {DOC_ENTRIES.map((entry) => (
+              <Link
+                key={entry.hash}
+                to="/docs"
+                hash={entry.hash}
+                className="group rounded-3xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:border-[color:var(--gold)]/60 hover:shadow-md"
+              >
+                <p className="font-display text-base font-semibold">{entry.title}</p>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{entry.summary}</p>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--emerald-deep)]">
+                  Read
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                </span>
+              </Link>
+            ))}
+          </div>
+          <p className="mt-6 text-sm text-muted-foreground">
+            Looking for answers instead?{" "}
+            <Link to="/docs" hash="faq" className="font-semibold text-[color:var(--emerald-deep)] underline underline-offset-4">
+              Browse the FAQs
+            </Link>{" "}
+            or open the{" "}
+            <Link to="/pdf-tools" className="font-semibold text-[color:var(--emerald-deep)] underline underline-offset-4">
+              tools hub
+            </Link>
+            .
+          </p>
+        </div>
       </section>
 
       {/* Learning center */}
-      <section className="border-t border-border bg-[color:var(--cream-warm)]">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-          <SectionHeading
-            eyebrow="Learning center"
-            title="Guides built from the documentation"
-            text="Task-shaped walkthroughs that point at the relevant reference section instead of repeating it."
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <SectionHeading
+          eyebrow="Learning center"
+          title="Guides built from the documentation"
+          text="Task-shaped walkthroughs that point at the relevant reference section instead of repeating it."
+        />
+        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+          <ArticleCard
+            hash="merge"
+            kicker="4 min read"
+            title="Combine scanned pages into one report"
+            text="Order matters more than anything when merging. This walkthrough covers picking multiple files, reordering them by drag, and naming the export so the finished report is easy to find later."
+            cta={{ label: "Open merge", tool: "merge" }}
           />
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            <ArticleCard
-              hash="merge"
-              kicker="4 min read"
-              title="Combine scanned pages into one report"
-              text="Order matters more than anything when merging. This walkthrough covers picking multiple files, reordering them by drag, and naming the export so the finished report is easy to find later."
-              cta={{ label: "Open merge", tool: "merge" }}
-            />
-            <ArticleCard
-              hash="split"
-              kicker="3 min read"
-              title="Pull a signature page out of a contract"
-              text="Instead of guessing page numbers, use the thumbnail grid to click the pages you want, or type a range like 1-3, 8. The extracted pages become a fresh PDF containing nothing else."
-              cta={{ label: "Open split", tool: "split" }}
-            />
-            <ArticleCard
-              hash="compression"
-              kicker="4 min read"
-              title="Get a scan under an email size limit"
-              text="Compression gains come from images, so scans respond best. Start at medium quality, check the reported reduction, and step down only if the file still exceeds the limit you are working against."
-              cta={{ label: "Open compress", tool: "compress" }}
-            />
+          <ArticleCard
+            hash="split"
+            kicker="3 min read"
+            title="Pull a signature page out of a contract"
+            text="Instead of guessing page numbers, use the thumbnail grid to click the pages you want, or type a range like 1-3, 8. The extracted pages become a fresh PDF containing nothing else."
+            cta={{ label: "Open split", tool: "split" }}
+          />
+          <ArticleCard
+            hash="compression"
+            kicker="4 min read"
+            title="Get a scan under an email size limit"
+            text="Compression gains come from images, so scans respond best. Start at medium quality, check the reported reduction, and step down only if the file still exceeds the limit you are working against."
+            cta={{ label: "Open compress", tool: "compress" }}
+          />
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="faq" className="scroll-mt-24 border-y border-border bg-[color:var(--cream-warm)]">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+          <SectionHeading
+            eyebrow="FAQ"
+            title="Frequently asked questions"
+            text="Quick answers to the questions that matter most for privacy, limits and getting started."
+          />
+          <Accordion type="single" collapsible className="mt-8 w-full">
+            {HOME_FAQ.map((item, i) => (
+              <AccordionItem key={item.question} value={`home-q${i}`}>
+                <AccordionTrigger className="text-left font-display">
+                  {item.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground leading-relaxed">
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+          <p className="mt-6 text-sm text-muted-foreground text-center">
+            Have a different question?{" "}
+            <Link to="/docs" hash="faq" className="font-semibold text-[color:var(--emerald-deep)] underline underline-offset-4">
+              Read the full FAQ
+            </Link>{" "}
+            or{" "}
+            <Link to="/docs" hash="contact" className="font-semibold text-[color:var(--emerald-deep)] underline underline-offset-4">
+              contact us
+            </Link>
+            .
+          </p>
+        </div>
+      </section>
+
+      {/* Contact */}
+      <section id="contact" className="scroll-mt-24 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div className="rounded-3xl border border-border bg-card p-6 sm:p-10 shadow-sm">
+          <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-[color:var(--cream-warm)] px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
+                <Mail className="h-3 w-3" />
+                Contact
+              </div>
+              <h2 className="font-display mt-4 text-2xl sm:text-3xl font-bold">Get in touch</h2>
+              <p className="mt-3 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                Found a bug, have a feature request, or want to report a file that did not process
+                correctly? We read every message. The most useful details are the tool name, browser,
+                device, file size and page count, and the exact error message shown.
+              </p>
+            </div>
+            <div className="space-y-4 text-sm">
+              <div className="flex items-start gap-3 rounded-2xl border border-border bg-[color:var(--cream-warm)] p-4">
+                <HelpCircle className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--emerald-mid)]" />
+                <div>
+                  <p className="font-semibold text-foreground">Support & bug reports</p>
+                  <p className="mt-1 text-muted-foreground">
+                    Start with the{" "}
+                    <Link to="/docs" hash="troubleshooting" className="font-semibold text-[color:var(--emerald-deep)] underline underline-offset-4">
+                      troubleshooting guide
+                    </Link>
+                    {" "}or send a note through the contact channel listed below.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 rounded-2xl border border-border bg-[color:var(--cream-warm)] p-4">
+                <Users className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--emerald-mid)]" />
+                <div>
+                  <p className="font-semibold text-foreground">Partners & press</p>
+                  <p className="mt-1 text-muted-foreground">
+                    For business or media enquiries, use the same contact route and we will route your
+                    message to the right person.
+                  </p>
+                </div>
+              </div>
+              <p className="text-muted-foreground">
+                Contact channel: <span className="font-semibold text-foreground">hello@nesake.com</span>
+                <span className="text-xs block mt-1">(placeholder — replace with a real address before publishing)</span>
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -361,3 +655,5 @@ function ArticleCard({
     </article>
   );
 }
+
+const HOME_FAQ = FAQ_ITEMS.slice(0, 6);
