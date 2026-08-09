@@ -298,6 +298,19 @@ function Home() {
             description="Straighten sideways scans from a thumbnail grid, page by page or the whole document at once."
             tool="rotate"
           />
+          <ToolCard
+            icon={<Lock className="h-6 w-6" />}
+            title="Protect PDF"
+            description="Add a password with AES-256 or AES-128 encryption and decide whether printing and copying stay allowed."
+            tool="protect"
+            accent="gold"
+          />
+          <ToolCard
+            icon={<Unlock className="h-6 w-6" />}
+            title="Unlock PDF"
+            description="Remove the password from a document you can already open and save an unrestricted copy."
+            tool="unlock"
+          />
         </div>
       </section>
 
