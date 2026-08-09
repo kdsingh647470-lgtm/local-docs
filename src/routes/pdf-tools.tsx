@@ -347,21 +347,6 @@ function ToolsHub() {
           />
         </div>
 
-
-        <div className="mt-12">
-          <SectionHeading eyebrow="Roadmap" title="Coming soon" />
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {UPCOMING.map(({ icon: Icon, title, description }) => (
-              <ToolCard
-                key={title}
-                icon={<Icon className="h-6 w-6" />}
-                title={title}
-                description={description}
-                comingSoon
-              />
-            ))}
-          </div>
-        </div>
       </section>
 
       {/* How it works */}
