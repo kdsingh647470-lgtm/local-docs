@@ -20,7 +20,7 @@ import {
 const TITLE = "Nesake PDF Docs — Guides, troubleshooting & reference";
 const DESCRIPTION =
   "Complete Nesake PDF knowledge base: step-by-step guides for merge, split, compress, PDF to Word, PDF to Image, Image to PDF and rotate, plus troubleshooting, FAQs, privacy details and the product changelog.";
-const URL = "https://local-docs.lovable.app/docs";
+const URL = "https://pdftools.nesake.com/docs";
 
 export const Route = createFileRoute("/docs")({
   head: () => ({
@@ -66,7 +66,7 @@ export const Route = createFileRoute("/docs")({
               "@type": "ListItem",
               position: 1,
               name: "Home",
-              item: "https://local-docs.lovable.app/",
+              item: "https://pdftools.nesake.com/",
             },
             { "@type": "ListItem", position: 2, name: "Documentation", item: URL },
           ],

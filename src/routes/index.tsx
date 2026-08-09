@@ -40,7 +40,7 @@ import {
 const TITLE = "Nesake PDF — Free Online PDF Tools | Merge, Split, Compress";
 const DESCRIPTION =
   "Free PDF tools by Nesake: merge, split, compress, convert and rotate documents locally in your browser. Private, fast, no watermark, no account.";
-const URL = "https://local-docs.lovable.app/";
+const URL = "https://pdftools.nesake.com/";
 
 const HOME_FAQ = FAQ_ITEMS.slice(0, 6);
 

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://local-docs.lovable.app/sitemap.xml
+Sitemap: https://pdftools.nesake.com/sitemap.xml

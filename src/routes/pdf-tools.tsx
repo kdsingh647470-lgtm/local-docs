@@ -71,7 +71,7 @@ const TOOLS: Tool[] = [
 const TITLE = "Free PDF Tools — Merge, Split, Compress, Convert | Nesake";
 const DESCRIPTION =
   "The Nesake PDF tools hub: merge, split, compress, rotate, convert PDF to Word, PDF to Image and Image to PDF locally in your browser — nothing is uploaded.";
-const URL = "https://local-docs.lovable.app/pdf-tools";
+const URL = "https://pdftools.nesake.com/pdf-tools";
 
 export const Route = createFileRoute("/pdf-tools")({
   validateSearch: (search: Record<string, unknown>): { tool?: Tool } => {
@@ -132,7 +132,7 @@ export const Route = createFileRoute("/pdf-tools")({
                 "@type": "ListItem",
                 position: 1,
                 name: "Home",
-                item: "https://local-docs.lovable.app/",
+                item: "https://pdftools.nesake.com/",
               },
               { "@type": "ListItem", position: 2, name: "PDF Tools", item: URL },
             ],
