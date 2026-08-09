@@ -5,7 +5,16 @@ export interface ToolCardProps {
   icon: React.ReactNode;
   title: string;
   description: string;
-  tool?: "merge" | "split" | "compress" | "pdf-to-word" | "pdf-to-jpg" | "jpg-to-pdf" | "rotate";
+  tool?:
+    | "merge"
+    | "split"
+    | "compress"
+    | "pdf-to-word"
+    | "pdf-to-jpg"
+    | "jpg-to-pdf"
+    | "rotate"
+    | "protect"
+    | "unlock";
   comingSoon?: boolean;
   accent?: "emerald" | "gold";
 }
