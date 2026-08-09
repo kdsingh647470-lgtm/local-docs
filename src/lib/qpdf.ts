@@ -15,16 +15,16 @@ type QpdfFactory = (opts: { locateFile: () => string }) => Promise<QpdfInstance>
 
 let loader: Promise<{ factory: QpdfFactory; wasmUrl: string }> | null = null;
 
+// Served as a static asset from public/wasm so the binary never enters a bundle.
+const WASM_URL = "/wasm/qpdf.wasm";
+
 function loadQpdf() {
   if (!loader) {
     loader = (async () => {
-      const [mod, wasm] = await Promise.all([
-        import("@neslinesli93/qpdf-wasm"),
-        import("@neslinesli93/qpdf-wasm/dist/qpdf.wasm?url"),
-      ]);
+      const mod = await import("@neslinesli93/qpdf-wasm");
       const factory = ((mod as unknown as { default: unknown }).default ??
         mod) as unknown as QpdfFactory;
-      return { factory, wasmUrl: (wasm as { default: string }).default };
+      return { factory, wasmUrl: WASM_URL };
     })();
   }
   return loader;
