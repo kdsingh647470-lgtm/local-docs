@@ -43,6 +43,8 @@ import { PdfToWord } from "@/components/pdf-tools/pdf-to-word";
 import { PdfToJpg } from "@/components/pdf-tools/pdf-to-jpg";
 import { JpgToPdf } from "@/components/pdf-tools/jpg-to-pdf";
 import { PdfRotate } from "@/components/pdf-tools/pdf-rotate";
+import { PdfProtect } from "@/components/pdf-tools/pdf-protect";
+import { PdfUnlock } from "@/components/pdf-tools/pdf-unlock";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { ToolCard } from "@/components/site/tool-card";
@@ -55,7 +57,9 @@ type Tool =
   | "pdf-to-word"
   | "pdf-to-jpg"
   | "jpg-to-pdf"
-  | "rotate";
+  | "rotate"
+  | "protect"
+  | "unlock";
 
 const TOOLS: Tool[] = [
   "merge",
@@ -65,6 +69,8 @@ const TOOLS: Tool[] = [
   "pdf-to-jpg",
   "jpg-to-pdf",
   "rotate",
+  "protect",
+  "unlock",
 ];
 
 const TITLE = "Free PDF Tools — Merge, Split, Compress, Convert | Nesake";
@@ -109,6 +115,8 @@ export const Route = createFileRoute("/pdf-tools")({
               "Convert PDF to Image",
               "Convert Image to PDF",
               "Rotate PDF",
+              "Protect PDF with a password",
+              "Unlock password-protected PDF",
             ],
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
           },
@@ -166,6 +174,16 @@ const TOOL_META: Record<Tool, { title: string; blurb: string }> = {
     title: "Image to PDF",
     blurb: "Turn JPG, PNG, WEBP, GIF, BMP or AVIF images into a single PDF, one page per image.",
   },
+  protect: {
+    title: "Protect PDF",
+    blurb:
+      "Add a password with AES encryption before sharing a sensitive document — done in your browser.",
+  },
+  unlock: {
+    title: "Unlock PDF",
+    blurb:
+      "Remove the password from a document you can open, so it can be edited and converted again.",
+  },
   rotate: {
     title: "Rotate PDF",
     blurb: "Turn sideways pages upright — one page at a time or the whole document at once.",
@@ -173,8 +191,6 @@ const TOOL_META: Record<Tool, { title: string; blurb: string }> = {
 };
 
 const UPCOMING = [
-  { icon: Unlock, title: "Unlock PDF", description: "Remove a password you own so the document can be edited again." },
-  { icon: Lock, title: "Protect PDF", description: "Add a password before sharing a sensitive document." },
   { icon: Trash2, title: "Delete Pages", description: "Drop pages you no longer need and keep the rest intact." },
   { icon: FileOutput, title: "Extract Pages", description: "Export chosen pages as separate standalone documents." },
   { icon: ScanText, title: "OCR PDF", description: "Make scanned text searchable and selectable." },
@@ -315,6 +331,19 @@ function ToolsHub() {
             title="Rotate PDF"
             description="Turn sideways pages upright from a thumbnail grid — per page or the whole document."
             tool="rotate"
+          />
+          <ToolCard
+            icon={<Lock className="h-6 w-6" />}
+            title="Protect PDF"
+            description="Lock a document with a password using AES-256 or AES-128 encryption, and choose whether printing and copying stay allowed."
+            tool="protect"
+            accent="gold"
+          />
+          <ToolCard
+            icon={<Unlock className="h-6 w-6" />}
+            title="Unlock PDF"
+            description="Enter the password of a file you own to save an unrestricted copy you can merge, split, compress or convert."
+            tool="unlock"
           />
         </div>
 
@@ -540,13 +569,23 @@ function ActiveTool({ tool, onBack }: { tool: Tool; onBack: () => void }) {
         {tool === "pdf-to-jpg" && <PdfToJpg />}
         {tool === "jpg-to-pdf" && <JpgToPdf />}
         {tool === "rotate" && <PdfRotate />}
+        {tool === "protect" && <PdfProtect />}
+        {tool === "unlock" && <PdfUnlock />}
       </section>
       <div className="mt-6 flex flex-wrap items-center gap-4">
         <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground">
           <ShieldCheck className="h-3.5 w-3.5 text-[color:var(--emerald-mid)]" />
           Files never leave your device
         </div>
-        <DocLink hash={tool === "compress" ? "compression" : tool}>
+        <DocLink
+          hash={
+            tool === "compress"
+              ? "compression"
+              : tool === "protect" || tool === "unlock"
+                ? "security"
+                : tool
+          }
+        >
           Read how this works
         </DocLink>
       </div>

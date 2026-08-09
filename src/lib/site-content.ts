@@ -18,7 +18,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: "Why can't I open a password-protected PDF?",
     answer:
-      "Encrypted PDFs cannot be parsed without the password, so the tools detect the encryption and stop with a clear message instead of failing silently. Remove the password in the application that created the file, then run it through the tool again.",
+      "Encrypted PDFs cannot be parsed without the password, so the other tools detect the encryption and stop with a clear message instead of failing silently. Open Unlock PDF, enter the password you normally type to open the file, and download the unrestricted copy — then merge, split, compress or convert it as usual.",
   },
   {
     question: "How much smaller will my file get after compression?",
@@ -44,6 +44,11 @@ export const FAQ_ITEMS: FaqItem[] = [
     question: "Can I make a PDF from photos or scans?",
     answer:
       "Yes. Image to PDF accepts JPG, PNG, WEBP, GIF, BMP and AVIF images, lets you reorder them, and writes one page per image. Choose A4 or Letter pages to centre each image with your chosen margin and orientation, or fit-to-image so the page matches the photo's own dimensions.",
+  },
+  {
+    question: "Can I add a password to a PDF?",
+    answer:
+      "Yes. Protect PDF encrypts the document with the standard PDF security handler using AES-256 or AES-128, so any reader will ask for your password before opening it. You can also decide whether printing and text copying stay allowed. The encryption runs in your browser, so neither the file nor the password ever leaves your device — and because there is no copy on a server, a forgotten password cannot be recovered.",
   },
   {
     question: "How do I fix a sideways scanned page?",
