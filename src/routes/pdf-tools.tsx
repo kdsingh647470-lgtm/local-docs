@@ -55,7 +55,9 @@ type Tool =
   | "pdf-to-word"
   | "pdf-to-jpg"
   | "jpg-to-pdf"
-  | "rotate";
+  | "rotate"
+  | "protect"
+  | "unlock";
 
 const TOOLS: Tool[] = [
   "merge",
@@ -65,6 +67,8 @@ const TOOLS: Tool[] = [
   "pdf-to-jpg",
   "jpg-to-pdf",
   "rotate",
+  "protect",
+  "unlock",
 ];
 
 const TITLE = "Free PDF Tools — Merge, Split, Compress, Convert | Nesake";
