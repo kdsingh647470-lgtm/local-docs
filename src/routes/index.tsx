@@ -20,6 +20,7 @@ import {
   Target,
   Users,
   Lock,
+  Unlock,
   Mail,
   HelpCircle,
   Scale,
