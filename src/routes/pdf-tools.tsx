@@ -10,11 +10,6 @@ import {
   RotateCw,
   Unlock,
   Lock,
-  Trash2,
-  FileOutput,
-  ScanText,
-  Stamp,
-  PenLine,
   MousePointerClick,
   Upload,
   Download,
@@ -190,13 +185,6 @@ const TOOL_META: Record<Tool, { title: string; blurb: string }> = {
   },
 };
 
-const UPCOMING = [
-  { icon: Trash2, title: "Delete Pages", description: "Drop pages you no longer need and keep the rest intact." },
-  { icon: FileOutput, title: "Extract Pages", description: "Export chosen pages as separate standalone documents." },
-  { icon: ScanText, title: "OCR PDF", description: "Make scanned text searchable and selectable." },
-  { icon: Stamp, title: "Watermark PDF", description: "Overlay text or an image across every page." },
-  { icon: PenLine, title: "Sign PDF", description: "Draw or place a signature and flatten it into the file." },
-];
 
 const STEPS = [
   {
