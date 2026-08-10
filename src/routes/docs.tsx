@@ -92,11 +92,15 @@ export const Route = createFileRoute("/docs")({
 type Tool =
   | "merge"
   | "split"
+  | "delete-pages"
+  | "extract-pages"
   | "compress"
   | "pdf-to-word"
   | "pdf-to-jpg"
   | "jpg-to-pdf"
-  | "rotate";
+  | "rotate"
+  | "protect"
+  | "unlock";
 
 interface Section {
   hash: string;
