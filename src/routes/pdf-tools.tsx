@@ -612,6 +612,12 @@ function CompressionBar() {
 
 function ActiveTool({ tool, onBack }: { tool: Tool; onBack: () => void }) {
   const meta = TOOL_META[tool];
+  useEffect(() => {
+    const seo = TOOL_SEO[tool];
+    if (seo) {
+      document.title = seo.title;
+    }
+  }, [tool]);
   return (
     <div>
       <button
