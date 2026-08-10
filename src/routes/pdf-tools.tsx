@@ -146,75 +146,70 @@ export const Route = createFileRoute("/pdf-tools")({
     const tool = search.tool;
     return TOOLS.includes(tool as Tool) ? { tool: tool as Tool } : {};
   },
-  head: ({ search }) => {
-    const tool = (search as { tool?: Tool }).tool;
-    const seo = tool ? TOOL_SEO[tool] : { title: HUB_TITLE, description: HUB_DESCRIPTION };
-    const url = tool ? `${HUB_URL}?tool=${tool}` : HUB_URL;
-    return {
-      meta: [
-        { title: seo.title },
-        { name: "description", content: seo.description },
-        { property: "og:title", content: seo.title },
-        { property: "og:description", content: seo.description },
-        { property: "og:type", content: "website" },
-        { property: "og:url", content: url },
-        { name: "twitter:card", content: "summary_large_image" },
-      ],
-      links: [{ rel: "canonical", href: url }],
-      scripts: [
-        {
-          type: "application/ld+json",
-          children: JSON.stringify([
-            {
-              "@context": "https://schema.org",
-              "@type": "SoftwareApplication",
-              name: "Nesake PDF Tools",
-              applicationCategory: "UtilitiesApplication",
-              operatingSystem: "Any (web browser)",
-              url: HUB_URL,
-              description: HUB_DESCRIPTION,
-              featureList: [
-                "Merge PDF",
-                "Split PDF",
-                "Extract pages",
-                "Delete pages",
-                "Compress PDF",
-                "Convert PDF to Word",
-                "Convert PDF to Image",
-                "Convert Image to PDF",
-                "Rotate PDF",
-                "Protect PDF with a password",
-                "Unlock password-protected PDF",
-              ],
-              offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-            },
-            {
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              mainEntity: FAQ_ITEMS.map((f) => ({
-                "@type": "Question",
-                name: f.question,
-                acceptedAnswer: { "@type": "Answer", text: f.answer },
-              })),
-            },
-            {
-              "@context": "https://schema.org",
-              "@type": "BreadcrumbList",
-              itemListElement: [
-                {
-                  "@type": "ListItem",
-                  position: 1,
-                  name: "Home",
-                  item: "https://pdftools.nesake.com/",
-                },
-                { "@type": "ListItem", position: 2, name: "PDF Tools", item: HUB_URL },
-              ],
-            },
-          ]),
-        },
-      ],
-    };
-  },
+  head: () => ({
+    meta: [
+      { title: HUB_TITLE },
+      { name: "description", content: HUB_DESCRIPTION },
+      { property: "og:title", content: HUB_TITLE },
+      { property: "og:description", content: HUB_DESCRIPTION },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: HUB_URL },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [{ rel: "canonical", href: HUB_URL }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify([
+          {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            name: "Nesake PDF Tools",
+            applicationCategory: "UtilitiesApplication",
+            operatingSystem: "Any (web browser)",
+            url: HUB_URL,
+            description: HUB_DESCRIPTION,
+            featureList: [
+              "Merge PDF",
+              "Split PDF",
+              "Extract pages",
+              "Delete pages",
+              "Compress PDF",
+              "Convert PDF to Word",
+              "Convert PDF to Image",
+              "Convert Image to PDF",
+              "Rotate PDF",
+              "Protect PDF with a password",
+              "Unlock password-protected PDF",
+            ],
+            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: FAQ_ITEMS.map((f) => ({
+              "@type": "Question",
+              name: f.question,
+              acceptedAnswer: { "@type": "Answer", text: f.answer },
+            })),
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://pdftools.nesake.com/",
+              },
+              { "@type": "ListItem", position: 2, name: "PDF Tools", item: HUB_URL },
+            ],
+          },
+        ]),
+      },
+    ],
+  }),
   component: PdfToolsPage,
 });
 
