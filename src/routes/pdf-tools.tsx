@@ -10,6 +10,8 @@ import {
   RotateCw,
   Unlock,
   Lock,
+  Trash2,
+  Scissors,
   MousePointerClick,
   Upload,
   Download,

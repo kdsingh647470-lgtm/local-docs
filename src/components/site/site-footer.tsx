@@ -51,6 +51,12 @@ export function SiteFooter() {
             </Link>
           </li>
           <li>
+            <Link to="/pdf-tools" search={{ tool: "delete-pages" }} className={linkClass}>
+              Delete Pages
+            </Link>
+            <Link to="/pdf-tools" search={{ tool: "extract-pages" }} className={linkClass}>
+              Extract Pages
+            </Link>
             <Link to="/pdf-tools" search={{ tool: "rotate" }} className={linkClass}>
               Rotate PDF
             </Link>
