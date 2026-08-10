@@ -775,18 +775,18 @@ function useSections(): Section[] {
         keywords: "contact support roadmap request feature bug report protect unlock ocr watermark",
         body: (
           <>
-            <p>
-              Found a document that will not process, or want a tool that is not here yet? The
-              roadmap on the tools hub lists what is planned next, including protect, unlock, OCR and
-              watermark. When reporting a problem, the useful details are: the tool, the browser and
-              device, the file size and page count, and the exact message shown.
-            </p>
-            <Link
-              to="/pdf-tools"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--emerald-deep)]"
-            >
-              See the roadmap <ArrowRight className="h-4 w-4" />
-            </Link>
+          <p>
+            Found a document that will not process, or want a tool that is not here yet? The roadmap
+            on the tools hub lists what is planned next. When reporting a problem, the useful details
+            are: the tool, the browser and device, the file size and page count, and the exact
+            message shown.
+          </p>
+          <Link
+            to="/pdf-tools"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--emerald-deep)]"
+          >
+            See the tools hub <ArrowRight className="h-4 w-4" />
+          </Link>
           </>
         ),
       },
