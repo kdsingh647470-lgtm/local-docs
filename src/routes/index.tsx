@@ -29,7 +29,7 @@ import {
 } from "lucide-react";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
-import { ToolCard } from "@/components/site/tool-card";
+import { ToolCard, type ToolCardProps } from "@/components/site/tool-card";
 import { DOC_ENTRIES, FAQ_ITEMS } from "@/lib/site-content";
 import {
   Accordion,
