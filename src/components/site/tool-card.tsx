@@ -14,7 +14,9 @@ export interface ToolCardProps {
     | "jpg-to-pdf"
     | "rotate"
     | "protect"
-    | "unlock";
+    | "unlock"
+    | "delete-pages"
+    | "extract-pages";
   comingSoon?: boolean;
   accent?: "emerald" | "gold";
 }

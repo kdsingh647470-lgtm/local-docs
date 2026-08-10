@@ -10,6 +10,7 @@ import {
   RotateCw,
   Unlock,
   Lock,
+  Trash2,
   MousePointerClick,
   Upload,
   Download,
@@ -40,6 +41,8 @@ import { JpgToPdf } from "@/components/pdf-tools/jpg-to-pdf";
 import { PdfRotate } from "@/components/pdf-tools/pdf-rotate";
 import { PdfProtect } from "@/components/pdf-tools/pdf-protect";
 import { PdfUnlock } from "@/components/pdf-tools/pdf-unlock";
+import { PdfDeletePages } from "@/components/pdf-tools/pdf-delete-pages";
+import { PdfExtractPages } from "@/components/pdf-tools/pdf-extract-pages";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { ToolCard } from "@/components/site/tool-card";
@@ -54,7 +57,9 @@ type Tool =
   | "jpg-to-pdf"
   | "rotate"
   | "protect"
-  | "unlock";
+  | "unlock"
+  | "delete-pages"
+  | "extract-pages";
 
 const TOOLS: Tool[] = [
   "merge",
@@ -66,6 +71,8 @@ const TOOLS: Tool[] = [
   "rotate",
   "protect",
   "unlock",
+  "delete-pages",
+  "extract-pages",
 ];
 
 const TITLE = "Free PDF Tools — Merge, Split, Compress, Convert | Nesake";
@@ -105,6 +112,7 @@ export const Route = createFileRoute("/pdf-tools")({
               "Merge PDF",
               "Split PDF",
               "Extract pages",
+              "Delete pages",
               "Compress PDF",
               "Convert PDF to Word",
               "Convert PDF to Image",
@@ -178,6 +186,14 @@ const TOOL_META: Record<Tool, { title: string; blurb: string }> = {
     title: "Unlock PDF",
     blurb:
       "Remove the password from a document you can open, so it can be edited and converted again.",
+  },
+  "delete-pages": {
+    title: "Delete Pages",
+    blurb: "Remove unwanted pages from a PDF and download the trimmed document.",
+  },
+  "extract-pages": {
+    title: "Extract Pages",
+    blurb: "Pull the pages you need out of a PDF into a brand new file.",
   },
   rotate: {
     title: "Rotate PDF",
@@ -332,6 +348,19 @@ function ToolsHub() {
             title="Unlock PDF"
             description="Enter the password of a file you own to save an unrestricted copy you can merge, split, compress or convert."
             tool="unlock"
+          />
+          <ToolCard
+            icon={<Trash2 className="h-6 w-6" />}
+            title="Delete Pages"
+            description="Tick the pages you don't need in the thumbnail grid and download a clean PDF without them."
+            tool="delete-pages"
+            accent="gold"
+          />
+          <ToolCard
+            icon={<Scissors className="h-6 w-6" />}
+            title="Extract Pages"
+            description="Choose pages visually or by range and save just those pages as a brand new PDF."
+            tool="extract-pages"
           />
         </div>
 
@@ -544,6 +573,8 @@ function ActiveTool({ tool, onBack }: { tool: Tool; onBack: () => void }) {
         {tool === "rotate" && <PdfRotate />}
         {tool === "protect" && <PdfProtect />}
         {tool === "unlock" && <PdfUnlock />}
+        {tool === "delete-pages" && <PdfDeletePages />}
+        {tool === "extract-pages" && <PdfExtractPages />}
       </section>
       <div className="mt-6 flex flex-wrap items-center gap-4">
         <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground">
@@ -556,7 +587,9 @@ function ActiveTool({ tool, onBack }: { tool: Tool; onBack: () => void }) {
               ? "compression"
               : tool === "protect" || tool === "unlock"
                 ? "security"
-                : tool
+                : tool === "delete-pages" || tool === "extract-pages"
+                  ? "split"
+                  : tool
           }
         >
           Read how this works
