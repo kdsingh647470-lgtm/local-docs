@@ -511,7 +511,75 @@ function useSections(): Section[] {
                 { hash: "troubleshooting", label: "Download button stays disabled" },
               ]}
             />
-            <ToolLink tool="rotate">Open Rotate PDF</ToolLink>
+          <ToolLink tool="rotate">Open Rotate PDF</ToolLink>
+          </>
+        ),
+      },
+      {
+        hash: "protect",
+        title: "How Protect PDF works",
+        group: "Tool guides",
+        keywords: "protect password encrypt pdf aes 256 128 permissions printing copying",
+        body: (
+          <>
+            <p>
+              Protect PDF adds a password to a PDF using standard PDF encryption. The file is
+              encrypted with AES-256 or AES-128 by a compiled WebAssembly build of qpdf that runs
+              entirely in your browser; neither the PDF nor the password leaves your device.
+            </p>
+            <Steps
+              items={[
+                "Add a PDF that is not already encrypted.",
+                "Choose a password and repeat it to confirm there are no typos.",
+                "Pick AES-256 for the strongest compatibility, or AES-128 if an older reader is involved.",
+                "Decide whether printing and copying text are allowed, then encrypt and download.",
+              ]}
+            />
+            <Callout title="Passwords cannot be recovered">
+              Because nothing is uploaded, there is no server copy we can decrypt. If you forget the
+              password you will not be able to open the file again.
+            </Callout>
+            <Related
+              links={[
+                { hash: "unlock", label: "Removing password protection from a file you can open" },
+                { hash: "security", label: "Security overview" },
+              ]}
+            />
+            <ToolLink tool="protect">Open Protect PDF</ToolLink>
+          </>
+        ),
+      },
+      {
+        hash: "unlock",
+        title: "How Unlock PDF works",
+        group: "Tool guides",
+        keywords: "unlock password remove decrypt pdf open copy print restrictions",
+        body: (
+          <>
+            <p>
+              Unlock PDF removes password protection from a PDF you can already open. You provide the
+              password, the file is decrypted locally with qpdf compiled to WebAssembly, and you
+              download an unrestricted copy. You can only unlock files you have the right to open.
+            </p>
+            <Steps
+              items={[
+                "Add a password-protected PDF.",
+                "Type the password you normally use to open it.",
+                "Press Unlock and wait for the decryption to finish.",
+                "Download the unrestricted PDF and use it with merge, split, compress or convert.",
+              ]}
+            />
+            <Example
+              title="Example: removing a colleague's password to merge files"
+              text="If one file in a batch is password-protected and you know the password, unlock it first, then merge the unprotected copy with the others."
+            />
+            <Related
+              links={[
+                { hash: "protect", label: "Adding password protection" },
+                { hash: "security", label: "Security overview" },
+              ]}
+            />
+            <ToolLink tool="unlock">Open Unlock PDF</ToolLink>
           </>
         ),
       },
