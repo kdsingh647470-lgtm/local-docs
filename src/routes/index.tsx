@@ -317,6 +317,19 @@ function Home() {
             description="Remove the password from a document you can already open and save an unrestricted copy."
             tool="unlock"
           />
+          <ToolCard
+            icon={<Trash2 className="h-6 w-6" />}
+            title="Delete Pages"
+            description="Tick the pages you don't need in the thumbnail grid and download a clean PDF without them."
+            tool="delete-pages"
+            accent="gold"
+          />
+          <ToolCard
+            icon={<Scissors className="h-6 w-6" />}
+            title="Extract Pages"
+            description="Choose pages visually or by range and save just those pages as a brand new PDF."
+            tool="extract-pages"
+          />
         </div>
       </section>
 
