@@ -191,38 +191,36 @@ function useSections(): Section[] {
       },
       {
         hash: "split",
-        title: "How split and extract works",
+        title: "How PDF split works",
         group: "Tool guides",
-        keywords: "split extract pages range zip thumbnails select delete pages",
+        keywords: "split pdf pages range zip thumbnails individual pages",
         body: (
           <>
             <p>
               After you add a file, every page is rendered to a small thumbnail so you can see what
-              you are selecting. Tap a thumbnail to include or exclude that page. For long
-              documents, type a range instead — <code>1-3, 5, 8-10</code> selects pages one to
-              three, five, and eight to ten. Out-of-range numbers are rejected rather than silently
-              ignored.
+              you are selecting. Tap a thumbnail to include or exclude that page. For long documents,
+              type a range instead — <code>1-3, 5, 8-10</code> selects pages one to three, five, and
+              eight to ten. Out-of-range numbers are rejected rather than silently ignored.
             </p>
             <Steps
               items={[
                 "Add one PDF and wait for the thumbnail grid to finish rendering.",
                 "Select pages by tapping thumbnails, or type a range such as 2, 5-9.",
-                "Choose Extract to get one PDF with just those pages, in ascending order.",
-                "Or choose Split into individual pages to get every page as its own PDF inside a ZIP.",
+                "Choose Split into individual pages to get every page as its own PDF inside a ZIP.",
               ]}
             />
             <Example
               title="Example: pulling one invoice out of a monthly batch"
-              text="A 60-page batch where each invoice is two pages: typing 23-24 extracts a clean two-page invoice you can send on its own."
+              text="A 60-page batch where each invoice is two pages: typing 23-24 lets you extract a clean two-page invoice you can send on its own. For that, use the Extract Pages tool; for a ZIP of every page, use Split PDF."
             />
             <Related
               links={[
-                { hash: "merge", label: "Recombining extracted pages" },
+                { hash: "extract-pages", label: "Extracting a subset of pages into a PDF" },
                 { hash: "pdf-to-jpg", label: "Exporting pages as images instead" },
                 { hash: "troubleshooting", label: "Thumbnails stay blank" },
               ]}
             />
-          <ToolLink tool="split">Open PDF split</ToolLink>
+            <ToolLink tool="split">Open PDF split</ToolLink>
           </>
         ),
       },
