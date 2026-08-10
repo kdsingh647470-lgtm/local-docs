@@ -268,11 +268,11 @@ const STEPS = [
   {
     icon: MousePointerClick,
     title: "Choose a tool",
-    text: "Pick merge, split or compress. Each opens a focused workspace with nothing else in the way.",
+    text: "Pick merge, split, delete, extract, compress, rotate, protect, unlock or convert. Each opens a focused workspace with nothing else in the way.",
   },
   {
     icon: Upload,
-    title: "Add your PDF",
+    title: "Add your file",
     text: "Drop a file in or tap to browse. It is read into your browser's memory — never sent to a server.",
   },
   {
