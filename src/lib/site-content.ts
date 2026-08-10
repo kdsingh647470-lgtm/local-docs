@@ -220,6 +220,14 @@ export interface ChangelogEntry {
 /** Product changelog surfaced on /docs#changelog. Newest first. */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.5.0",
+    date: "2026-08-12",
+    changes: [
+      "Added Delete PDF Pages and Extract PDF Pages — visual thumbnail selection with range support.",
+      "Added Protect PDF and Unlock PDF using qpdf compiled to WebAssembly, running AES-256 and AES-128 encryption locally.",
+    ],
+  },
+  {
     version: "1.4.0",
     date: "2026-08-08",
     changes: [
