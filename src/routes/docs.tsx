@@ -19,7 +19,7 @@ import {
 
 const TITLE = "Nesake PDF Docs — Guides, troubleshooting & reference";
 const DESCRIPTION =
-  "Complete Nesake PDF knowledge base: step-by-step guides for merge, split, compress, PDF to Word, PDF to Image, Image to PDF and rotate, plus troubleshooting, FAQs, privacy details and the product changelog.";
+  "Complete Nesake PDF knowledge base: step-by-step guides for merge, split, delete and extract pages, compress, protect, unlock, PDF to Word, PDF to Image, Image to PDF and rotate, plus troubleshooting, FAQs, privacy details and the product changelog.";
 const URL = "https://pdftools.nesake.com/docs";
 
 export const Route = createFileRoute("/docs")({
