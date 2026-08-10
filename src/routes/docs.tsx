@@ -222,7 +222,84 @@ function useSections(): Section[] {
                 { hash: "troubleshooting", label: "Thumbnails stay blank" },
               ]}
             />
-            <ToolLink tool="split">Open PDF split</ToolLink>
+          <ToolLink tool="split">Open PDF split</ToolLink>
+          </>
+        ),
+      },
+      {
+        hash: "delete-pages",
+        title: "How Delete Pages works",
+        group: "Tool guides",
+        keywords: "delete pages remove unwanted pages thumbnail range pdf locally",
+        body: (
+          <>
+            <p>
+              Delete Pages lets you remove the pages you do not want from a PDF and download a clean
+              copy. The file is rendered to a thumbnail grid so you can see exactly what you are
+              removing, and you can also type a page range like <code>1-3, 5, 8-10</code> to select
+              pages in bulk.
+            </p>
+            <Steps
+              items={[
+                "Add a PDF and wait for the thumbnail grid to render.",
+                "Tap the thumbnails you want to remove, or type a range in the input box.",
+                "Review the live counter showing how many pages will remain in the result.",
+                "Press the remove button and download the trimmed PDF.",
+              ]}
+            />
+            <Example
+              title="Example: removing blank pages from a scan"
+              text="A 12-page scan where pages 3, 7 and 11 are blank can be reduced to a clean 9-page document by selecting those three thumbnails and downloading."
+            />
+            <Callout title="Cannot remove every page">
+              The tool refuses to delete every page in the document because a PDF must have at least
+              one page. If you need to discard the whole file, you can simply delete the local file
+              instead.
+            </Callout>
+            <Related
+              links={[
+                { hash: "extract-pages", label: "Keeping only the pages you want" },
+                { hash: "split", label: "Splitting a PDF into pieces" },
+                { hash: "troubleshooting", label: "Thumbnails stay blank" },
+              ]}
+            />
+            <ToolLink tool="delete-pages">Open Delete Pages</ToolLink>
+          </>
+        ),
+      },
+      {
+        hash: "extract-pages",
+        title: "How Extract Pages works",
+        group: "Tool guides",
+        keywords: "extract pages keep selected range new pdf thumbnail pages",
+        body: (
+          <>
+            <p>
+              Extract Pages is the opposite of Delete Pages: you select the pages you want to keep,
+              and the tool writes those pages into a brand-new PDF in the order you selected them.
+              Pages are picked visually or by range, and the live counter shows how many pages will
+              be in the output.
+            </p>
+            <Steps
+              items={[
+                "Add a PDF and wait for thumbnails to render.",
+                "Tap the pages you want to keep, or type a range such as 2, 5-9.",
+                "Confirm the selected count and the number of pages in the result.",
+                "Download the new PDF containing only the chosen pages.",
+              ]}
+            />
+            <Example
+              title="Example: pulling a chapter from a long report"
+              text="A 40-page report where pages 12-19 form a self-contained chapter can be extracted as an 8-page PDF you can share on its own."
+            />
+            <Related
+              links={[
+                { hash: "delete-pages", label: "Removing pages instead of keeping them" },
+                { hash: "split", label: "Splitting into a ZIP of individual pages" },
+                { hash: "troubleshooting", label: "Thumbnails stay blank" },
+              ]}
+            />
+            <ToolLink tool="extract-pages">Open Extract Pages</ToolLink>
           </>
         ),
       },
