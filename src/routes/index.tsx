@@ -222,8 +222,8 @@ function Home() {
             <span className="italic text-[color:var(--emerald-mid)]">online</span>
           </h1>
           <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            Merge, split, compress, rotate and convert PDFs securely in your browser. No
-            installation. Fast. Private. Free.
+            Merge, split, delete, extract, compress, convert, rotate, protect and unlock PDFs
+            securely in your browser. No installation. Fast. Private. Free.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
