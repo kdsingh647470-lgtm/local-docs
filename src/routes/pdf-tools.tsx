@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import {
   ArrowLeft,
@@ -75,10 +76,71 @@ const TOOLS: Tool[] = [
   "extract-pages",
 ];
 
-const TITLE = "Free PDF Tools — Merge, Split, Compress, Convert | Nesake";
-const DESCRIPTION =
-  "The Nesake PDF tools hub: merge, split, compress, rotate, convert PDF to Word, PDF to Image and Image to PDF locally in your browser — nothing is uploaded.";
-const URL = "https://pdftools.nesake.com/pdf-tools";
+const HUB_TITLE = "Free PDF Tools — Merge, Split, Compress, Convert | Nesake";
+const HUB_DESCRIPTION =
+  "The Nesake PDF tools hub: merge, split, compress, delete and extract pages, rotate, convert PDF to Word, PDF to Image and Image to PDF locally in your browser — nothing is uploaded.";
+const HUB_URL = "https://pdftools.nesake.com/pdf-tools";
+
+const TOOL_SEO: Record<
+  Tool,
+  { title: string; description: string }
+> = {
+  merge: {
+    title: "Merge PDFs — Combine Files Locally | Nesake",
+    description:
+      "Combine multiple PDFs into one file. Drag to reorder and download the merged document — all processing happens in your browser.",
+  },
+  split: {
+    title: "Split PDF — Extract Pages or Split into ZIP | Nesake",
+    description:
+      "Select pages visually or by range, then extract them into a new PDF or split every page into a ZIP archive locally.",
+  },
+  compress: {
+    title: "Compress PDF — Reduce File Size Locally | Nesake",
+    description:
+      "Shrink PDFs by re-encoding images and stripping metadata. Pick Low, Medium or High quality and see the exact size saving.",
+  },
+  "pdf-to-word": {
+    title: "PDF to Word — Convert to DOCX in Browser | Nesake",
+    description:
+      "Turn a PDF into an editable Word document with headings and formatting preserved. Converted locally, never uploaded.",
+  },
+  "pdf-to-jpg": {
+    title: "PDF to Image — JPG, PNG & WEBP Export | Nesake",
+    description:
+      "Render PDF pages to JPG, PNG or WEBP images at screen, standard or print quality. Download one page or all as a ZIP.",
+  },
+  "jpg-to-pdf": {
+    title: "Image to PDF — JPG, PNG, WEBP to PDF | Nesake",
+    description:
+      "Convert JPG, PNG, WEBP, GIF, BMP and AVIF images into one PDF. Choose A4, Letter or fit-to-image pages with custom margins.",
+  },
+  rotate: {
+    title: "Rotate PDF — Fix Sideways Pages Locally | Nesake",
+    description:
+      "Rotate individual pages or the entire document from a thumbnail grid. Quality stays untouched because rotation is stored as metadata.",
+  },
+  protect: {
+    title: "Protect PDF — Password Encrypt in Browser | Nesake",
+    description:
+      "Add AES-256 or AES-128 password protection to a PDF and control printing and copying. Encryption happens entirely on your device.",
+  },
+  unlock: {
+    title: "Unlock PDF — Remove Password Protection | Nesake",
+    description:
+      "Remove the password from a PDF you can open and save an unrestricted copy. Processing stays local in your browser.",
+  },
+  "delete-pages": {
+    title: "Delete PDF Pages — Remove Pages Locally | Nesake",
+    description:
+      "Remove unwanted pages from a PDF by selecting thumbnails or typing a range. Download the trimmed PDF — nothing is uploaded.",
+  },
+  "extract-pages": {
+    title: "Extract PDF Pages — Save Selected Pages | Nesake",
+    description:
+      "Pull selected pages out of a PDF into a new file. Pick pages visually or enter a range like 1-3, 5 — all processed locally.",
+  },
+};
 
 export const Route = createFileRoute("/pdf-tools")({
   validateSearch: (search: Record<string, unknown>): { tool?: Tool } => {
@@ -87,15 +149,15 @@ export const Route = createFileRoute("/pdf-tools")({
   },
   head: () => ({
     meta: [
-      { title: TITLE },
-      { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: TITLE },
-      { property: "og:description", content: DESCRIPTION },
+      { title: HUB_TITLE },
+      { name: "description", content: HUB_DESCRIPTION },
+      { property: "og:title", content: HUB_TITLE },
+      { property: "og:description", content: HUB_DESCRIPTION },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: URL },
+      { property: "og:url", content: HUB_URL },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: URL }],
+    links: [{ rel: "canonical", href: HUB_URL }],
     scripts: [
       {
         type: "application/ld+json",
@@ -106,8 +168,8 @@ export const Route = createFileRoute("/pdf-tools")({
             name: "Nesake PDF Tools",
             applicationCategory: "UtilitiesApplication",
             operatingSystem: "Any (web browser)",
-            url: URL,
-            description: DESCRIPTION,
+            url: HUB_URL,
+            description: HUB_DESCRIPTION,
             featureList: [
               "Merge PDF",
               "Split PDF",
@@ -142,7 +204,7 @@ export const Route = createFileRoute("/pdf-tools")({
                 name: "Home",
                 item: "https://pdftools.nesake.com/",
               },
-              { "@type": "ListItem", position: 2, name: "PDF Tools", item: URL },
+              { "@type": "ListItem", position: 2, name: "PDF Tools", item: HUB_URL },
             ],
           },
         ]),
@@ -206,11 +268,11 @@ const STEPS = [
   {
     icon: MousePointerClick,
     title: "Choose a tool",
-    text: "Pick merge, split or compress. Each opens a focused workspace with nothing else in the way.",
+    text: "Pick merge, split, delete, extract, compress, rotate, protect, unlock or convert. Each opens a focused workspace with nothing else in the way.",
   },
   {
     icon: Upload,
-    title: "Add your PDF",
+    title: "Add your file",
     text: "Drop a file in or tap to browse. It is read into your browser's memory — never sent to a server.",
   },
   {
@@ -484,6 +546,8 @@ function ToolsHub() {
           <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold">
             <DocLink hash="merge">How merge works</DocLink>
             <DocLink hash="split">How split works</DocLink>
+            <DocLink hash="delete-pages">How delete pages works</DocLink>
+            <DocLink hash="extract-pages">How extract pages works</DocLink>
             <DocLink hash="compression">How compression works</DocLink>
             <DocLink hash="privacy">Privacy</DocLink>
             <DocLink hash="security">Security</DocLink>
@@ -550,6 +614,12 @@ function CompressionBar() {
 
 function ActiveTool({ tool, onBack }: { tool: Tool; onBack: () => void }) {
   const meta = TOOL_META[tool];
+  useEffect(() => {
+    const seo = TOOL_SEO[tool];
+    if (seo) {
+      document.title = seo.title;
+    }
+  }, [tool]);
   return (
     <div>
       <button

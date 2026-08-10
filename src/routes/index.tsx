@@ -25,10 +25,11 @@ import {
   HelpCircle,
   Scale,
   FileText,
+  Trash2,
 } from "lucide-react";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
-import { ToolCard } from "@/components/site/tool-card";
+import { ToolCard, type ToolCardProps } from "@/components/site/tool-card";
 import { DOC_ENTRIES, FAQ_ITEMS } from "@/lib/site-content";
 import {
   Accordion,
@@ -39,7 +40,7 @@ import {
 
 const TITLE = "Nesake PDF — Free Online PDF Tools | Merge, Split, Compress";
 const DESCRIPTION =
-  "Free PDF tools by Nesake: merge, split, compress, convert and rotate documents locally in your browser. Private, fast, no watermark, no account.";
+  "Free PDF tools by Nesake: merge, split, delete and extract pages, compress, convert to Word, convert to and from images, rotate, protect and unlock — all locally in your browser. Private, fast, no watermark, no account.";
 const URL = "https://pdftools.nesake.com/";
 
 const HOME_FAQ = FAQ_ITEMS.slice(0, 6);
@@ -81,11 +82,15 @@ export const Route = createFileRoute("/")({
           featureList: [
             "Merge PDF files",
             "Split and extract PDF pages",
+            "Delete PDF pages",
+            "Extract PDF pages",
             "Compress PDF files",
             "Convert PDF to Word",
             "Convert PDF to JPG, PNG or WEBP",
             "Convert images to PDF",
             "Rotate PDF pages",
+            "Protect PDF with a password",
+            "Unlock password-protected PDF",
           ],
         }),
       },
@@ -217,8 +222,8 @@ function Home() {
             <span className="italic text-[color:var(--emerald-mid)]">online</span>
           </h1>
           <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            Merge, split, compress, rotate and convert PDFs securely in your browser. No
-            installation. Fast. Private. Free.
+            Merge, split, delete, extract, compress, convert, rotate, protect and unlock PDFs
+            securely in your browser. No installation. Fast. Private. Free.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
@@ -311,6 +316,19 @@ function Home() {
             title="Unlock PDF"
             description="Remove the password from a document you can already open and save an unrestricted copy."
             tool="unlock"
+          />
+          <ToolCard
+            icon={<Trash2 className="h-6 w-6" />}
+            title="Delete Pages"
+            description="Tick the pages you don't need in the thumbnail grid and download a clean PDF without them."
+            tool="delete-pages"
+            accent="gold"
+          />
+          <ToolCard
+            icon={<Scissors className="h-6 w-6" />}
+            title="Extract Pages"
+            description="Choose pages visually or by range and save just those pages as a brand new PDF."
+            tool="extract-pages"
           />
         </div>
       </section>
@@ -507,7 +525,7 @@ function Home() {
           title="Guides built from the documentation"
           text="Task-shaped walkthroughs that point at the relevant reference section instead of repeating it."
         />
-        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <ArticleCard
             hash="merge"
             kicker="4 min read"
@@ -521,6 +539,13 @@ function Home() {
             title="Pull a signature page out of a contract"
             text="Instead of guessing page numbers, use the thumbnail grid to click the pages you want, or type a range like 1-3, 8. The extracted pages become a fresh PDF containing nothing else."
             cta={{ label: "Open split", tool: "split" }}
+          />
+          <ArticleCard
+            hash="delete-pages"
+            kicker="3 min read"
+            title="Remove blank pages from a scan"
+            text="Use the thumbnail grid or a range like 3, 7, 11 to remove the pages you do not need, then download a clean PDF that keeps only the content you want."
+            cta={{ label: "Open delete pages", tool: "delete-pages" }}
           />
           <ArticleCard
             hash="compression"
@@ -639,6 +664,7 @@ function SectionHeading({
   );
 }
 
+
 function ArticleCard({
   hash,
   kicker,
@@ -650,7 +676,7 @@ function ArticleCard({
   kicker: string;
   title: string;
   text: string;
-  cta: { label: string; tool: "merge" | "split" | "compress" };
+  cta: { label: string; tool: ToolCardProps["tool"] };
 }) {
   return (
     <article className="flex flex-col rounded-3xl border border-border bg-card p-6 shadow-sm">

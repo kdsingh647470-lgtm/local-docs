@@ -19,7 +19,7 @@ import {
 
 const TITLE = "Nesake PDF Docs — Guides, troubleshooting & reference";
 const DESCRIPTION =
-  "Complete Nesake PDF knowledge base: step-by-step guides for merge, split, compress, PDF to Word, PDF to Image, Image to PDF and rotate, plus troubleshooting, FAQs, privacy details and the product changelog.";
+  "Complete Nesake PDF knowledge base: step-by-step guides for merge, split, delete and extract pages, compress, protect, unlock, PDF to Word, PDF to Image, Image to PDF and rotate, plus troubleshooting, FAQs, privacy details and the product changelog.";
 const URL = "https://pdftools.nesake.com/docs";
 
 export const Route = createFileRoute("/docs")({
@@ -92,11 +92,15 @@ export const Route = createFileRoute("/docs")({
 type Tool =
   | "merge"
   | "split"
+  | "delete-pages"
+  | "extract-pages"
   | "compress"
   | "pdf-to-word"
   | "pdf-to-jpg"
   | "jpg-to-pdf"
-  | "rotate";
+  | "rotate"
+  | "protect"
+  | "unlock";
 
 interface Section {
   hash: string;
@@ -187,38 +191,113 @@ function useSections(): Section[] {
       },
       {
         hash: "split",
-        title: "How split and extract works",
+        title: "How PDF split works",
         group: "Tool guides",
-        keywords: "split extract pages range zip thumbnails select delete pages",
+        keywords: "split pdf pages range zip thumbnails individual pages",
         body: (
           <>
             <p>
               After you add a file, every page is rendered to a small thumbnail so you can see what
-              you are selecting. Tap a thumbnail to include or exclude that page. For long
-              documents, type a range instead — <code>1-3, 5, 8-10</code> selects pages one to
-              three, five, and eight to ten. Out-of-range numbers are rejected rather than silently
-              ignored.
+              you are selecting. Tap a thumbnail to include or exclude that page. For long documents,
+              type a range instead — <code>1-3, 5, 8-10</code> selects pages one to three, five, and
+              eight to ten. Out-of-range numbers are rejected rather than silently ignored.
             </p>
             <Steps
               items={[
                 "Add one PDF and wait for the thumbnail grid to finish rendering.",
                 "Select pages by tapping thumbnails, or type a range such as 2, 5-9.",
-                "Choose Extract to get one PDF with just those pages, in ascending order.",
-                "Or choose Split into individual pages to get every page as its own PDF inside a ZIP.",
+                "Choose Split into individual pages to get every page as its own PDF inside a ZIP.",
               ]}
             />
             <Example
               title="Example: pulling one invoice out of a monthly batch"
-              text="A 60-page batch where each invoice is two pages: typing 23-24 extracts a clean two-page invoice you can send on its own."
+              text="A 60-page batch where each invoice is two pages: typing 23-24 lets you extract a clean two-page invoice you can send on its own. For that, use the Extract Pages tool; for a ZIP of every page, use Split PDF."
             />
             <Related
               links={[
-                { hash: "merge", label: "Recombining extracted pages" },
+                { hash: "extract-pages", label: "Extracting a subset of pages into a PDF" },
                 { hash: "pdf-to-jpg", label: "Exporting pages as images instead" },
                 { hash: "troubleshooting", label: "Thumbnails stay blank" },
               ]}
             />
             <ToolLink tool="split">Open PDF split</ToolLink>
+          </>
+        ),
+      },
+      {
+        hash: "delete-pages",
+        title: "How Delete Pages works",
+        group: "Tool guides",
+        keywords: "delete pages remove unwanted pages thumbnail range pdf locally",
+        body: (
+          <>
+            <p>
+              Delete Pages lets you remove the pages you do not want from a PDF and download a clean
+              copy. The file is rendered to a thumbnail grid so you can see exactly what you are
+              removing, and you can also type a page range like <code>1-3, 5, 8-10</code> to select
+              pages in bulk.
+            </p>
+            <Steps
+              items={[
+                "Add a PDF and wait for the thumbnail grid to render.",
+                "Tap the thumbnails you want to remove, or type a range in the input box.",
+                "Review the live counter showing how many pages will remain in the result.",
+                "Press the remove button and download the trimmed PDF.",
+              ]}
+            />
+            <Example
+              title="Example: removing blank pages from a scan"
+              text="A 12-page scan where pages 3, 7 and 11 are blank can be reduced to a clean 9-page document by selecting those three thumbnails and downloading."
+            />
+            <Callout title="Cannot remove every page">
+              The tool refuses to delete every page in the document because a PDF must have at least
+              one page. If you need to discard the whole file, you can simply delete the local file
+              instead.
+            </Callout>
+            <Related
+              links={[
+                { hash: "extract-pages", label: "Keeping only the pages you want" },
+                { hash: "split", label: "Splitting a PDF into pieces" },
+                { hash: "troubleshooting", label: "Thumbnails stay blank" },
+              ]}
+            />
+            <ToolLink tool="delete-pages">Open Delete Pages</ToolLink>
+          </>
+        ),
+      },
+      {
+        hash: "extract-pages",
+        title: "How Extract Pages works",
+        group: "Tool guides",
+        keywords: "extract pages keep selected range new pdf thumbnail pages",
+        body: (
+          <>
+            <p>
+              Extract Pages is the opposite of Delete Pages: you select the pages you want to keep,
+              and the tool writes those pages into a brand-new PDF in the order you selected them.
+              Pages are picked visually or by range, and the live counter shows how many pages will
+              be in the output.
+            </p>
+            <Steps
+              items={[
+                "Add a PDF and wait for thumbnails to render.",
+                "Tap the pages you want to keep, or type a range such as 2, 5-9.",
+                "Confirm the selected count and the number of pages in the result.",
+                "Download the new PDF containing only the chosen pages.",
+              ]}
+            />
+            <Example
+              title="Example: pulling a chapter from a long report"
+              text="A 40-page report where pages 12-19 form a self-contained chapter can be extracted as an 8-page PDF you can share on its own."
+            />
+            <Related
+              links={[
+                { hash: "delete-pages", label: "Removing pages instead of keeping them" },
+                { hash: "split", label: "Splitting into a ZIP of individual pages" },
+                { hash: "troubleshooting", label: "Thumbnails stay blank" },
+              ]}
+            />
+            <ToolLink tool="extract-pages">Open Extract Pages</ToolLink>
           </>
         ),
       },
@@ -430,7 +509,75 @@ function useSections(): Section[] {
                 { hash: "troubleshooting", label: "Download button stays disabled" },
               ]}
             />
-            <ToolLink tool="rotate">Open Rotate PDF</ToolLink>
+          <ToolLink tool="rotate">Open Rotate PDF</ToolLink>
+          </>
+        ),
+      },
+      {
+        hash: "protect",
+        title: "How Protect PDF works",
+        group: "Tool guides",
+        keywords: "protect password encrypt pdf aes 256 128 permissions printing copying",
+        body: (
+          <>
+            <p>
+              Protect PDF adds a password to a PDF using standard PDF encryption. The file is
+              encrypted with AES-256 or AES-128 by a compiled WebAssembly build of qpdf that runs
+              entirely in your browser; neither the PDF nor the password leaves your device.
+            </p>
+            <Steps
+              items={[
+                "Add a PDF that is not already encrypted.",
+                "Choose a password and repeat it to confirm there are no typos.",
+                "Pick AES-256 for the strongest compatibility, or AES-128 if an older reader is involved.",
+                "Decide whether printing and copying text are allowed, then encrypt and download.",
+              ]}
+            />
+            <Callout title="Passwords cannot be recovered">
+              Because nothing is uploaded, there is no server copy we can decrypt. If you forget the
+              password you will not be able to open the file again.
+            </Callout>
+            <Related
+              links={[
+                { hash: "unlock", label: "Removing password protection from a file you can open" },
+                { hash: "security", label: "Security overview" },
+              ]}
+            />
+            <ToolLink tool="protect">Open Protect PDF</ToolLink>
+          </>
+        ),
+      },
+      {
+        hash: "unlock",
+        title: "How Unlock PDF works",
+        group: "Tool guides",
+        keywords: "unlock password remove decrypt pdf open copy print restrictions",
+        body: (
+          <>
+            <p>
+              Unlock PDF removes password protection from a PDF you can already open. You provide the
+              password, the file is decrypted locally with qpdf compiled to WebAssembly, and you
+              download an unrestricted copy. You can only unlock files you have the right to open.
+            </p>
+            <Steps
+              items={[
+                "Add a password-protected PDF.",
+                "Type the password you normally use to open it.",
+                "Press Unlock and wait for the decryption to finish.",
+                "Download the unrestricted PDF and use it with merge, split, compress or convert.",
+              ]}
+            />
+            <Example
+              title="Example: removing a colleague's password to merge files"
+              text="If one file in a batch is password-protected and you know the password, unlock it first, then merge the unprotected copy with the others."
+            />
+            <Related
+              links={[
+                { hash: "protect", label: "Adding password protection" },
+                { hash: "security", label: "Security overview" },
+              ]}
+            />
+            <ToolLink tool="unlock">Open Unlock PDF</ToolLink>
           </>
         ),
       },
@@ -626,18 +773,18 @@ function useSections(): Section[] {
         keywords: "contact support roadmap request feature bug report protect unlock ocr watermark",
         body: (
           <>
-            <p>
-              Found a document that will not process, or want a tool that is not here yet? The
-              roadmap on the tools hub lists what is planned next, including protect, unlock, OCR and
-              watermark. When reporting a problem, the useful details are: the tool, the browser and
-              device, the file size and page count, and the exact message shown.
-            </p>
-            <Link
-              to="/pdf-tools"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--emerald-deep)]"
-            >
-              See the roadmap <ArrowRight className="h-4 w-4" />
-            </Link>
+          <p>
+            Found a document that will not process, or want a tool that is not here yet? The roadmap
+            on the tools hub lists what is planned next. When reporting a problem, the useful details
+            are: the tool, the browser and device, the file size and page count, and the exact
+            message shown.
+          </p>
+          <Link
+            to="/pdf-tools"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--emerald-deep)]"
+          >
+            See the tools hub <ArrowRight className="h-4 w-4" />
+          </Link>
           </>
         ),
       },
