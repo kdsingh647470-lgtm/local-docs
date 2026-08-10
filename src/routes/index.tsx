@@ -25,6 +25,7 @@ import {
   HelpCircle,
   Scale,
   FileText,
+  Trash2,
 } from "lucide-react";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
