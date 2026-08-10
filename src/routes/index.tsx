@@ -525,7 +525,7 @@ function Home() {
           title="Guides built from the documentation"
           text="Task-shaped walkthroughs that point at the relevant reference section instead of repeating it."
         />
-        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <ArticleCard
             hash="merge"
             kicker="4 min read"
@@ -539,6 +539,13 @@ function Home() {
             title="Pull a signature page out of a contract"
             text="Instead of guessing page numbers, use the thumbnail grid to click the pages you want, or type a range like 1-3, 8. The extracted pages become a fresh PDF containing nothing else."
             cta={{ label: "Open split", tool: "split" }}
+          />
+          <ArticleCard
+            hash="delete-pages"
+            kicker="3 min read"
+            title="Remove blank pages from a scan"
+            text="Use the thumbnail grid or a range like 3, 7, 11 to remove the pages you do not need, then download a clean PDF that keeps only the content you want."
+            cta={{ label: "Open delete pages", tool: "delete-pages" }}
           />
           <ArticleCard
             hash="compression"
