@@ -546,6 +546,8 @@ function ToolsHub() {
           <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold">
             <DocLink hash="merge">How merge works</DocLink>
             <DocLink hash="split">How split works</DocLink>
+            <DocLink hash="delete-pages">How delete pages works</DocLink>
+            <DocLink hash="extract-pages">How extract pages works</DocLink>
             <DocLink hash="compression">How compression works</DocLink>
             <DocLink hash="privacy">Privacy</DocLink>
             <DocLink hash="security">Security</DocLink>
