@@ -657,9 +657,6 @@ function SectionHeading({
   );
 }
 
-import { ToolCard, type ToolCardProps } from "@/components/site/tool-card";
-
-// ...
 
 function ArticleCard({
   hash,
