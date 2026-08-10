@@ -657,6 +657,10 @@ function SectionHeading({
   );
 }
 
+import { ToolCard, type ToolCardProps } from "@/components/site/tool-card";
+
+// ...
+
 function ArticleCard({
   hash,
   kicker,
@@ -668,7 +672,7 @@ function ArticleCard({
   kicker: string;
   title: string;
   text: string;
-  cta: { label: string; tool: "merge" | "split" | "compress" };
+  cta: { label: string; tool: ToolCardProps["tool"] };
 }) {
   return (
     <article className="flex flex-col rounded-3xl border border-border bg-card p-6 shadow-sm">
