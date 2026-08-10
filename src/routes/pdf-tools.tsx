@@ -75,80 +75,146 @@ const TOOLS: Tool[] = [
   "extract-pages",
 ];
 
-const TITLE = "Free PDF Tools — Merge, Split, Compress, Convert | Nesake";
-const DESCRIPTION =
-  "The Nesake PDF tools hub: merge, split, compress, rotate, convert PDF to Word, PDF to Image and Image to PDF locally in your browser — nothing is uploaded.";
-const URL = "https://pdftools.nesake.com/pdf-tools";
+const HUB_TITLE = "Free PDF Tools — Merge, Split, Compress, Convert | Nesake";
+const HUB_DESCRIPTION =
+  "The Nesake PDF tools hub: merge, split, compress, delete and extract pages, rotate, convert PDF to Word, PDF to Image and Image to PDF locally in your browser — nothing is uploaded.";
+const HUB_URL = "https://pdftools.nesake.com/pdf-tools";
+
+const TOOL_SEO: Record<
+  Tool,
+  { title: string; description: string }
+> = {
+  merge: {
+    title: "Merge PDFs — Combine Files Locally | Nesake",
+    description:
+      "Combine multiple PDFs into one file. Drag to reorder and download the merged document — all processing happens in your browser.",
+  },
+  split: {
+    title: "Split PDF — Extract Pages or Split into ZIP | Nesake",
+    description:
+      "Select pages visually or by range, then extract them into a new PDF or split every page into a ZIP archive locally.",
+  },
+  compress: {
+    title: "Compress PDF — Reduce File Size Locally | Nesake",
+    description:
+      "Shrink PDFs by re-encoding images and stripping metadata. Pick Low, Medium or High quality and see the exact size saving.",
+  },
+  "pdf-to-word": {
+    title: "PDF to Word — Convert to DOCX in Browser | Nesake",
+    description:
+      "Turn a PDF into an editable Word document with headings and formatting preserved. Converted locally, never uploaded.",
+  },
+  "pdf-to-jpg": {
+    title: "PDF to Image — JPG, PNG & WEBP Export | Nesake",
+    description:
+      "Render PDF pages to JPG, PNG or WEBP images at screen, standard or print quality. Download one page or all as a ZIP.",
+  },
+  "jpg-to-pdf": {
+    title: "Image to PDF — JPG, PNG, WEBP to PDF | Nesake",
+    description:
+      "Convert JPG, PNG, WEBP, GIF, BMP and AVIF images into one PDF. Choose A4, Letter or fit-to-image pages with custom margins.",
+  },
+  rotate: {
+    title: "Rotate PDF — Fix Sideways Pages Locally | Nesake",
+    description:
+      "Rotate individual pages or the entire document from a thumbnail grid. Quality stays untouched because rotation is stored as metadata.",
+  },
+  protect: {
+    title: "Protect PDF — Password Encrypt in Browser | Nesake",
+    description:
+      "Add AES-256 or AES-128 password protection to a PDF and control printing and copying. Encryption happens entirely on your device.",
+  },
+  unlock: {
+    title: "Unlock PDF — Remove Password Protection | Nesake",
+    description:
+      "Remove the password from a PDF you can open and save an unrestricted copy. Processing stays local in your browser.",
+  },
+  "delete-pages": {
+    title: "Delete PDF Pages — Remove Pages Locally | Nesake",
+    description:
+      "Remove unwanted pages from a PDF by selecting thumbnails or typing a range. Download the trimmed PDF — nothing is uploaded.",
+  },
+  "extract-pages": {
+    title: "Extract PDF Pages — Save Selected Pages | Nesake",
+    description:
+      "Pull selected pages out of a PDF into a new file. Pick pages visually or enter a range like 1-3, 5 — all processed locally.",
+  },
+};
 
 export const Route = createFileRoute("/pdf-tools")({
   validateSearch: (search: Record<string, unknown>): { tool?: Tool } => {
     const tool = search.tool;
     return TOOLS.includes(tool as Tool) ? { tool: tool as Tool } : {};
   },
-  head: () => ({
-    meta: [
-      { title: TITLE },
-      { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: TITLE },
-      { property: "og:description", content: DESCRIPTION },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: URL },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: URL }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify([
-          {
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            name: "Nesake PDF Tools",
-            applicationCategory: "UtilitiesApplication",
-            operatingSystem: "Any (web browser)",
-            url: URL,
-            description: DESCRIPTION,
-            featureList: [
-              "Merge PDF",
-              "Split PDF",
-              "Extract pages",
-              "Delete pages",
-              "Compress PDF",
-              "Convert PDF to Word",
-              "Convert PDF to Image",
-              "Convert Image to PDF",
-              "Rotate PDF",
-              "Protect PDF with a password",
-              "Unlock password-protected PDF",
-            ],
-            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-          },
-          {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: FAQ_ITEMS.map((f) => ({
-              "@type": "Question",
-              name: f.question,
-              acceptedAnswer: { "@type": "Answer", text: f.answer },
-            })),
-          },
-          {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: "Home",
-                item: "https://pdftools.nesake.com/",
-              },
-              { "@type": "ListItem", position: 2, name: "PDF Tools", item: URL },
-            ],
-          },
-        ]),
-      },
-    ],
-  }),
+  head: ({ search }) => {
+    const tool = (search as { tool?: Tool }).tool;
+    const seo = tool ? TOOL_SEO[tool] : { title: HUB_TITLE, description: HUB_DESCRIPTION };
+    const url = tool ? `${HUB_URL}?tool=${tool}` : HUB_URL;
+    return {
+      meta: [
+        { title: seo.title },
+        { name: "description", content: seo.description },
+        { property: "og:title", content: seo.title },
+        { property: "og:description", content: seo.description },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: url },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              name: "Nesake PDF Tools",
+              applicationCategory: "UtilitiesApplication",
+              operatingSystem: "Any (web browser)",
+              url: HUB_URL,
+              description: HUB_DESCRIPTION,
+              featureList: [
+                "Merge PDF",
+                "Split PDF",
+                "Extract pages",
+                "Delete pages",
+                "Compress PDF",
+                "Convert PDF to Word",
+                "Convert PDF to Image",
+                "Convert Image to PDF",
+                "Rotate PDF",
+                "Protect PDF with a password",
+                "Unlock password-protected PDF",
+              ],
+              offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: FAQ_ITEMS.map((f) => ({
+                "@type": "Question",
+                name: f.question,
+                acceptedAnswer: { "@type": "Answer", text: f.answer },
+              })),
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: "Home",
+                  item: "https://pdftools.nesake.com/",
+                },
+                { "@type": "ListItem", position: 2, name: "PDF Tools", item: HUB_URL },
+              ],
+            },
+          ]),
+        },
+      ],
+    };
+  },
   component: PdfToolsPage,
 });
 
