@@ -87,8 +87,18 @@ export const DOC_ENTRIES: DocEntry[] = [
   },
   {
     hash: "split",
-    title: "How split & extract works",
+    title: "How PDF split works",
     summary: "Selecting pages visually, range syntax like 1-3, 5, and exporting a ZIP of pages.",
+  },
+  {
+    hash: "delete-pages",
+    title: "How Delete Pages works",
+    summary: "Remove unwanted pages from a PDF by selecting thumbnails or typing a range.",
+  },
+  {
+    hash: "extract-pages",
+    title: "How Extract Pages works",
+    summary: "Pull selected pages out of a PDF into a brand new file in the order you choose.",
   },
   {
     hash: "compression",
@@ -114,6 +124,16 @@ export const DOC_ENTRIES: DocEntry[] = [
     hash: "rotate",
     title: "How rotate works",
     summary: "Per-page and whole-document rotation, and why quality is never affected.",
+  },
+  {
+    hash: "protect",
+    title: "How Protect PDF works",
+    summary: "AES-256 and AES-128 encryption, password choice, and permission flags.",
+  },
+  {
+    hash: "unlock",
+    title: "How Unlock PDF works",
+    summary: "Removing password protection from a file you can already open.",
   },
   {
     hash: "troubleshooting",
