@@ -51,6 +51,11 @@ export const FAQ_ITEMS: FaqItem[] = [
       "Yes. Protect PDF encrypts the document with the standard PDF security handler using AES-256 or AES-128, so any reader will ask for your password before opening it. You can also decide whether printing and text copying stay allowed. The encryption runs in your browser, so neither the file nor the password ever leaves your device — and because there is no copy on a server, a forgotten password cannot be recovered.",
   },
   {
+    question: "Can I sign a PDF without printing it?",
+    answer:
+      "Yes. Sign PDF lets you draw a signature with your finger or mouse, type your name in a handwriting style, or upload a photo or scan of your signature. Drag it onto the page you need, resize it, and download a signed copy. The signature and the document are only ever handled inside your browser, so nothing is uploaded.",
+  },
+  {
     question: "How do I fix a sideways scanned page?",
     answer:
       "Open Rotate PDF, drop the file in, and rotate individual pages left or right from the thumbnail grid — or rotate every page at once. Rotation is stored as page metadata, so text and image quality are untouched.",
@@ -99,6 +104,11 @@ export const DOC_ENTRIES: DocEntry[] = [
     hash: "extract-pages",
     title: "How Extract Pages works",
     summary: "Pull selected pages out of a PDF into a brand new file in the order you choose.",
+  },
+  {
+    hash: "sign",
+    title: "How Sign PDF works",
+    summary: "Draw, type or upload a signature, position it on any page and export a signed copy.",
   },
   {
     hash: "compression",
@@ -219,6 +229,13 @@ export interface ChangelogEntry {
 
 /** Product changelog surfaced on /docs#changelog. Newest first. */
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.6.0",
+    date: "2026-08-11",
+    changes: [
+      "Added Sign PDF — draw, type or upload a signature and place it on any page, entirely in the browser.",
+    ],
+  },
   {
     version: "1.5.0",
     date: "2026-08-12",
