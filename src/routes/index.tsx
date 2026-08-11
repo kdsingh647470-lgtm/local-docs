@@ -3,6 +3,7 @@ import {
   ArrowRight,
   FilePlus2,
   Scissors,
+  PenLine,
   FileArchive,
   FileType2,
   ShieldCheck,
@@ -91,6 +92,7 @@ export const Route = createFileRoute("/")({
             "Rotate PDF pages",
             "Protect PDF with a password",
             "Unlock password-protected PDF",
+      "Sign PDF with a handwritten signature",
           ],
         }),
       },
@@ -329,6 +331,13 @@ function Home() {
             title="Extract Pages"
             description="Choose pages visually or by range and save just those pages as a brand new PDF."
             tool="extract-pages"
+          />
+          <ToolCard
+            icon={<PenLine className="h-6 w-6" />}
+            title="Sign PDF"
+            description="Draw, type or upload your signature, drag it onto the page and download the signed PDF."
+            tool="sign"
+            accent="gold"
           />
         </div>
       </section>

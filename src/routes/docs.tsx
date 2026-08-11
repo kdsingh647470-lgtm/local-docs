@@ -100,7 +100,8 @@ type Tool =
   | "jpg-to-pdf"
   | "rotate"
   | "protect"
-  | "unlock";
+  | "unlock"
+  | "sign";
 
 interface Section {
   hash: string;
@@ -298,6 +299,47 @@ function useSections(): Section[] {
               ]}
             />
             <ToolLink tool="extract-pages">Open Extract Pages</ToolLink>
+          </>
+        ),
+      },
+      {
+        hash: "sign",
+        title: "How Sign PDF works",
+        group: "Tool guides",
+        keywords: "sign signature draw type upload initials esign place page signed pdf",
+        body: (
+          <>
+            <p>
+              Sign PDF adds a visible signature image to a page of your document. You can draw the
+              signature on a touch or mouse pad, type your name and pick a handwriting style, or
+              upload a photo or scan of a signature you already have. The signature is trimmed to
+              the ink, drawn onto the page you choose, and the document is re-saved locally.
+            </p>
+            <Steps
+              items={[
+                "Add the PDF you need to sign.",
+                "Draw, type or upload your signature and press \u201cUse this signature\u201d.",
+                "Move to the page you want with the page arrows.",
+                "Tap or drag on the page preview to position the signature, then set its size.",
+                "Download the signed PDF.",
+              ]}
+            />
+            <Example
+              title="Example: returning a signed contract"
+              text="Open the contract, draw your signature once, jump to the last page, drop it on the signature line at about 25% of the page width and download the signed copy."
+            />
+            <Callout title="Visible signature, not a digital certificate">
+              This is a visible signature, not a cryptographic digital signature. It replaces the
+              print-sign-scan loop, but it does not embed a certificate-based identity.
+            </Callout>
+            <Related
+              links={[
+                { hash: "protect", label: "Adding a password after signing" },
+                { hash: "rotate", label: "Straightening a page before signing" },
+                { hash: "privacy", label: "Why your signature never leaves the device" },
+              ]}
+            />
+            <ToolLink tool="sign">Open Sign PDF</ToolLink>
           </>
         ),
       },

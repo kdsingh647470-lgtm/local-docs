@@ -25,6 +25,7 @@ import {
   BookOpen,
   Images,
   ImagePlus,
+  PenLine,
 } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import {
@@ -44,6 +45,7 @@ import { PdfProtect } from "@/components/pdf-tools/pdf-protect";
 import { PdfUnlock } from "@/components/pdf-tools/pdf-unlock";
 import { PdfDeletePages } from "@/components/pdf-tools/pdf-delete-pages";
 import { PdfExtractPages } from "@/components/pdf-tools/pdf-extract-pages";
+import { PdfSign } from "@/components/pdf-tools/pdf-sign";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { ToolCard } from "@/components/site/tool-card";
@@ -60,7 +62,8 @@ type Tool =
   | "protect"
   | "unlock"
   | "delete-pages"
-  | "extract-pages";
+  | "extract-pages"
+  | "sign";
 
 const TOOLS: Tool[] = [
   "merge",
@@ -74,11 +77,12 @@ const TOOLS: Tool[] = [
   "unlock",
   "delete-pages",
   "extract-pages",
+  "sign",
 ];
 
 const HUB_TITLE = "Free PDF Tools — Merge, Split, Compress, Convert | Nesake";
 const HUB_DESCRIPTION =
-  "The Nesake PDF tools hub: merge, split, compress, delete and extract pages, rotate, convert PDF to Word, PDF to Image and Image to PDF locally in your browser — nothing is uploaded.";
+  "The Nesake PDF tools hub: merge, split, compress, delete and extract pages, sign, rotate, convert PDF to Word, PDF to Image and Image to PDF locally in your browser — nothing is uploaded.";
 const HUB_URL = "https://pdftools.nesake.com/pdf-tools";
 
 const TOOL_SEO: Record<
@@ -140,6 +144,11 @@ const TOOL_SEO: Record<
     description:
       "Pull selected pages out of a PDF into a new file. Pick pages visually or enter a range like 1-3, 5 — all processed locally.",
   },
+  sign: {
+    title: "Sign PDF — Add Your Signature in Browser | Nesake",
+    description:
+      "Draw, type or upload your signature, drag it onto any page and download the signed PDF. Your document never leaves your device.",
+  },
 };
 
 export const Route = createFileRoute("/pdf-tools")({
@@ -182,6 +191,7 @@ export const Route = createFileRoute("/pdf-tools")({
               "Rotate PDF",
               "Protect PDF with a password",
               "Unlock password-protected PDF",
+              "Sign PDF with a handwritten signature",
             ],
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
           },
@@ -261,6 +271,11 @@ const TOOL_META: Record<Tool, { title: string; blurb: string }> = {
     title: "Rotate PDF",
     blurb: "Turn sideways pages upright — one page at a time or the whole document at once.",
   },
+  sign: {
+    title: "Sign PDF",
+    blurb:
+      "Draw, type or upload a signature, place it exactly where you want and download the signed document.",
+  },
 };
 
 
@@ -268,7 +283,7 @@ const STEPS = [
   {
     icon: MousePointerClick,
     title: "Choose a tool",
-    text: "Pick merge, split, delete, extract, compress, rotate, protect, unlock or convert. Each opens a focused workspace with nothing else in the way.",
+    text: "Pick merge, split, delete, extract, compress, sign, rotate, protect, unlock or convert. Each opens a focused workspace with nothing else in the way.",
   },
   {
     icon: Upload,
@@ -423,6 +438,13 @@ function ToolsHub() {
             title="Extract Pages"
             description="Choose pages visually or by range and save just those pages as a brand new PDF."
             tool="extract-pages"
+          />
+          <ToolCard
+            icon={<PenLine className="h-6 w-6" />}
+            title="Sign PDF"
+            description="Draw, type or upload your signature, drag it onto the right page and download the signed PDF."
+            tool="sign"
+            accent="gold"
           />
         </div>
 
@@ -645,6 +667,7 @@ function ActiveTool({ tool, onBack }: { tool: Tool; onBack: () => void }) {
         {tool === "unlock" && <PdfUnlock />}
         {tool === "delete-pages" && <PdfDeletePages />}
         {tool === "extract-pages" && <PdfExtractPages />}
+        {tool === "sign" && <PdfSign />}
       </section>
       <div className="mt-6 flex flex-wrap items-center gap-4">
         <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground">

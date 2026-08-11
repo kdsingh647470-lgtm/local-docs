@@ -60,6 +60,9 @@ export function SiteFooter() {
             <Link to="/pdf-tools" search={{ tool: "rotate" }} className={linkClass}>
               Rotate PDF
             </Link>
+            <Link to="/pdf-tools" search={{ tool: "sign" }} className={linkClass}>
+              Sign PDF
+            </Link>
           </li>
           <li>
             <Link to="/pdf-tools" className={linkClass}>

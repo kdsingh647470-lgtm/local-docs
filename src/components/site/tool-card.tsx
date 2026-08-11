@@ -16,7 +16,8 @@ export interface ToolCardProps {
     | "protect"
     | "unlock"
     | "delete-pages"
-    | "extract-pages";
+    | "extract-pages"
+    | "sign";
   comingSoon?: boolean;
   accent?: "emerald" | "gold";
 }
