@@ -54,12 +54,18 @@ export function SiteFooter() {
             <Link to="/pdf-tools" search={{ tool: "delete-pages" }} className={linkClass}>
               Delete Pages
             </Link>
+          </li>
+          <li>
             <Link to="/pdf-tools" search={{ tool: "extract-pages" }} className={linkClass}>
               Extract Pages
             </Link>
+          </li>
+          <li>
             <Link to="/pdf-tools" search={{ tool: "rotate" }} className={linkClass}>
               Rotate PDF
             </Link>
+          </li>
+          <li>
             <Link to="/pdf-tools" search={{ tool: "sign" }} className={linkClass}>
               Sign PDF
             </Link>
@@ -88,40 +94,82 @@ export function SiteFooter() {
             </Link>
           </li>
           <li>
+            <Link to="/docs" hash="troubleshooting" className={linkClass}>
+              Troubleshooting
+            </Link>
+          </li>
+          <li>
             <Link to="/docs" hash="faq" className={linkClass}>
               FAQs
             </Link>
           </li>
         </FooterCol>
 
-        <FooterCol title="Company">
+        <FooterCol title="Company & legal">
           <li>
-            <Link to="/" hash="about" className={linkClass}>
+            <Link to="/contact" className={linkClass}>
               About
             </Link>
           </li>
           <li>
-            <Link to="/" hash="contact" className={linkClass}>
+            <Link to="/contact" className={linkClass}>
               Contact
             </Link>
           </li>
           <li>
-            <Link to="/docs" hash="privacy" className={linkClass}>
-              Privacy
+            <Link to="/privacy" className={linkClass}>
+              Privacy Policy
             </Link>
           </li>
           <li>
-            <Link to="/docs" hash="security" className={linkClass}>
-              Security
+            <Link to="/terms" className={linkClass}>
+              Terms of Use
             </Link>
           </li>
           <li>
-            <Link to="/docs" hash="terms" className={linkClass}>
-              Terms
+            <Link to="/cookies" className={linkClass}>
+              Cookie Policy
             </Link>
           </li>
         </FooterCol>
       </div>
+
+      <div className="border-t border-border/70 bg-[color:var(--cream-warm)]">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8">
+          <p className="font-display text-sm font-bold">Why trust Nesake PDF?</p>
+          <div className="mt-4 grid gap-5 text-xs text-muted-foreground leading-relaxed sm:grid-cols-2 lg:grid-cols-4">
+            <div>
+              <p className="text-foreground font-semibold">Local processing</p>
+              <p className="mt-1">
+                Files are read, edited and saved inside your browser tab. Nothing is uploaded, so
+                there is no server copy to leak or delete.
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground font-semibold">No accounts, no watermarks</p>
+              <p className="mt-1">
+                No sign-up, no email, no trial limits. Output files carry no watermark and are not
+                capped in number.
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground font-semibold">Browser compatibility</p>
+              <p className="mt-1">
+                Works in current Chrome, Edge, Firefox and Safari. Once the page has loaded, the
+                tools keep working offline.
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground font-semibold">Phones and tablets</p>
+              <p className="mt-1">
+                Touch-friendly drop zones and thumbnail grids. Very large documents run slower on
+                mobile hardware than on a desktop.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="border-t border-border/70">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-5 text-xs text-muted-foreground">
           © {new Date().getFullYear()} Nesake PDF. All processing happens locally in your browser.
