@@ -199,6 +199,125 @@ const TRUST_POINTS = [
   },
 ];
 
+type CategoryTool = {
+  icon: typeof FilePlus2;
+  title: string;
+  description: string;
+  tool: NonNullable<ToolCardProps["tool"]>;
+  accent?: ToolCardProps["accent"];
+};
+
+const TOOL_CATEGORIES: { name: string; text: string; tools: CategoryTool[] }[] = [
+  {
+    name: "Organize PDF",
+    text: "Rearrange, trim and tidy the pages inside a document.",
+    tools: [
+      {
+        icon: FilePlus2,
+        title: "Merge PDF",
+        description: "Combine several PDFs into one file in the order you choose.",
+        tool: "merge",
+      },
+      {
+        icon: Scissors,
+        title: "Split PDF",
+        description: "Break one PDF into separate files or a ZIP of single pages.",
+        tool: "split",
+        accent: "gold",
+      },
+      {
+        icon: Trash2,
+        title: "Delete Pages",
+        description: "Remove unwanted pages and download a clean document.",
+        tool: "delete-pages",
+      },
+      {
+        icon: FileText,
+        title: "Extract Pages",
+        description: "Save only the pages you select as a brand new PDF.",
+        tool: "extract-pages",
+        accent: "gold",
+      },
+      {
+        icon: RotateCw,
+        title: "Rotate PDF",
+        description: "Straighten sideways scans, page by page or all at once.",
+        tool: "rotate",
+      },
+    ],
+  },
+  {
+    name: "Convert PDF",
+    text: "Move between PDF, Word documents and image formats.",
+    tools: [
+      {
+        icon: FileType2,
+        title: "PDF to Word",
+        description: "Turn a PDF into an editable .docx with formatting rebuilt.",
+        tool: "pdf-to-word",
+        accent: "gold",
+      },
+      {
+        icon: Images,
+        title: "PDF to Image",
+        description: "Export pages as JPG, PNG or WEBP at your chosen quality.",
+        tool: "pdf-to-jpg",
+      },
+      {
+        icon: ImagePlus,
+        title: "Image to PDF",
+        description: "Bundle JPG, PNG, WEBP, GIF, BMP or AVIF images into one PDF.",
+        tool: "jpg-to-pdf",
+        accent: "gold",
+      },
+    ],
+  },
+  {
+    name: "Optimize PDF",
+    text: "Make heavy documents smaller and easier to share.",
+    tools: [
+      {
+        icon: FileArchive,
+        title: "Compress PDF",
+        description: "Shrink large scans by re-encoding images and stripping metadata.",
+        tool: "compress",
+      },
+    ],
+  },
+  {
+    name: "Protect PDF",
+    text: "Add or remove password protection on your documents.",
+    tools: [
+      {
+        icon: Lock,
+        title: "Protect PDF",
+        description: "Set a password with AES-256 or AES-128 encryption.",
+        tool: "protect",
+        accent: "gold",
+      },
+      {
+        icon: Unlock,
+        title: "Unlock PDF",
+        description: "Remove the password from a PDF you can already open.",
+        tool: "unlock",
+      },
+    ],
+  },
+  {
+    name: "Sign & Forms",
+    text: "Add your handwritten or typed signature to a document.",
+    tools: [
+      {
+        icon: PenLine,
+        title: "Sign PDF",
+        description: "Draw, type or upload a signature and place it on any page.",
+        tool: "sign",
+        accent: "gold",
+      },
+    ],
+  },
+];
+
 function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
