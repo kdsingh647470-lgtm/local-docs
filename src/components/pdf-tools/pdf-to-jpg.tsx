@@ -41,8 +41,6 @@ export function PdfToJpg() {
   const [images, setImages] = useState<PageImage[]>([]);
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [dragOver, setDragOver] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
   const bytesRef = useRef<ArrayBuffer | null>(null);
 
   const loadFile = useCallback(async (f: File) => {

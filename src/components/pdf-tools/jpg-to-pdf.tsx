@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { PDFDocument } from "pdf-lib";
 import { Loader2, X, ArrowUp, ArrowDown, FileType2 } from "lucide-react";
 import { FileDropZone } from "./file-drop-zone";
@@ -58,8 +58,6 @@ export function JpgToPdf() {
   const [orientation, setOrientation] = useState<Orientation>("auto");
   const [margin, setMargin] = useState<MarginKey>("small");
   const [busy, setBusy] = useState(false);
-  const [dragOver, setDragOver] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const addFiles = useCallback((files: FileList | File[]) => {
     const accepted: ImageItem[] = [];

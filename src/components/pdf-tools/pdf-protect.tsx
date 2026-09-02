@@ -24,7 +24,6 @@ import { protectPdf, type EncryptionStrength } from "@/lib/qpdf";
 export function PdfProtect() {
   const [file, setFile] = useState<File | null>(null);
   const [pageCount, setPageCount] = useState(0);
-  const [dragOver, setDragOver] = useState(false);
   const [busy, setBusy] = useState(false);
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -33,7 +32,6 @@ export function PdfProtect() {
   const [allowPrinting, setAllowPrinting] = useState(true);
   const [allowCopying, setAllowCopying] = useState(true);
   const [result, setResult] = useState<{ size: number } | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
   const bytesRef = useRef<Uint8Array | null>(null);
 
   const loadFile = useCallback(async (f: File) => {

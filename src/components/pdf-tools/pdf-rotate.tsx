@@ -20,8 +20,6 @@ export function PdfRotate() {
   const [rotations, setRotations] = useState<Record<number, number>>({});
   const [loadingThumbs, setLoadingThumbs] = useState(false);
   const [busy, setBusy] = useState(false);
-  const [dragOver, setDragOver] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
   const bytesRef = useRef<ArrayBuffer | null>(null);
 
   const loadFile = useCallback(async (f: File) => {

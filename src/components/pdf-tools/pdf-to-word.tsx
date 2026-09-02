@@ -16,11 +16,9 @@ export function PdfToWord() {
   const [pageCount, setPageCount] = useState(0);
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [dragOver, setDragOver] = useState(false);
   const [keepFormatting, setKeepFormatting] = useState(true);
   const [pageBreaks, setPageBreaks] = useState(true);
   const [result, setResult] = useState<{ size: number; empty: number[] } | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
   const bytesRef = useRef<ArrayBuffer | null>(null);
 
   const loadFile = useCallback(async (f: File) => {

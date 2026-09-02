@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { PDFDocument } from "pdf-lib";
 import { Loader2, Download, FileText, X, Info } from "lucide-react";
 import { FileDropZone } from "./file-drop-zone";
@@ -27,8 +27,6 @@ export function PdfCompress() {
   const [method, setMethod] = useState<"original" | "optimized" | "rasterized" | null>(null);
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [dragOver, setDragOver] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
   const bytesRef = useRef<ArrayBuffer | null>(null);
 
   const loadFile = useCallback(async (f: File) => {

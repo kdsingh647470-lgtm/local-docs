@@ -31,8 +31,6 @@ export function PdfPagePicker({ mode }: { mode: PickerMode }) {
   const [rangeInput, setRangeInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [loadingThumbs, setLoadingThumbs] = useState(false);
-  const [dragOver, setDragOver] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
   const bytesRef = useRef<ArrayBuffer | null>(null);
 
   const loadFile = useCallback(async (f: File) => {

@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { PDFDocument } from "pdf-lib";
 import {
   Loader2,
@@ -23,13 +23,11 @@ import { unlockPdf } from "@/lib/qpdf";
 export function PdfUnlock() {
   const [file, setFile] = useState<File | null>(null);
   const [encrypted, setEncrypted] = useState(true);
-  const [dragOver, setDragOver] = useState(false);
   const [busy, setBusy] = useState(false);
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<{ size: number } | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
   const bytesRef = useRef<Uint8Array | null>(null);
 
   const loadFile = useCallback(async (f: File) => {
