@@ -68,7 +68,8 @@ export function ToolCard({
     <Link
       to="/pdf-tools"
       search={{ tool }}
-      className={`${base} transition-all hover:-translate-y-0.5 hover:border-[color:var(--gold)]/60 hover:shadow-md`}
+      aria-label={`${title} — ${description}`}
+      className={`${base} min-h-[11rem] transition-all hover:-translate-y-0.5 hover:border-[color:var(--gold)]/60 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--emerald-mid)] focus-visible:ring-offset-2`}
     >
       {body}
     </Link>
