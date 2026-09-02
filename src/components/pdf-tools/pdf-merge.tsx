@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import { PDFDocument } from "pdf-lib";
-import { FileText, GripVertical, Upload, X, Loader2, Download } from "lucide-react";
+import { FileText, GripVertical, X, Loader2, Download } from "lucide-react";
+import { FileDropZone } from "./file-drop-zone";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
