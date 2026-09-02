@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { PrivacyNote } from "@/components/site/privacy-note";
 import {
   ArrowLeft,
   ArrowRight,
