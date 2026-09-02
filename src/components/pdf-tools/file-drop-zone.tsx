@@ -55,7 +55,7 @@ export function FileDropZone({
 
   return (
     <div
-      role="button"
+      role="group"
       tabIndex={0}
       aria-label={`${headline}. ${hint}`}
       onDragOver={(e) => {
