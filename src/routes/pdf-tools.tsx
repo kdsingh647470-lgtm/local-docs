@@ -655,6 +655,7 @@ function ActiveTool({ tool, onBack }: { tool: Tool; onBack: () => void }) {
         <h1 className="font-display text-2xl sm:text-3xl font-bold text-foreground">{meta.title}</h1>
         <p className="mt-2 text-sm sm:text-base text-muted-foreground max-w-2xl">{meta.blurb}</p>
       </header>
+      <PrivacyNote className="mb-4" />
       <section className="rounded-3xl border border-border bg-card p-5 sm:p-8 shadow-sm">
         {tool === "merge" && <PdfMerge />}
         {tool === "split" && <PdfSplit />}
