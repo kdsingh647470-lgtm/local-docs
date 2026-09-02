@@ -253,92 +253,60 @@ function Home() {
         </div>
       </section>
 
-      {/* Featured tools */}
+      {/* Privacy band */}
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-4">
+        <div className="rounded-3xl border border-border bg-[color:var(--cream-warm)] p-5 sm:p-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-start gap-3">
+              <span className="rounded-2xl bg-[color:var(--emerald-mid)]/10 p-2.5 text-[color:var(--emerald-mid)]">
+                <ShieldCheck aria-hidden className="h-5 w-5" />
+              </span>
+              <div>
+                <h2 className="font-display text-base sm:text-lg font-bold">
+                  Your files stay on your device
+                </h2>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  PDF processing happens locally in your browser — no file uploads, no account
+                  required, no cloud storage of your documents.
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/privacy"
+              className="shrink-0 inline-flex items-center gap-1.5 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-semibold transition-colors hover:border-[color:var(--gold)]/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--emerald-mid)] focus-visible:ring-offset-2"
+            >
+              Privacy policy <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Tools by category */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <SectionHeading
-          eyebrow="Featured tools"
+          eyebrow="All tools"
           title="Everything you need for everyday PDFs"
-          text="Seven tools cover the tasks people reach for most. Each one runs locally and downloads straight back to your device."
+          text="Twelve tools grouped by the job you need done. Each one runs locally and downloads straight back to your device."
         />
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <ToolCard
-            icon={<FilePlus2 className="h-6 w-6" />}
-            title="PDF Merge"
-            description="Combine several documents into one file and drag them into the exact order you want before exporting."
-            tool="merge"
-          />
-          <ToolCard
-            icon={<Scissors className="h-6 w-6" />}
-            title="PDF Split"
-            description="Preview every page as a thumbnail, pick the pages you need, or break one PDF into a ZIP of single pages."
-            tool="split"
-            accent="gold"
-          />
-          <ToolCard
-            icon={<FileArchive className="h-6 w-6" />}
-            title="PDF Compress"
-            description="Shrink large scans and photo-heavy files by re-encoding their images and stripping unused metadata."
-            tool="compress"
-          />
-          <ToolCard
-            icon={<FileType2 className="h-6 w-6" />}
-            title="PDF to Word"
-            description="Convert a PDF into an editable .docx with headings, bold text and paragraph flow rebuilt for you."
-            tool="pdf-to-word"
-            accent="gold"
-          />
-          <ToolCard
-            icon={<Images className="h-6 w-6" />}
-            title="PDF to Image"
-            description="Turn each page into a JPG, PNG or WEBP image at screen, standard or print quality — one page or a ZIP of all."
-            tool="pdf-to-jpg"
-          />
-          <ToolCard
-            icon={<ImagePlus className="h-6 w-6" />}
-            title="Image to PDF"
-            description="Bundle JPG, PNG, WEBP, GIF, BMP or AVIF images into one PDF, reordered how you like, on A4, Letter or image-sized pages."
-            tool="jpg-to-pdf"
-            accent="gold"
-          />
-          <ToolCard
-            icon={<RotateCw className="h-6 w-6" />}
-            title="Rotate PDF"
-            description="Straighten sideways scans from a thumbnail grid, page by page or the whole document at once."
-            tool="rotate"
-          />
-          <ToolCard
-            icon={<Lock className="h-6 w-6" />}
-            title="Protect PDF"
-            description="Add a password with AES-256 or AES-128 encryption and decide whether printing and copying stay allowed."
-            tool="protect"
-            accent="gold"
-          />
-          <ToolCard
-            icon={<Unlock className="h-6 w-6" />}
-            title="Unlock PDF"
-            description="Remove the password from a document you can already open and save an unrestricted copy."
-            tool="unlock"
-          />
-          <ToolCard
-            icon={<Trash2 className="h-6 w-6" />}
-            title="Delete Pages"
-            description="Tick the pages you don't need in the thumbnail grid and download a clean PDF without them."
-            tool="delete-pages"
-            accent="gold"
-          />
-          <ToolCard
-            icon={<Scissors className="h-6 w-6" />}
-            title="Extract Pages"
-            description="Choose pages visually or by range and save just those pages as a brand new PDF."
-            tool="extract-pages"
-          />
-          <ToolCard
-            icon={<PenLine className="h-6 w-6" />}
-            title="Sign PDF"
-            description="Draw, type or upload your signature, drag it onto the page and download the signed PDF."
-            tool="sign"
-            accent="gold"
-          />
+        <div className="mt-8 space-y-10">
+          {TOOL_CATEGORIES.map((category) => (
+            <div key={category.name}>
+              <h3 className="font-display text-lg font-bold text-foreground">{category.name}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">{category.text}</p>
+              <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {category.tools.map((t) => (
+                  <ToolCard
+                    key={t.tool}
+                    icon={<t.icon className="h-6 w-6" />}
+                    title={t.title}
+                    description={t.description}
+                    tool={t.tool}
+                    accent={t.accent}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
