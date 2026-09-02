@@ -21,9 +21,7 @@ export function PdfMerge() {
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState(0);
   const [filename, setFilename] = useState("merged.pdf");
-  const [dragOver, setDragOver] = useState(false);
   const dragIndex = useRef<number | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const addFiles = useCallback(async (files: FileList | File[]) => {
     const list = Array.from(files).filter((f) => f.type === "application/pdf" || f.name.toLowerCase().endsWith(".pdf"));
