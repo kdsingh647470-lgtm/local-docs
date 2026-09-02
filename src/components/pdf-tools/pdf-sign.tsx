@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PDFDocument } from "pdf-lib";
 import {
-  Upload,
   Loader2,
   Download,
   FileText,
+  FileUp as FileUpIcon,
   X,
   PenLine,
   Type,
@@ -13,6 +13,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import { FileDropZone } from "./file-drop-zone";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -357,42 +358,15 @@ export function PdfSign() {
 
   if (!file) {
     return (
-      <div
-        onDragOver={(e) => {
-          e.preventDefault();
-          setDragOver(true);
+      <FileDropZone
+        kind="pdf"
+        loading={previewLoading}
+        onFiles={(files) => {
+          const first = Array.from(files)[0];
+          if (first) loadFile(first);
         }}
-        onDragLeave={() => setDragOver(false)}
-        onDrop={(e) => {
-          e.preventDefault();
-          setDragOver(false);
-          if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
-        }}
-        onClick={() => inputRef.current?.click()}
-        className={`flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-8 text-center cursor-pointer transition-colors min-h-[200px] ${
-          dragOver ? "border-primary bg-primary/5" : "border-border hover:bg-accent/50"
-        }`}
-      >
-        {previewLoading ? (
-          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground mb-2" />
-        ) : (
-          <Upload className="h-8 w-8 text-muted-foreground mb-2" />
-        )}
-        <p className="text-sm font-medium">Drop a PDF here or tap to browse</p>
-        <p className="text-xs text-muted-foreground mt-1">
-          Draw, type or upload a signature and place it on the page
-        </p>
-        <input
-          ref={inputRef}
-          type="file"
-          accept="application/pdf,.pdf"
-          className="hidden"
-          onChange={(e) => {
-            if (e.target.files?.[0]) loadFile(e.target.files[0]);
-            e.target.value = "";
-          }}
-        />
-      </div>
+        hint="Draw, type or upload a signature and place it on the page."
+      />
     );
   }
 
@@ -504,7 +478,7 @@ export function PdfSign() {
               onClick={() => imageInputRef.current?.click()}
               className="min-h-11"
             >
-              <Upload className="mr-2 h-4 w-4" /> Choose image
+              <FileUpIcon className="mr-2 h-4 w-4" /> Choose image
             </Button>
           </TabsContent>
         </Tabs>

@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import { PDFDocument } from "pdf-lib";
-import { Upload, Loader2, Download, FileText, X, FileType2, Info } from "lucide-react";
+import { Loader2, Download, FileText, X, FileType2, Info } from "lucide-react";
+import { FileDropZone } from "./file-drop-zone";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -15,11 +16,9 @@ export function PdfToWord() {
   const [pageCount, setPageCount] = useState(0);
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [dragOver, setDragOver] = useState(false);
   const [keepFormatting, setKeepFormatting] = useState(true);
   const [pageBreaks, setPageBreaks] = useState(true);
   const [result, setResult] = useState<{ size: number; empty: number[] } | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
   const bytesRef = useRef<ArrayBuffer | null>(null);
 
   const loadFile = useCallback(async (f: File) => {
@@ -88,38 +87,14 @@ export function PdfToWord() {
 
   if (!file) {
     return (
-      <div
-        onDragOver={(e) => {
-          e.preventDefault();
-          setDragOver(true);
+      <FileDropZone
+        kind="pdf"
+        onFiles={(files) => {
+          const first = Array.from(files)[0];
+          if (first) loadFile(first);
         }}
-        onDragLeave={() => setDragOver(false)}
-        onDrop={(e) => {
-          e.preventDefault();
-          setDragOver(false);
-          if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
-        }}
-        onClick={() => inputRef.current?.click()}
-        className={`flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-8 text-center cursor-pointer transition-colors min-h-[200px] ${
-          dragOver ? "border-primary bg-primary/5" : "border-border hover:bg-accent/50"
-        }`}
-      >
-        <Upload className="h-8 w-8 text-muted-foreground mb-2" />
-        <p className="text-sm font-medium">Drop a PDF here or tap to browse</p>
-        <p className="text-xs text-muted-foreground mt-1">
-          Text and headings become an editable .docx — all in this tab
-        </p>
-        <input
-          ref={inputRef}
-          type="file"
-          accept="application/pdf,.pdf"
-          className="hidden"
-          onChange={(e) => {
-            if (e.target.files?.[0]) loadFile(e.target.files[0]);
-            e.target.value = "";
-          }}
-        />
-      </div>
+        hint="Text and headings become an editable .docx — all in this tab."
+      />
     );
   }
 

@@ -1,7 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import { PDFDocument } from "pdf-lib";
 import {
-  Upload,
   Loader2,
   Download,
   FileText,
@@ -12,6 +11,7 @@ import {
   Info,
   ShieldCheck,
 } from "lucide-react";
+import { FileDropZone } from "./file-drop-zone";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -24,7 +24,6 @@ import { protectPdf, type EncryptionStrength } from "@/lib/qpdf";
 export function PdfProtect() {
   const [file, setFile] = useState<File | null>(null);
   const [pageCount, setPageCount] = useState(0);
-  const [dragOver, setDragOver] = useState(false);
   const [busy, setBusy] = useState(false);
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -33,7 +32,6 @@ export function PdfProtect() {
   const [allowPrinting, setAllowPrinting] = useState(true);
   const [allowCopying, setAllowCopying] = useState(true);
   const [result, setResult] = useState<{ size: number } | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
   const bytesRef = useRef<Uint8Array | null>(null);
 
   const loadFile = useCallback(async (f: File) => {
@@ -99,38 +97,14 @@ export function PdfProtect() {
 
   if (!file) {
     return (
-      <div
-        onDragOver={(e) => {
-          e.preventDefault();
-          setDragOver(true);
+      <FileDropZone
+        kind="pdf"
+        onFiles={(files) => {
+          const first = Array.from(files)[0];
+          if (first) loadFile(first);
         }}
-        onDragLeave={() => setDragOver(false)}
-        onDrop={(e) => {
-          e.preventDefault();
-          setDragOver(false);
-          if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
-        }}
-        onClick={() => inputRef.current?.click()}
-        className={`flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-8 text-center cursor-pointer transition-colors min-h-[200px] ${
-          dragOver ? "border-primary bg-primary/5" : "border-border hover:bg-accent/50"
-        }`}
-      >
-        <Upload className="h-8 w-8 text-muted-foreground mb-2" />
-        <p className="text-sm font-medium">Drop a PDF here or tap to browse</p>
-        <p className="text-xs text-muted-foreground mt-1">
-          Encryption happens in this tab — your password is never sent anywhere
-        </p>
-        <input
-          ref={inputRef}
-          type="file"
-          accept="application/pdf,.pdf"
-          className="hidden"
-          onChange={(e) => {
-            if (e.target.files?.[0]) loadFile(e.target.files[0]);
-            e.target.value = "";
-          }}
-        />
-      </div>
+        hint="Your password and document stay in this browser tab."
+      />
     );
   }
 

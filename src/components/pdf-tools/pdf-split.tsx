@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PDFDocument } from "pdf-lib";
 import JSZip from "jszip";
-import { Upload, Loader2, Download, FileText, X } from "lucide-react";
+import { Loader2, Download, FileText, X } from "lucide-react";
+import { FileDropZone } from "./file-drop-zone";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -23,8 +24,6 @@ export function PdfSplit() {
   const [rangeInput, setRangeInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [loadingThumbs, setLoadingThumbs] = useState(false);
-  const [dragOver, setDragOver] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
   const bytesRef = useRef<ArrayBuffer | null>(null);
 
   const loadFile = useCallback(async (f: File) => {
@@ -164,33 +163,14 @@ export function PdfSplit() {
 
   if (!file) {
     return (
-      <div
-        onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-        onDragLeave={() => setDragOver(false)}
-        onDrop={(e) => {
-          e.preventDefault();
-          setDragOver(false);
-          if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+      <FileDropZone
+        kind="pdf"
+        onFiles={(files) => {
+          const first = Array.from(files)[0];
+          if (first) loadFile(first);
         }}
-        onClick={() => inputRef.current?.click()}
-        className={`flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-8 text-center cursor-pointer transition-colors min-h-[200px] ${
-          dragOver ? "border-primary bg-primary/5" : "border-border hover:bg-accent/50"
-        }`}
-      >
-        <Upload className="h-8 w-8 text-muted-foreground mb-2" />
-        <p className="text-sm font-medium">Drop a PDF here or tap to browse</p>
-        <p className="text-xs text-muted-foreground mt-1">Preview pages and extract what you need</p>
-        <input
-          ref={inputRef}
-          type="file"
-          accept="application/pdf,.pdf"
-          className="hidden"
-          onChange={(e) => {
-            if (e.target.files?.[0]) loadFile(e.target.files[0]);
-            e.target.value = "";
-          }}
-        />
-      </div>
+        hint="Preview pages and extract what you need."
+      />
     );
   }
 

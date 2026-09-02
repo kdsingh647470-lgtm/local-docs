@@ -1,6 +1,7 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { PDFDocument } from "pdf-lib";
-import { Upload, Loader2, X, ArrowUp, ArrowDown, FileType2 } from "lucide-react";
+import { Loader2, X, ArrowUp, ArrowDown, FileType2 } from "lucide-react";
+import { FileDropZone } from "./file-drop-zone";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
@@ -57,8 +58,6 @@ export function JpgToPdf() {
   const [orientation, setOrientation] = useState<Orientation>("auto");
   const [margin, setMargin] = useState<MarginKey>("small");
   const [busy, setBusy] = useState(false);
-  const [dragOver, setDragOver] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const addFiles = useCallback((files: FileList | File[]) => {
     const accepted: ImageItem[] = [];
@@ -143,36 +142,12 @@ export function JpgToPdf() {
 
   return (
     <div className="space-y-4">
-      <div
-        onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-        onDragLeave={() => setDragOver(false)}
-        onDrop={(e) => {
-          e.preventDefault();
-          setDragOver(false);
-          if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
-        }}
-        onClick={() => inputRef.current?.click()}
-        className={`flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-8 text-center cursor-pointer transition-colors min-h-[160px] ${
-          dragOver ? "border-primary bg-primary/5" : "border-border hover:bg-accent/50"
-        }`}
-      >
-        <Upload className="h-8 w-8 text-muted-foreground mb-2" />
-        <p className="text-sm font-medium">Drop images here or tap to browse</p>
-        <p className="text-xs text-muted-foreground mt-1">
-          JPG, PNG, WEBP, GIF, BMP or AVIF — each image becomes one page
-        </p>
-        <input
-          ref={inputRef}
-          type="file"
-          accept="image/jpeg,image/png,image/webp,image/gif,image/bmp,image/avif,.jpg,.jpeg,.png,.webp,.gif,.bmp,.avif"
-          multiple
-          className="hidden"
-          onChange={(e) => {
-            if (e.target.files?.length) addFiles(e.target.files);
-            e.target.value = "";
-          }}
-        />
-      </div>
+      <FileDropZone
+        kind="image"
+        multiple
+        onFiles={addFiles}
+        hint="JPG, PNG, WEBP, GIF, BMP or AVIF — each image becomes one page."
+      />
 
       {items.length > 0 && (
         <>

@@ -1,7 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import { PDFDocument } from "pdf-lib";
 import {
-  Upload,
   Loader2,
   FileText,
   X,
@@ -12,6 +11,7 @@ import {
   ShieldCheck,
   LockOpen,
 } from "lucide-react";
+import { FileDropZone } from "./file-drop-zone";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -23,13 +23,11 @@ import { unlockPdf } from "@/lib/qpdf";
 export function PdfUnlock() {
   const [file, setFile] = useState<File | null>(null);
   const [encrypted, setEncrypted] = useState(true);
-  const [dragOver, setDragOver] = useState(false);
   const [busy, setBusy] = useState(false);
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<{ size: number } | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
   const bytesRef = useRef<Uint8Array | null>(null);
 
   const loadFile = useCallback(async (f: File) => {
@@ -92,38 +90,14 @@ export function PdfUnlock() {
 
   if (!file) {
     return (
-      <div
-        onDragOver={(e) => {
-          e.preventDefault();
-          setDragOver(true);
+      <FileDropZone
+        kind="pdf"
+        onFiles={(files) => {
+          const first = Array.from(files)[0];
+          if (first) loadFile(first);
         }}
-        onDragLeave={() => setDragOver(false)}
-        onDrop={(e) => {
-          e.preventDefault();
-          setDragOver(false);
-          if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
-        }}
-        onClick={() => inputRef.current?.click()}
-        className={`flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-8 text-center cursor-pointer transition-colors min-h-[200px] ${
-          dragOver ? "border-primary bg-primary/5" : "border-border hover:bg-accent/50"
-        }`}
-      >
-        <Upload className="h-8 w-8 text-muted-foreground mb-2" />
-        <p className="text-sm font-medium">Drop a protected PDF here or tap to browse</p>
-        <p className="text-xs text-muted-foreground mt-1">
-          Only unlock documents you own — the password stays in this tab
-        </p>
-        <input
-          ref={inputRef}
-          type="file"
-          accept="application/pdf,.pdf"
-          className="hidden"
-          onChange={(e) => {
-            if (e.target.files?.[0]) loadFile(e.target.files[0]);
-            e.target.value = "";
-          }}
-        />
-      </div>
+        hint="Only unlock documents you own — the password stays in this tab."
+      />
     );
   }
 
