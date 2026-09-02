@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import { PDFDocument, degrees } from "pdf-lib";
-import { Upload, Loader2, Download, FileText, X, RotateCw, RotateCcw } from "lucide-react";
+import { Loader2, Download, FileText, X, RotateCw, RotateCcw } from "lucide-react";
+import { FileDropZone } from "./file-drop-zone";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
