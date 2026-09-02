@@ -17,15 +17,15 @@ export interface FileDropZoneProps {
   hint: string;
   /** Show a spinner instead of the upload icon while a file is being read. */
   loading?: boolean;
-  /** Optional soft size guidance, e.g. "Best results under 50 MB". */
+  /** Optional soft size guidance, e.g. "Files over 50 MB may be slow". */
   sizeNote?: string;
   className?: string;
 }
 
 /**
  * Shared upload / drop zone used by every PDF tool so the first step of each
- * workflow looks and behaves the same. Keyboard accessible: the whole zone is a
- * button, and the visible "Choose…" button opens the same native file picker.
+ * workflow looks and behaves the same. The visible button opens the native
+ * picker, while the surrounding group also accepts dragged files.
  */
 export function FileDropZone({
   kind,
