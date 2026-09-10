@@ -1,11 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { ShieldCheck } from "lucide-react";
 
-const linkClass = "text-muted-foreground transition-colors hover:text-[color:var(--emerald-deep)]";
+const linkClass = "text-muted-foreground transition-colors hover:text-primary";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-border bg-[color:var(--cream-warm)]">
+    <footer className="border-t border-border bg-card/50">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <p className="font-display text-base font-bold">Nesake PDF</p>
@@ -14,7 +14,7 @@ export function SiteFooter() {
             to a server.
           </p>
           <p className="mt-4 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-            <ShieldCheck className="h-3.5 w-3.5 text-[color:var(--emerald-mid)]" />
+            <ShieldCheck className="h-3.5 w-3.5 text-primary" />
             Private by default
           </p>
         </div>
@@ -134,7 +134,7 @@ export function SiteFooter() {
         </FooterCol>
       </div>
 
-      <div className="border-t border-border/70 bg-[color:var(--cream-warm)]">
+      <div className="border-t border-border/70 bg-background/40">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8">
           <p className="font-display text-sm font-bold">Why trust Nesake PDF?</p>
           <div className="mt-4 grid gap-5 text-xs text-muted-foreground leading-relaxed sm:grid-cols-2 lg:grid-cols-4">
