@@ -33,7 +33,7 @@ export function FileDropZone({
   onFiles,
   hint,
   loading = false,
-  sizeNote = "Best results with files under 50 MB",
+    sizeNote = "Files over 50 MB may be slower",
   className = "",
 }: FileDropZoneProps) {
   const [dragOver, setDragOver] = useState(false);
@@ -75,11 +75,11 @@ export function FileDropZone({
           open();
         }
       }}
-      className={`flex flex-col items-center justify-center rounded-2xl border-2 border-dashed px-4 py-8 text-center cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--emerald-mid)] focus-visible:ring-offset-2 ${
-        dragOver ? "border-primary bg-primary/5" : "border-border hover:bg-accent/50"
+      className={`flex cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed px-4 py-8 text-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
+        dragOver ? "border-primary bg-primary/10" : "border-border bg-card/50 hover:border-primary/50 hover:bg-accent/40"
       } ${className}`}
     >
-      <span className="mb-3 rounded-2xl bg-primary/10 p-3 text-primary">
+      <span className="mb-3 rounded-lg border border-primary/20 bg-primary/10 p-3 text-primary">
         {loading ? (
           <Loader2 aria-hidden className="h-6 w-6 animate-spin" />
         ) : (
@@ -105,7 +105,7 @@ export function FileDropZone({
         {types} · {sizeNote}
       </p>
       <p className="mt-2 flex items-center gap-1.5 text-xs text-muted-foreground">
-        <ShieldCheck aria-hidden className="h-3.5 w-3.5 text-[color:var(--emerald-mid)]" />
+        <ShieldCheck aria-hidden className="h-3.5 w-3.5 text-primary" />
         Your {noun} {multiple ? "are" : "is"} processed locally on your device.
       </p>
 
