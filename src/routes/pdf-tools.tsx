@@ -334,16 +334,8 @@ function ToolsHub() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-border">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-28 -top-32 h-80 w-80 rounded-full"
-          style={{
-            background:
-              "radial-gradient(closest-side, color-mix(in oklab, var(--gold) 28%, transparent), transparent 70%)",
-          }}
-        />
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative">
+      <section className="border-b border-border">
+        <div className="relative mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
           <nav aria-label="Breadcrumb" className="text-xs text-muted-foreground">
             <Link to="/" className="hover:text-foreground">
               Home
@@ -353,7 +345,7 @@ function ToolsHub() {
           </nav>
           <h1 className="font-display mt-5 text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.08] max-w-2xl">
             Free PDF tools,{" "}
-            <span className="italic text-[color:var(--emerald-mid)]">on your device</span>
+             <span className="text-primary">on your device</span>
           </h1>
           <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
             A dedicated workspace for every PDF task — open a tool, work on your file locally, and
@@ -366,7 +358,7 @@ function ToolsHub() {
       </section>
 
       {/* Tool grid */}
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <SectionHeading eyebrow="Available now" title="Pick a tool" />
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <ToolCard

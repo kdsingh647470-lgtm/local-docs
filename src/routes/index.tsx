@@ -324,47 +324,39 @@ function Home() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-32 -top-40 h-96 w-96 rounded-full"
-          style={{
-            background:
-              "radial-gradient(closest-side, color-mix(in oklab, var(--gold) 30%, transparent), transparent 70%)",
-          }}
-        />
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-16 pb-12 sm:pt-24 sm:pb-16 relative">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
-            <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--gold)]" />
-            Nesake PDF platform
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-6xl px-4 pb-10 pt-14 text-center sm:px-6 sm:pb-14 sm:pt-20 lg:px-8">
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+            <ShieldCheck className="h-3.5 w-3.5" />
+            Local processing · no uploads
           </div>
-          <h1 className="font-display mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] max-w-3xl">
-            Free PDF tools{" "}
-            <span className="italic text-[color:var(--emerald-mid)]">online</span>
+          <h1 className="font-display mx-auto mt-6 max-w-4xl text-4xl font-bold leading-[1.12] sm:text-5xl lg:text-6xl">
+            Free PDF tools, built for{" "}
+            <span className="text-primary">private work.</span>
           </h1>
-          <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
             Merge, split, delete, extract, compress, convert, rotate, protect and unlock PDFs
             securely in your browser. No installation. Fast. Private. Free.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
               to="/pdf-tools"
-              className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-[color:var(--emerald-mid)]"
+              className="inline-flex min-h-12 items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               Explore PDF tools <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               to="/docs"
-              className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-6 py-3.5 text-sm font-semibold transition-colors hover:border-[color:var(--gold)]/60"
+              className="inline-flex min-h-12 items-center gap-2 rounded-md border border-border bg-card px-6 py-3 text-sm font-semibold transition-colors hover:border-primary/60 hover:bg-accent"
             >
               <BookOpen className="h-4 w-4" /> Documentation
             </Link>
           </div>
 
-          <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground">
+          <ul className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm text-muted-foreground">
             {BADGES.map((b) => (
               <li key={b} className="inline-flex items-center gap-2">
-                <Check className="h-4 w-4 text-[color:var(--emerald-mid)]" />
+                <Check className="h-4 w-4 text-primary" />
                 {b}
               </li>
             ))}
@@ -373,11 +365,11 @@ function Home() {
       </section>
 
       {/* Privacy band */}
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-4">
-        <div className="rounded-3xl border border-border bg-[color:var(--cream-warm)] p-5 sm:p-6">
+      <section className="mx-auto max-w-6xl px-4 pt-6 sm:px-6 lg:px-8">
+        <div className="rounded-lg border border-primary/25 bg-primary/5 p-5 sm:p-6">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-start gap-3">
-              <span className="rounded-2xl bg-[color:var(--emerald-mid)]/10 p-2.5 text-[color:var(--emerald-mid)]">
+              <span className="rounded-lg border border-primary/20 bg-primary/10 p-2.5 text-primary">
                 <ShieldCheck aria-hidden className="h-5 w-5" />
               </span>
               <div>
@@ -392,7 +384,7 @@ function Home() {
             </div>
             <Link
               to="/privacy"
-              className="shrink-0 inline-flex items-center gap-1.5 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-semibold transition-colors hover:border-[color:var(--gold)]/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--emerald-mid)] focus-visible:ring-offset-2"
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-md border border-border bg-card px-4 py-2.5 text-sm font-semibold transition-colors hover:border-primary/60 hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               Privacy policy <ArrowRight className="h-4 w-4" />
             </Link>
@@ -401,28 +393,34 @@ function Home() {
       </section>
 
       {/* Tools by category */}
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <SectionHeading
-          eyebrow="All tools"
-          title="Everything you need for everyday PDFs"
-          text="Twelve tools grouped by the job you need done. Each one runs locally and downloads straight back to your device."
-        />
-        <div className="mt-8 space-y-10">
+      <section className="py-12 sm:py-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <SectionHeading
+            eyebrow="All tools"
+            title="Everything you need for everyday PDFs"
+            text="Twelve tools grouped by the job you need done. Each one runs locally and downloads straight back to your device."
+          />
+        </div>
+        <div className="mt-8 border-t border-border">
           {TOOL_CATEGORIES.map((category) => (
-            <div key={category.name}>
-              <h3 className="font-display text-lg font-bold text-foreground">{category.name}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{category.text}</p>
-              <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {category.tools.map((t) => (
-                  <ToolCard
-                    key={t.tool}
-                    icon={<t.icon className="h-6 w-6" />}
-                    title={t.title}
-                    description={t.description}
-                    tool={t.tool}
-                    accent={t.accent}
-                  />
-                ))}
+            <div key={category.name} className="border-b border-border py-8 sm:py-10">
+              <div className="mx-auto grid max-w-6xl gap-6 px-4 sm:px-6 lg:grid-cols-[14rem_1fr] lg:px-8">
+                <div>
+                  <h3 className="font-display text-lg font-bold text-foreground">{category.name}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{category.text}</p>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                  {category.tools.map((t) => (
+                    <ToolCard
+                      key={t.tool}
+                      icon={<t.icon className="h-6 w-6" />}
+                      title={t.title}
+                      description={t.description}
+                      tool={t.tool}
+                      accent={t.accent}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           ))}
